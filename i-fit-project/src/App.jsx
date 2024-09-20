@@ -14,8 +14,8 @@ import Login from './pages/Login';
 function App() {
   return (
     <>
-    <body className="min-h-screen bg-gray-50 bg-[url('./assets/background.svg')] bg-fixed bg-bottom bg-no-repeat">
-    <Header />
+      <Header />
+<div className="min-h-screen bg-gray-50 bg-[url('./assets/background.svg')] bg-fixed bg-bottom bg-no-repeat">
       <Routes>
       <Route path="/" element={<Home/>}/> 
       <Route path="/register" element={<Register/>}/> 
@@ -27,9 +27,8 @@ function App() {
       <Route path="/business" element={<Services/>}/> 
       
       <Route path="*" element={<NotFound />} /> {/* Маршрут для страницы 404 */}
-    </Routes>   
-          
-      </body>
+    </Routes>
+</div>
     </>
   )
 }
