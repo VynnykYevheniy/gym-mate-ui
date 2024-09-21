@@ -71,13 +71,33 @@ const Home = () => {
             </li>
           </ul>
           <div className="p-4 border-t mx-8 mt-2">
-            <button
-                className="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2">Follow
-            </button>
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+            className=" m-1 max-w-2xl mx-4 sm:max-w-sm md:max-wd-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white shadow-xl rounded-lg text-gray-900">
+          <svg className="m-0 mx-auto" width="100px" height="100px" viewBox="0 0 21.00 21.00" version="1.1" xmlns="http://www.w3.org/2000/svg"
+               xmlnsXlink="http://www.w3.org/1999/xlink" fill="#057A55">
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC"
+               strokeWidth="0.33599999999999997"></g>
+            <g id="SVGRepo_iconCarrier"><title>plus_circle []</title>
+              <desc>Created with Sketch.</desc>
+              <defs></defs>
+              <g id="Page-1" strokeWidth="0.00021000000000000004" fill="none" fillRule="evenodd">
+                <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -520.000000)" fill="#057A55">
+                  <g id="icons" transform="translate(56.000000, 160.000000)">
+                    <path
+                        d="M374.55,369 L377.7,369 L377.7,371 L374.55,371 L374.55,374 L372.45,374 L372.45,371 L369.3,371 L369.3,369 L372.45,369 L372.45,366 L374.55,366 L374.55,369 Z M373.5,378 C368.86845,378 365.1,374.411 365.1,370 C365.1,365.589 368.86845,362 373.5,362 C378.13155,362 381.9,365.589 381.9,370 C381.9,374.411 378.13155,378 373.5,378 L373.5,378 Z M373.5,360 C367.70085,360 363,364.477 363,370 C363,375.523 367.70085,380 373.5,380 C379.29915,380 384,375.523 384,370 C384,364.477 379.29915,360 373.5,360 L373.5,360 Z"
+                        id="plus_circle-[]"></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div className="overflow-x-auto m-4 shadow-xl rounded-lg">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Date</Table.HeadCell>
@@ -93,7 +113,7 @@ const Home = () => {
                 </Table.Cell>
                 <Table.Cell>Ryki</Table.Cell>
                 <Table.Cell>
-                <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                  <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                     <img className="size-5" src="https://www.svgrepo.com/show/29974/pencil.svg" alt=""/>
                   </a>
                 </Table.Cell>
