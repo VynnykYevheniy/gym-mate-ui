@@ -94,7 +94,7 @@ const Home = () => {
                 <Table.Cell>Ryki</Table.Cell>
                 <Table.Cell>
                 <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                    <img className="size-5" src="https://www.svgrepo.com/show/29974/pencil.svg"/>
+                    <img className="size-5" src="https://www.svgrepo.com/show/29974/pencil.svg" alt=""/>
                   </a>
                 </Table.Cell>
               </Table.Row>
