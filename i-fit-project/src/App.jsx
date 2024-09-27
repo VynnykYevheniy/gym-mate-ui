@@ -5,21 +5,22 @@ import Header from './components/Header';
 import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import TelegramWebAppComponent from './components/TelegramWebAppComponent'; // Импорт вашего компонента
+import TelegramWebApp from './components/TelegramWebApp.jsx';
+import { TokenProvider } from './context/TokenContext.jsx';
 
 function App() {
 	return (
-		<>
+		<TokenProvider>
 			<Header />
 			<div className="min-h-screen bg-gray-50 bg-[url('./assets/background.svg')] bg-fixed bg-bottom bg-no-repeat">
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/telegram" element={<TelegramWebAppComponent />} /> {/* Новый маршрут */}
+					<Route path="/telegram" element={<TelegramWebApp />} /> {/* Новый маршрут */}
 				</Routes>
 			</div>
-		</>
+		</TokenProvider>
 	);
 }
 
