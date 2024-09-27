@@ -21,29 +21,29 @@ const TelegramWebAppComponent = () => {
 				lastName: TelegramWebApp.initDataUnsafe.user.last_name,
 				photoUrl: TelegramWebApp.initDataUnsafe.user.photo_url || '', // Если есть
 			};
-
+			setUser(userData); // Обработка полученных данных
 			// Отправка данных на сервер
 			setLoading(true);
-			try {
-				const response = await fetch('https://gym-manager-co9r.onrender.com/api/auth/telegram', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(userData),
-				});
-
-				if (response.ok) {
-					const data = await response.json();
-					setUser(data); // Обработка полученных данных
-				} else {
-					console.error('Ошибка:', response.statusText);
-				}
-			} catch (error) {
-				console.error('Ошибка:', error);
-			} finally {
-				setLoading(false);
-			}
+			// try {
+			// 	const response = await fetch('https://gym-manager-co9r.onrender.com/api/auth/telegram', {
+			// 		method: 'POST',
+			// 		headers: {
+			// 			'Content-Type': 'application/json',
+			// 		},
+			// 		body: JSON.stringify(userData),
+			// 	});
+			//
+			// 	if (response.ok) {
+			// 		// const data = await response.json();
+			//
+			// 	} else {
+			// 		console.error('Ошибка:', response.statusText);
+			// 	}
+			// } catch (error) {
+			// 	console.error('Ошибка:', error);
+			// } finally {
+			// 	setLoading(false);
+			// }
 		};
 
 		return () => {
