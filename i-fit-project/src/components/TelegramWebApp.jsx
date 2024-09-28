@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useToken } from '../context/TokenContext.jsx';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useToken} from '../context/TokenContext.jsx';
 import Token from "../model/Token";
 
 const TelegramWebApp = () => {
-	const { setToken } = useToken();
+	const {setToken} = useToken();
 	const [loading, setLoading] = useState(true);
-	const [token, setLocalToken] = useState(null); // Локальное состояние для токена
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -16,21 +15,18 @@ const TelegramWebApp = () => {
 		document.body.appendChild(script);
 
 		script.onload = async () => {
-			window.Telegram.ready();
 			const TelegramWebApp = window.Telegram.WebApp;
 
-			// Получение данных о пользователе
 			const userData = {
-				id: TelegramWebApp.initDataUnsafe.user.id,
-				username: TelegramWebApp.initDataUnsafe.user.username,
-				firstName: TelegramWebApp.initDataUnsafe.user.first_name,
-				lastName: TelegramWebApp.initDataUnsafe.user.last_name
+				id: TelegramWebApp.initDataUnsafe?.user?.id || 123,
+				username: TelegramWebApp.initDataUnsafe?.user?.username || 'Evyn1',
+				firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || 'Yvheniy',
+				lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || 'Vynnyk'
 			};
 
-			// Отправка данных на сервер
 			setLoading(true);
 			try {
-				const response = await fetch('https://gym-manager-co9r.onrender.com/api/auth/telegram', {
+				const response = await fetch('http://localhost:8080/api/auth/telegram', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -40,10 +36,14 @@ const TelegramWebApp = () => {
 
 				if (response.ok) {
 					const data = await response.json();
-					// Создаем объект Token и сохраняем его в состоянии
-					const tokenInstance = new Token(data.accessToken, data.expiresIn, data.refreshToken, data.refreshExpiresIn);
-					setToken(tokenInstance);
-					setLocalToken(tokenInstance); // Сохраняем токен в локальном состоянии
+					const token = new Token(data.accessToken, data.expiresIn, data.refreshToken, data.refreshExpiresIn);
+					setToken(token);
+					console.log(token);
+
+					// Проверка, что токен полностью заполнен
+					if (token && token.accessToken && token.expiresIn && token.refreshToken && token.refreshExpiresIn) {
+						navigate('/'); // Редирект только если все поля заполнены
+					}
 				} else {
 					console.error('Ошибка:', response.statusText);
 				}
@@ -53,28 +53,18 @@ const TelegramWebApp = () => {
 				setLoading(false);
 			}
 		};
-
-		return () => {
-			document.body.removeChild(script);
-		};
-	}, [setToken]);
-
-	// Редирект при успешной загрузке
-	useEffect(() => {
-		if (!loading && token) {
-			navigate('/'); // Перенаправляем на главную страницу
-		}
-	}, [loading, token, navigate]);
+	}, [setToken, navigate]);
 
 	return (
-		<div>
+		<div className="loader">
 			{loading ? (
-				<div className="loader">
-					<span className="loading loading-spinner text-info"></span>
-					<span className="loading loading-spinner text-success"></span>
-					<span className="loading loading-spinner text-warning"></span>
-					<span className="loading loading-spinner text-error"></span>
+				<div
+					className="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+					<div
+						className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...
+					</div>
 				</div>
+
 			) : (
 				<div>Your token has been received.</div>
 			)}
