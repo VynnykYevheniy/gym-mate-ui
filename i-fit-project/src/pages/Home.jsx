@@ -2,6 +2,7 @@
 import {useEffect, useState} from 'react';
 import {useToken} from '../context/TokenContext.jsx';
 import User from "../model/User.js";
+import {USER} from "../model/ApiUrls.js";
 
 const Home = () => {
 	const [user, setUser] = useState(null);
@@ -9,7 +10,7 @@ const Home = () => {
 		useEffect(() => {
 			const fetchUserData = async () => {
 				try {
-					const response = await fetch('http://localhost:8080/api/user/current', {
+					const response = await fetch(USER.CURRENT, {
 						method: 'POST',
 						headers: {
 							'Authorization': `Bearer ${token.token.accessToken}`,

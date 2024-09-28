@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useToken} from '../context/TokenContext.jsx';
 import Token from "../model/Token";
+import {AUTH} from "../model/ApiUrls.js";
 
 const TelegramWebApp = () => {
 	const {setToken} = useToken();
@@ -26,7 +27,7 @@ const TelegramWebApp = () => {
 
 			setLoading(true);
 			try {
-				const response = await fetch('http://localhost:8080/api/auth/telegram', {
+				const response = await fetch(AUTH.TELEGRAM, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
