@@ -19,10 +19,10 @@ const TelegramWebApp = () => {
 			const TelegramWebApp = window.Telegram.WebApp;
 
 			const userData = {
-				id: TelegramWebApp.initDataUnsafe?.user?.id || 123,
-				username: TelegramWebApp.initDataUnsafe?.user?.username || 'Evyn1',
-				firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || 'Yvheniy',
-				lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || 'Vynnyk'
+				id: TelegramWebApp.initDataUnsafe?.user?.id || null,
+				username: TelegramWebApp.initDataUnsafe?.user?.username || '',
+				firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || '',
+				lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || ''
 			};
 
 			setLoading(true);
