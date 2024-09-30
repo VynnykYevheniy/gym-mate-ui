@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import EmailField from "../components/EmailField.jsx";
 
 export default function Register() {
 	return (
@@ -31,44 +32,7 @@ export default function Register() {
 							</div>
 						</div>
 
-						<div>
-							<label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-							<div className="relative mt-1 rounded-md shadow-sm">
-								<div className="absolute inset-y-0 left-0 flex items-center pl-3">
-									<svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-										 viewBox="0 0 24 24" strokeWidth={"1.5"} stroke="currentColor">
-										<path strokeLinecap="round" strokeLinejoin="round"
-											  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
-									</svg>
-								</div>
-								<input type="email" id="email" name="email"
-									   className="w-full rounded-md border-red-300 pl-10 pr-10 text-sm text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
-									   placeholder="john@example.com"/>
-								<div className="absolute inset-y-0 right-0 flex items-center pr-3">
-									<svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-										 viewBox="0 0 24 24" fill="currentColor">
-										<path fillRule="evenodd"
-											  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-											  clipRule="evenodd"/>
-									</svg>
-								</div>
-							</div>
-							<p className="mt-2 text-sm text-red-600">Your email must be valid email address.</p>
-						</div>
-
-						<fieldset>
-							<legend>User status</legend>
-
-							<input id="athlete" className="peer/draft" type="radio" name="status" defaultChecked/>
-							<label htmlFor="athlete" className="peer-checked/draft:text-sky-500">Athlete</label>
-
-							<input id="trainer" className="peer/published" type="radio" name="status"/>
-							<label htmlFor="trainer" className="peer-checked/published:text-sky-500">Trainer</label>
-
-							<div className="hidden peer-checked/draft:block">You can keep track of your workouts</div>
-							<div className="hidden peer-checked/published:block">You can edit student programs</div>
-						</fieldset>
-
+						<EmailField/>
 						<div>
 							<label htmlFor="password"
 								   className="block text-sm font-medium text-gray-700">Password</label>
@@ -98,7 +62,6 @@ export default function Register() {
 									</svg>
 								</div>
 								<input type="password" id="password_confirmation" name="password_confirmation"
-									   minLength="8"
 									   className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"
 									   placeholder="Minimum 8 characters"/>
 							</div>
@@ -112,7 +75,8 @@ export default function Register() {
 
 					<div className="mt-6 flex items-center justify-center">
 
-						<Link className="text-sm font-medium text-green-600 hover:text-green-500" to={"/login"}> Already
+						<Link to={"/signin"}
+							  className="text-sm font-medium text-green-600 hover:text-green-500"> Already
 							have an account?</Link>
 					</div>
 				</div>

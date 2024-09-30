@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {useToken} from '../context/TokenContext.jsx';
 import Token from "../model/Token";
 import ApiUrls from "../model/ApiUrls.js";
+import Loader from "./Loader.jsx";
 
 const TelegramWebApp = () => {
 	const {setToken} = useToken();
@@ -57,19 +58,7 @@ const TelegramWebApp = () => {
 	}, [setToken, navigate]);
 
 	return (
-		<div className="loader">
-			{loading ? (
-				<div
-					className="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-					<div
-						className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...
-					</div>
-				</div>
-
-			) : (
-				<div>Your token has been received.</div>
-			)}
-		</div>
+		<Loader loading={loading}/>
 	);
 };
 

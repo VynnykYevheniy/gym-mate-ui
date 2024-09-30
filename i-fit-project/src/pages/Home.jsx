@@ -4,10 +4,11 @@ import {useToken} from '../context/TokenContext.jsx';
 import User from "../model/User.js";
 import ApiUrls from "../model/ApiUrls.js";
 import TrainingList from "../components/TrainingList.jsx";
+import WelcomeComponent from "../components/WelcomeComponent.jsx";
 
 const Home = () => {
-	const [user, setUser] = useState(null);
-	const token = useToken();
+		const [user, setUser] = useState(null);
+		const token = useToken();
 		useEffect(() => {
 			const fetchUserData = async () => {
 				try {
@@ -31,8 +32,13 @@ const Home = () => {
 				}
 			};
 
-			fetchUserData();
+			if (token && token.token && token.token.accessToken) {
+				fetchUserData();
+			}
 		}, [token])
+		if (!token || !token.token || !token.token.accessToken) {
+			return <WelcomeComponent/>; // Отображаем компонент WelcomeComponent, если токена нет
+		}
 
 		return (
 			<>
@@ -49,7 +55,7 @@ const Home = () => {
 							 alt='Woman looking front'/>
 					</div>
 					<div className="text-center mt-2">
-						<h2 className="font-semibold"> {user ? (user.firstName + ' '+ user.lastName) : ('Name')}</h2>
+						<h2 className="font-semibold"> {user ? (user.firstName + ' ' + user.lastName) : ('Name')}</h2>
 						<p className="text-gray-500">Telegram: {user ? (user.login) : ('Login')}</p>
 					</div>
 					<ul className="py-4 mt-2 text-gray-700 flex items-center justify-around">
