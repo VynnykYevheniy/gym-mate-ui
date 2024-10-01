@@ -22,7 +22,7 @@ const TelegramWebApp = () => {
                 firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || '',
                 lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || ''
             };
-
+            console.log(userData)
             // Проверка: если данные пользователя пустые, показываем сообщение об ошибке
             if (!userData.id || !userData.username || !userData.firstName || !userData.lastName) {
                 setError("Не удалось получить данные пользователя с Telegram. Пожалуйста, попробуйте снова.");
