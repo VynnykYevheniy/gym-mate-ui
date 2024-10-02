@@ -1,9 +1,8 @@
 import {Link} from 'react-router-dom';
-import {useToken} from "../context/TokenContext.jsx";
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Header() {
-	const {token} = useToken();
+	const token = localStorage.getItem('token');
 
 	return (
 		<header className="flex items-center justify-between p-6 bg-white shadow">
@@ -14,7 +13,9 @@ export default function Header() {
         </span>
 			</Link>
 
-			{!token ? (
+			{token ? (
+				<HamburgerMenu/>
+			) : (
 				<nav>
 					<ul className="list-none flex space-x-2">
 						<li>
@@ -29,8 +30,6 @@ export default function Header() {
 						</li>
 					</ul>
 				</nav>
-			) : (
-				<HamburgerMenu/>
 			)}
 		</header>
 	);

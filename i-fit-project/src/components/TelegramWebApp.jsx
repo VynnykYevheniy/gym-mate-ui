@@ -3,10 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import Token from "../model/Token";
 import ApiUrls from "../model/ApiUrls.js";
 import Loader from "./Loader";
-import {useToken} from "../context/TokenContext.jsx";
 
 const TelegramWebApp = () => {
-    const {setToken} = useToken();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -18,11 +16,11 @@ const TelegramWebApp = () => {
 
             const userData = {
                 id: TelegramWebApp.initDataUnsafe?.user?.id || null,
-                username: TelegramWebApp.initDataUnsafe?.user?.username || '',
-                firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || '',
-                lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || ''
+                username: TelegramWebApp.initDataUnsafe?.user?.username || null,
+                firstName: TelegramWebApp.initDataUnsafe?.user?.first_name || null,
+                lastName: TelegramWebApp.initDataUnsafe?.user?.last_name || null
             };
-            console.log(userData)
+            // console.log(userData)
             // Проверка: если данные пользователя пустые, показываем сообщение об ошибке
             if (!userData.id || !userData.username || !userData.firstName || !userData.lastName) {
                 setError("Не удалось получить данные пользователя с Telegram. Пожалуйста, попробуйте снова.");
@@ -43,12 +41,11 @@ const TelegramWebApp = () => {
                     });
 
                     if (response.ok) {
-                        const data = await response.json();
-                        const token = new Token(data.accessToken, data.expiresIn, data.refreshToken, data.refreshExpiresIn);
-                        setToken(token);
-
+                        const token = await response.json();
                         // Редирект если токен корректно получен
                         if (token && token.accessToken && token.expiresIn && token.refreshToken && token.refreshExpiresIn) {
+                            // Сохраняем токены в localStorage
+                            localStorage.setItem('token', JSON.stringify(token));
                             navigate('/');
                         }
                     } else {

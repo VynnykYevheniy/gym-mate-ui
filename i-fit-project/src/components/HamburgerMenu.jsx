@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Link} from "react-router-dom";
 
 const HamburgerMenu = () => {
@@ -31,16 +31,16 @@ const HamburgerMenu = () => {
 				<div className="absolute right-0 w-48 bg-white shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/">Profile</Link>
+							<Link to="/profile">Profile</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/about">Training</Link>
+							<Link to="/training">Training</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/services">Calendar</Link>
+							<Link to="/calendar">Calendar</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-red-600">
-							<Link to="/contact">Log out</Link>
+							<Link to="/logout">Log out</Link>
 						</li>
 					</ul>
 				</div>
