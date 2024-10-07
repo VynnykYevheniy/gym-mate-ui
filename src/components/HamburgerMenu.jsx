@@ -1,11 +1,18 @@
-import {useState} from 'react';
-import {Link} from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { handleLogout } from '../service/AuthService.jsx';
 
 const HamburgerMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
+	};
+
+	const handleMenuItemClick = () => {
+		// Close the menu when a menu item is clicked
+		setIsOpen(false);
 	};
 
 	return (
@@ -18,29 +25,29 @@ const HamburgerMenu = () => {
 				role="button"
 				tabIndex={0}
 			>
- 				 <span
-					 className={`block w-6 h-1 bg-green-600 transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''} mb-1`}></span>
+				<span
+					className={`block w-6 h-1 bg-green-600 transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''} mb-1`}></span>
 				<span
 					className={`block w-6 h-1 bg-green-600 transition-opacity duration-100 ${isOpen ? 'opacity-0' : 'opacity-100'} mb-1`}></span>
 				<span
 					className={`block w-6 h-1 bg-green-600 transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
 			</button>
 
-
 			{isOpen && (
 				<div className="absolute right-0 w-48 bg-white shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/profile">Profile</Link>
+							<Link to="/profile" onClick={handleMenuItemClick}>Profile</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/training">Training</Link>
+							<Link to="/training" onClick={handleMenuItemClick}>Training</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/calendar">Calendar</Link>
+							<Link to="/calendar" onClick={handleMenuItemClick}>Calendar</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-red-600">
-							<Link to="/logout">Log out</Link>
+							{/* Use the imported handleLogout */}
+							<button onClick={() => handleLogout(navigate)}>Log out</button>
 						</li>
 					</ul>
 				</div>

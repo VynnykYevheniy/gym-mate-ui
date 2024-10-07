@@ -1,9 +1,32 @@
+import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import HamburgerMenu from './HamburgerMenu';
 
-export default function Header() {
-	const token = localStorage.getItem('token');
 
+export default function Header() {
+	const [token, setToken] = useState(localStorage.getItem('token'));
+
+	// Monitor token changes in localStorage (from other tabs/windows)
+	useEffect(() => {
+		const handleStorageChange = (event) => {
+			if (event.key === 'token') {
+				setToken(localStorage.getItem('token')); // Update token if it's changed in another tab
+			}
+		};
+
+		window.addEventListener('storage', handleStorageChange);
+
+		// Clean up the event listener
+		return () => {
+			window.removeEventListener('storage', handleStorageChange);
+		};
+	}, []);
+
+	// Update token state when it changes directly in this tab (after login/logout)
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		setToken(token); // Update token state when it changes
+	}, [localStorage.getItem('token')]); // Dependency on the token stored in localStorage
 	return (
 		<header className="flex items-center justify-between p-6 bg-white shadow">
 			<Link to="/" className="flex items-center gap-2">

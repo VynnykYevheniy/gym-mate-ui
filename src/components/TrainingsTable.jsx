@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
+import axiosInstance from '../api/axiosConfig'; // Импортируем настроенный экземпляр Axios
 import ApiUrls from "../model/ApiUrls.js";
 import TrainingFormModal from "./TrainingFormModal"; // Импортируем модальное окно
 
@@ -6,31 +7,25 @@ const TrainingsTable = () => {
 	const [trainings, setTrainings] = useState([]);
 	const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для открытия модального окна
 	const [selectedTrainingRecord, setSelectedTrainingRecord] = useState(null); // Данные для выбранной тренировки
-	const token = JSON.parse(localStorage.getItem("token"));
-	const headers = {
-		'Authorization': 'Bearer ' + token.accessToken,
-		'Content-Type': 'application/json'
-	};
 
 	useEffect(() => {
-		// Загружаем тренировки с API
-		fetch(ApiUrls.TRAINING_DAY.ALL, {
-			method: 'GET',
-			headers: headers,
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
-				}
-				return response.json();
-			})
-			.then(data => {
-				setTrainings(data);
-			})
-			.catch(error => {
+		const fetchTrainings = async () => {
+			try {
+				const response = await axiosInstance.get(ApiUrls.TRAINING_DAY.ALL);
+				setTrainings(response.data);
+			} catch (error) {
 				console.error('Error fetching trainings:', error);
-			});
+			}
+		};
+
+		fetchTrainings();
 	}, []);
+
+	// Функция для форматирования даты в виде День недели: дата
+	const formatDate = (dateString) => {
+		const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+		return new Date(dateString).toLocaleDateString('ru-RU', options); // Форматируем по-русски
+	};
 
 	const handleCardClick = (trainingRecord) => {
 		setSelectedTrainingRecord(trainingRecord); // Устанавливаем выбранную тренировку
@@ -53,7 +48,7 @@ const TrainingsTable = () => {
 						onClick={() => handleCardClick(trainingRecord)} // Обработчик клика по карточке
 					>
 						<h3 className="text-lg font-bold mb-2">
-							Date: {new Date(trainingRecord.date).toLocaleDateString()}
+							{formatDate(trainingRecord.date)} {/* Форматированная дата */}
 						</h3>
 						{trainingRecord.trainings.map((training, index) => (
 							<div key={`${trainingRecord.id}-${index}`} className="border-t pt-2">

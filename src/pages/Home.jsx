@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
-import ApiUrls from "../model/ApiUrls.js";
 import WelcomeComponent from "../components/WelcomeComponent.jsx";
 import HeightSwg from "../assets/height.svg"
 import WeightSwg from "../assets/weight.svg"
 import AgeSwg from "../assets/age.svg"
+import {currentUser} from "../service/UserService.jsx";
 
 export default function Home() {
 	const [user, setUser] = useState(null);
@@ -11,20 +11,8 @@ export default function Home() {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
-				const response = await fetch(ApiUrls.USER.CURRENT, {
-					method: 'POST',
-					headers: {
-						'Authorization': `Bearer ${token.accessToken}`,
-						'Content-Type': 'application/json',
-					}
-				});
-
-				if (response.ok) {
-					const user = await response.json();
-					setUser(user);
-				} else {
-					console.error('Ошибка:', response.statusText);
-				}
+				const user = await currentUser();
+				setUser(user);
 			} catch (error) {
 				console.error('Ошибка:', error);
 			}
@@ -32,10 +20,11 @@ export default function Home() {
 
 		if (token?.accessToken) {
 			fetchUserData();
-		} else {
-			return <WelcomeComponent/>; // Отображаем компонент WelcomeComponent, если токена нет
 		}
 	}, [token])
+	if (!token?.accessToken) {
+		return <WelcomeComponent/>;
+	}
 	return (
 		<>
 			<div
