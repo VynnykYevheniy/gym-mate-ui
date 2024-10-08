@@ -20,10 +20,10 @@ export const handleLogout = (navigate) => {
 
 // Function for user login
 export const loginRequest = async (login, password, navigate) => {
-	const requestBody = { login, password };
+	const requestBody = {login, password};
+	let response = null;
 	try {
-		const response = await axiosInstance.post(ApiUrls.AUTH.SIGN_IN, requestBody);
-		return handleToken(response.data, navigate);
+		response = await axiosInstance.post(ApiUrls.AUTH.SIGN_IN, requestBody);
 	} catch (error) {
 		// Проверяем, есть ли у ошибки ответ и ожидаемая структура
 		if (error.response) {
@@ -33,9 +33,10 @@ export const loginRequest = async (login, password, navigate) => {
 			throw new Error(`Неудача входа: ${message} (статус: ${status})`);
 		} else {
 			// Если ответа нет, возвращаем общее сообщение об ошибке
-			throw new Error('Неудача входа: ' + error.message);
+			throw new Error('Неудача входа: ' + error);
 		}
 	}
+	return handleToken(response.data, navigate);
 };
 
 // Function for Telegram authentication
@@ -49,7 +50,7 @@ export const authenticateTelegramUser = async (userData, navigate) => {
 };
 
 export const registerRequest = async (login, email, password) => {
-	const requestBody = { login, email, password };
+	const requestBody = {login, email, password};
 	try {
 		const response = await axiosInstance.post(ApiUrls.AUTH.SIGN_UP, requestBody);
 		return response.data; // Return response data on success
