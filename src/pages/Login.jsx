@@ -23,6 +23,8 @@ export default function Login() {
 		setLoading(true);
 
 		try {
+			setError("login:" + login);
+			setError("password:" + password);
 			const token = await loginRequest(login, password, navigate);
 			if (!token) {
 				setError(t('invalidCredentials') + error); // Используйте перевод для ошибки

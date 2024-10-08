@@ -25,7 +25,16 @@ export const loginRequest = async (login, password, navigate) => {
 		const response = await axiosInstance.post(ApiUrls.AUTH.SIGN_IN, requestBody);
 		return handleToken(response.data, navigate);
 	} catch (error) {
-		throw new Error('Login failed: ' + error.message);
+		// Проверяем, есть ли у ошибки ответ и ожидаемая структура
+		if (error.response) {
+			// Получаем статус и сообщение из ответа ошибки
+			const status = error.response.status;
+			const message = error.response.data?.message || 'Произошла ошибка при входе';
+			throw new Error(`Неудача входа: ${message} (статус: ${status})`);
+		} else {
+			// Если ответа нет, возвращаем общее сообщение об ошибке
+			throw new Error('Неудача входа: ' + error.message);
+		}
 	}
 };
 
