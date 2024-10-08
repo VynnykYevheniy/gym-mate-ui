@@ -1,34 +1,45 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Header() {
-	const [token, setToken] = useState(localStorage.getItem('token'));
-	const { t, i18n } = useTranslation(); // Импортируйте i18n для смены языка
+	const [token, setToken] = useState(localStorage.getItem('token')); // Инициализируем состояние токена
+	const { t, i18n } = useTranslation();
 
-	// Monitor token changes in localStorage (from other tabs/windows)
 	useEffect(() => {
-		const handleStorageChange = (event) => {
-			if (event.key === 'token') {
-				setToken(localStorage.getItem('token')); // Update token if it's changed in another tab
+		const handleTokenChange = () => {
+			setToken(localStorage.getItem('token')); // Обновляем состояние токена при изменении или удалении
+		};
+
+		// Перехватываем изменения токена в localStorage, даже если это происходит в другой вкладке
+		window.addEventListener('storage', handleTokenChange);
+
+		// Переопределяем localStorage.setItem, чтобы сразу подхватывать изменения токена в текущей вкладке
+		const originalSetItem = localStorage.setItem;
+		localStorage.setItem = function (key, value) {
+			originalSetItem.apply(this, arguments);
+			if (key === 'token') {
+				handleTokenChange(); // Обновляем токен после логина/разлогина
 			}
 		};
 
-		window.addEventListener('storage', handleStorageChange);
+		// Переопределяем localStorage.removeItem для отслеживания удаления токена
+		const originalRemoveItem = localStorage.removeItem;
+		localStorage.removeItem = function (key) {
+			originalRemoveItem.apply(this, arguments);
+			if (key === 'token') {
+				handleTokenChange(); // Обновляем токен после его удаления
+			}
+		};
 
-		// Clean up the event listener
+		// Убираем обработчики при размонтировании компонента
 		return () => {
-			window.removeEventListener('storage', handleStorageChange);
+			window.removeEventListener('storage', handleTokenChange);
+			localStorage.setItem = originalSetItem; // Восстанавливаем оригинальный setItem
+			localStorage.removeItem = originalRemoveItem; // Восстанавливаем оригинальный removeItem
 		};
 	}, []);
-
-	// Update token state when it changes directly in this tab (after login/logout)
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		setToken(token); // Update token state when it changes
-	}, [localStorage.getItem('token')]); // Dependency on the token stored in localStorage
-
 	// Функция для смены языка
 	const changeLanguage = (lng) => {
 		i18n.changeLanguage(lng);
@@ -55,7 +66,7 @@ export default function Header() {
 			</div>
 
 			{token ? (
-				<HamburgerMenu />
+				<HamburgerMenu/>
 			) : (
 				<nav>
 					<ul className="list-none flex space-x-2">

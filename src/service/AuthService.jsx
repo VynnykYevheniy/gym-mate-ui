@@ -10,14 +10,6 @@ export const handleToken = (token, navigate) => {
 	return null; // Return null if token is invalid
 };
 
-// Function to log out the user
-export const handleLogout = (navigate) => {
-	// Remove the token from localStorage
-	localStorage.removeItem('token');
-	// Redirect to the sign-in page
-	navigate('/signin');
-};
-
 // Function for user login
 export const loginRequest = async (login, password, navigate) => {
 	const requestBody = {login, password};
@@ -57,4 +49,13 @@ export const registerRequest = async (login, email, password) => {
 	} catch (error) {
 		throw new Error('Registration failed: ' + error.message);
 	}
+};
+
+
+// Function to log out the user
+export const handleLogout = (navigate) => {
+	// Remove the token from localStorage
+	localStorage.removeItem('token');
+	// Redirect to the sign-in page
+	navigate('/signin');
 };

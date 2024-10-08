@@ -18,7 +18,7 @@ export default function Home() {
 			}
 		};
 
-		if (token?.accessToken) {
+		if (!user && token?.accessToken) {
 			fetchUserData();
 		}
 	}, [token])

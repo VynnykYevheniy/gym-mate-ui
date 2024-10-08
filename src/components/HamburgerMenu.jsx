@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { handleLogout } from '../service/AuthService.jsx';
+import {useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
+import {handleLogout} from '../service/AuthService.jsx';
 
 const HamburgerMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,11 @@ const HamburgerMenu = () => {
 	const handleMenuItemClick = () => {
 		// Close the menu when a menu item is clicked
 		setIsOpen(false);
+	};
+
+	const handleLogoutClick = () => {
+		handleLogout(navigate); // Выполняем логаут
+		handleMenuItemClick();  // Закрываем меню
 	};
 
 	return (
@@ -46,8 +51,8 @@ const HamburgerMenu = () => {
 							<Link to="/calendar" onClick={handleMenuItemClick}>Calendar</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-red-600">
-							{/* Use the imported handleLogout */}
-							<button onClick={() => handleLogout(navigate)}>Log out</button>
+							{/* Закрываем меню и выполняем логаут */}
+							<button onClick={handleLogoutClick}>Log out</button>
 						</li>
 					</ul>
 				</div>
