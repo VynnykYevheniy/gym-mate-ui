@@ -25,10 +25,10 @@ export default function Login() {
 		try {
 			const token = await loginRequest(login, password, navigate);
 			if (!token) {
-				setError(t('invalid_credentials')); // Используйте перевод для ошибки
+				setError(t('invalidCredentials') + error); // Используйте перевод для ошибки
 			}
 		} catch (error) {
-			setError(t('invalid_credentials')); // Используйте перевод для ошибки
+			setError(t('invalidCredentials') + error); // Используйте перевод для ошибки
 			console.error(error);
 		} finally {
 			setLoading(false);

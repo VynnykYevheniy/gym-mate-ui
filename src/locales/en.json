@@ -8,7 +8,7 @@
 	"login": "Login",
 	"password": "Password",
 	"welcomeBack": "Welcome back!",
-	"invalidCredentials": "Invalid credentials, please try again.",
+	"invalidCredentials": "Invalid credentials, please try again.\n",
 	"rememberMe": "Remember me",
 	"forgotPassword": "Forgot your password?",
 	"signIn": "Sign in"
