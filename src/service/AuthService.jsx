@@ -38,3 +38,13 @@ export const authenticateTelegramUser = async (userData, navigate) => {
 		throw new Error('Telegram authentication failed: ' + error.message);
 	}
 };
+
+export const registerRequest = async (login, email, password) => {
+	const requestBody = { login, email, password };
+	try {
+		const response = await axiosInstance.post(ApiUrls.AUTH.SIGN_UP, requestBody);
+		return response.data; // Return response data on success
+	} catch (error) {
+		throw new Error('Registration failed: ' + error.message);
+	}
+};

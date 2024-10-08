@@ -1,0 +1,31 @@
+{
+  "welcome": {
+	"message": "Welcome to {{appName}}!",
+	"description": "{{appName}} is a gym workout tracking app. Manage your workouts, track progress, and achieve your fitness goals with ease.",
+	"getStarted": "Get Started"
+  },
+  "auth": {
+	"login": "Login",
+	"password": "Password",
+	"welcomeBack": "Welcome back!",
+	"invalidCredentials": "Invalid credentials, please try again.",
+	"rememberMe": "Remember me",
+	"forgotPassword": "Forgot your password?",
+	"signIn": "Sign in"
+  },
+  "header": {
+	"signIn": "Sign In",
+	"signUp": "Sign Up",
+	"language": "Language"
+  },
+  "register": {
+	"createAccount": "Create your account",
+	"login": "Login",
+	"password": "Password",
+	"passwordPlaceholder": "Minimum 8 characters",
+	"confirmPassword": "Confirm Password",
+	"passwordMismatch": "Passwords do not match!",
+	"signUp": "Sign Up",
+	"alreadyHaveAccount": "Already have an account?"
+  }
+}

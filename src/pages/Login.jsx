@@ -6,8 +6,10 @@ import LoginSvg from '../assets/login.svg';
 import PasswordSvg from '../assets/password.svg';
 import ErrorSvg from '../assets/error.svg';
 import {loginRequest} from "../service/AuthService.jsx";
+import {useTranslation} from 'react-i18next'; // Импортируйте хук useTranslation
 
 export default function Login() {
+	const {t} = useTranslation(); // Используйте хук для получения функции перевода
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
@@ -23,10 +25,10 @@ export default function Login() {
 		try {
 			const token = await loginRequest(login, password, navigate);
 			if (!token) {
-				setError('Invalid credentials, please try again.');
+				setError(t('invalid_credentials')); // Используйте перевод для ошибки
 			}
 		} catch (error) {
-			setError('Invalid credentials, please try again.');
+			setError(t('invalid_credentials')); // Используйте перевод для ошибки
 			console.error(error);
 		} finally {
 			setLoading(false);
@@ -50,14 +52,15 @@ export default function Login() {
 				<main className="flex flex-col justify-center p-6 pb-12">
 					<div className="mx-auto max-w-md">
 						<img src={WelcomeBackSvg} alt="Welcome Back" className="mx-auto h-12 text-green-600"/>
-						<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">Welcome back!</h2>
+						<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">{t('auth.welcomeBack')}</h2>
 					</div>
 					<div
 						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 						{renderError()}
 						<form onSubmit={handleSubmit} autoComplete="off" className="mt-6 space-y-6">
 							<div>
-								<label htmlFor="login" className="block text-md font-medium text-gray-700">Login</label>
+								<label htmlFor="login"
+									   className="block text-md font-medium text-gray-700">{t('auth.login')}</label>
 								<div className="relative mt-1 rounded-md shadow-sm">
 									<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 										<img src={LoginSvg} alt="Login Icon" className="h-5 w-5 text-gray-400"/>
@@ -67,7 +70,7 @@ export default function Login() {
 										id="login"
 										name="login"
 										className="w-full rounded-md border-gray-200 pl-10 text-md focus:border-green-500 focus:ring-green-500"
-										placeholder="Login"
+										placeholder={t('auth.login')}
 										value={login}
 										onChange={handleInputChange(setLogin)}
 									/>
@@ -76,7 +79,7 @@ export default function Login() {
 
 							<div>
 								<label htmlFor="password"
-									   className="block text-md font-medium text-gray-700">Password</label>
+									   className="block text-md font-medium text-gray-700">{t('auth.password')}</label>
 								<div className="relative mt-1 rounded-md shadow-sm">
 									<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 										<img src={PasswordSvg} alt="Password Icon" className="h-5 w-5 text-gray-400"/>
@@ -86,7 +89,7 @@ export default function Login() {
 										id="password"
 										name="password"
 										className="w-full rounded-md border-gray-200 pl-10 text-md focus:border-green-500 focus:ring-green-500"
-										placeholder="Password"
+										placeholder={t('auth.password')}
 										value={password}
 										onChange={handleInputChange(setPassword)}
 									/>
@@ -101,11 +104,13 @@ export default function Login() {
 										name="remember"
 										className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
 									/>
-									<label htmlFor="remember" className="text-sm text-gray-900">Remember me</label>
+									<label htmlFor="remember"
+										   className="text-sm text-gray-900">{t('auth.rememberMe')}</label>
 								</div>
 								<a href="forgot-password.html"
-								   className="text-sm font-medium text-green-500 hover:text-green-600 underline">Forgot
-									your password?</a>
+								   className="text-sm font-medium text-green-500 hover:text-green-600 underline">
+									{t('auth.forgotPassword')}
+								</a>
 							</div>
 
 							<div>
@@ -113,7 +118,7 @@ export default function Login() {
 									type="submit"
 									className="w-full rounded-md border border-transparent bg-green-600 px-4 py-2 text-white font-medium shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 								>
-									Sign in
+									{t('auth.signIn')}
 								</button>
 							</div>
 						</form>

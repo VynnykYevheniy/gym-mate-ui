@@ -21,9 +21,6 @@ const EmailField = () => {
 				Email (optional)
 			</label>
 			<div className="relative mt-1 rounded-md shadow-sm">
-				<div className="absolute inset-y-0 left-0 flex items-center pl-3">
-					<img src={ErrorSvg} className="h-5 w-5 text-gray-400"/>
-				</div>
 				<input
 					type="email"
 					id="email"
@@ -34,7 +31,9 @@ const EmailField = () => {
 					placeholder="arnold@schwarzenegger.com (optional)"
 				/>
 				<div className="absolute inset-y-0 right-0 flex items-center pr-3">
-					<img src={ErrorSvg} className="{error ? text-red-500 : text-gray-400} h-5 w-5"/>
+					{error && (
+						<img src={ErrorSvg} className="text-red-500 h-5 w-5" alt="Error icon"/>
+					)}
 				</div>
 			</div>
 			{error && <p className="mt-2 text-sm text-red-600">{error}</p>}

@@ -6,10 +6,7 @@ import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../s
 const TrainingFormModal = ({isOpen, onClose, initialData}) => {
 	const [date, setDate] = useState(dayjs().format('YYYY-MM-DDTHH:mm'));
 	const [muscleGroups, setMuscleGroups] = useState([]);
-	const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null);
 	const [exercises, setExercises] = useState([]);
-	const [selectedExercise, setSelectedExercise] = useState(null);
-	const [sets, setSets] = useState(0);
 	const [trainingDetails, setTrainingDetails] = useState([]);
 
 	useEffect(() => {
@@ -27,186 +24,214 @@ const TrainingFormModal = ({isOpen, onClose, initialData}) => {
 	useEffect(() => {
 		if (isOpen && initialData) {
 			setDate(dayjs(initialData.date).format('YYYY-MM-DDTHH:mm'));
-			setSelectedMuscleGroup(initialData.muscleGroup || null);
-			setSelectedExercise(initialData.exercise || null);
-			setSets(initialData.trainingDetails?.length || 0);
-			setTrainingDetails(initialData.trainingDetails || []);
+			setTrainingDetails(initialData.trainings.map(training => ({
+				muscleGroupId: training.exercise.muscleGroup.id,
+				exerciseId: training.exercise.id,
+				sets: training.trainingDetails.length,
+				trainingDetails: training.trainingDetails
+			})));
 		} else {
 			resetForm();
 		}
 	}, [isOpen, initialData]);
 
 	const resetForm = () => {
-		setSelectedMuscleGroup(null);
-		setSelectedExercise(null);
-		setSets(0);
 		setTrainingDetails([]);
 	};
 
-	const handleMuscleGroupChange = async (muscleGroupId) => {
-		setSelectedMuscleGroup(muscleGroupId);
+	const handleAdd = () => {
+		setTrainingDetails((prevDetails) => [
+			...prevDetails,
+			{
+				muscleGroupId: null,
+				exerciseId: null,
+				sets: 0,
+				trainingDetails: [],
+			},
+		]);
+	};
+
+	const handleMuscleGroupChange = async (index, muscleGroupId) => {
+		const updatedDetails = [...trainingDetails];
+		updatedDetails[index].muscleGroupId = muscleGroupId;
+
 		try {
 			const data = await fetchExercisesByMuscleGroup(muscleGroupId);
-			setExercises(data);
-			setSelectedExercise(null);
-			setSets(0);
-			setTrainingDetails([]);
+			updatedDetails[index].exercises = data;
+			updatedDetails[index].exerciseId = null;
+			updatedDetails[index].trainingDetails = [];
+			updatedDetails[index].sets = 0;
+			setTrainingDetails(updatedDetails);
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
-	const handleExerciseChange = (exerciseId) => {
-		const exercise = exercises.find((ex) => ex.id === parseInt(exerciseId));
-		setSelectedExercise(exercise);
-		setSets(0);
-		setTrainingDetails([]);
+	const handleExerciseChange = (index, exerciseId) => {
+		const updatedDetails = [...trainingDetails];
+		updatedDetails[index].exerciseId = exerciseId;
+		updatedDetails[index].trainingDetails = [];
+		updatedDetails[index].sets = 0;
+		setTrainingDetails(updatedDetails);
 	};
 
-	const handleSetsChange = (setsCount) => {
-		setSets(setsCount);
+	const handleSetsChange = (index, setsCount) => {
+		const updatedDetails = [...trainingDetails];
+		updatedDetails[index].sets = setsCount;
 		const details = Array.from({length: setsCount}, (_, i) => ({
 			set: i + 1,
 			weight: 0,
-			repetition: 0
+			repetition: 0,
 		}));
-		setTrainingDetails(details);
+		updatedDetails[index].trainingDetails = details;
+		setTrainingDetails(updatedDetails);
 	};
 
-	const handleTrainingDetailChange = (detailIndex, field, value) => {
+	const handleTrainingDetailChange = (trainingIndex, detailIndex, field, value) => {
 		const updatedDetails = [...trainingDetails];
-		updatedDetails[detailIndex][field] = parseInt(value);
+		updatedDetails[trainingIndex].trainingDetails[detailIndex][field] = parseInt(value);
 		setTrainingDetails(updatedDetails);
 	};
 
 	const handleSave = async () => {
 		const payload = {
 			date: date,
-			trainings: [
-				{
-					exercise: {
-						id: selectedExercise?.id,
-						name: selectedExercise?.name,
-						description: selectedExercise?.description,
-						muscleGroup: {
-							id: selectedMuscleGroup,
-							name: muscleGroups.find(group => group.id === selectedMuscleGroup)?.name
-						}
-					},
-					trainingDetails: trainingDetails
-				}
-			]
+			trainings: trainingDetails.map(detail => ({
+				exercise: {
+					id: detail.exerciseId,
+					muscleGroup: {id: detail.muscleGroupId},
+				},
+				trainingDetails: detail.trainingDetails,
+			})),
 		};
 
 		try {
-			const data = await saveTraining(payload, initialData);
-			console.log('Save successful:', data);
+			await saveTraining(payload);
+			alert('Training record saved successfully!');
 			onClose();
-		} catch (err) {
-			console.error(err);
+		} catch (error) {
+			console.error('Error saving training:', error);
+			alert('Error saving training record.');
 		}
 	};
 
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-			<div className="bg-white rounded-lg p-6 w-2/4 max-h-screen overflow-y-auto">
-				<h2 className="text-2xl mb-4">Record Training</h2>
+		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+			<div className="bg-white rounded-lg p-6 w-11/12 sm:w-1/3 max-h-screen overflow-y-auto">
+				<h2 className="text-2xl font-bold mb-4">{initialData ? 'Edit Training' : 'Add Training'}</h2>
 
-				<label className="block mb-4">
-					<span className="text-gray-700">Date</span>
+				{/* Контейнер с прокруткой */}
+				<div className="mb-4">
+					<label htmlFor="date" className="block mb-1">Date</label>
 					<input
-						type="datetime-local" // Изменено на datetime-local
-						className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+						type="datetime-local"
+						id="date"
 						value={date}
 						onChange={(e) => setDate(e.target.value)}
+						className="w-full p-2 border border-gray-300 rounded"
 					/>
-				</label>
+				</div>
 
-				<label className="block mb-4">
-					<span className="text-gray-700">Muscle Group</span>
-					<select
-						className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-						onChange={(e) => handleMuscleGroupChange(e.target.value)}
-						value={selectedMuscleGroup || ''}
-					>
-						<option value="">Select Muscle Group</option>
-						{muscleGroups.map((group) => (
-							<option key={group.id} value={group.id}>
-								{group.name}
-							</option>
-						))}
-					</select>
-				</label>
+				<div className="overflow-y-auto max-h-80"> {/* Ограничение высоты и прокрутка */}
+					{trainingDetails.map((detail, index) => (
+						<div key={index} className="mb-4 border border-gray-300 rounded-lg p-4 shadow-md">
+							<h3 className="text-lg font-semibold mb-2">Exercise {index + 1}</h3>
 
-				{selectedMuscleGroup && (
-					<label className="block mb-4">
-						<span className="text-gray-700">Exercise</span>
-						<select
-							className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-							onChange={(e) => handleExerciseChange(e.target.value)}
-							value={selectedExercise?.id || ''}
-						>
-							<option value="">Select Exercise</option>
-							{exercises.map((exercise) => (
-								<option key={exercise.id} value={exercise.id}>
-									{exercise.name}
-								</option>
-							))}
-						</select>
-					</label>
-				)}
+							<div className="mb-4">
+								<label htmlFor={`muscleGroup-${index}`} className="block mb-1">Muscle Group</label>
+								<select
+									id={`muscleGroup-${index}`}
+									value={detail.muscleGroupId || ''}
+									onChange={(e) => handleMuscleGroupChange(index, e.target.value)}
+									className="w-full p-2 border border-gray-300 rounded"
+								>
+									<option value="">Select a muscle group</option>
+									{muscleGroups.map((group) => (
+										<option key={group.id} value={group.id}>
+											{group.name}
+										</option>
+									))}
+								</select>
+							</div>
 
-				{selectedExercise && (
-					<label className="block mb-4">
-						<span className="text-gray-700">Sets</span>
-						<input
-							type="number"
-							className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-							placeholder="Number of Sets"
-							min="1"
-							value={sets || ''}
-							onChange={(e) => handleSetsChange(e.target.value)}
-						/>
-					</label>
-				)}
+							<div className="mb-4">
+								<label htmlFor={`exercise-${index}`} className="block mb-1">Exercise</label>
+								<select
+									id={`exercise-${index}`}
+									value={detail.exerciseId || ''}
+									onChange={(e) => handleExerciseChange(index, e.target.value)}
+									className="w-full p-2 border border-gray-300 rounded"
+									disabled={!detail.muscleGroupId}
+								>
+									<option value="">Select an exercise</option>
+									{detail.exercises?.map((exercise) => (
+										<option key={exercise.id} value={exercise.id}>
+											{exercise.name}
+										</option>
+									))}
+								</select>
+							</div>
 
-				{sets > 0 && (
-					<>
-						{trainingDetails.map((detail, index) => (
-							<div key={index} className="mb-2">
-								<div className="flex items-center">
-									<span>{index + 1}.</span>
+							<div className="mb-4">
+								<label htmlFor={`sets-${index}`} className="block mb-1">Sets</label>
+								<input
+									type="number"
+									id={`sets-${index}`}
+									min="1"
+									value={detail.sets}
+									onChange={(e) => handleSetsChange(index, e.target.value)}
+									className="w-full p-2 border border-gray-300 rounded"
+								/>
+							</div>
+
+							{detail.trainingDetails.map((setDetail, setIndex) => (
+								<div key={setIndex} className="mb-2 flex items-center">
+									<span>{setIndex + 1}.</span>
 									<input
 										type="number"
-										className="border border-gray-300 rounded-md p-2 w-20 m-2"
+										className="w-full border border-gray-300 rounded-md p-2 m-2"
 										placeholder="Weight"
-										value={detail.weight}
-										onChange={(e) => handleTrainingDetailChange(index, 'weight', e.target.value)}
+										value={setDetail.weight}
+										onChange={(e) => handleTrainingDetailChange(index, setIndex, 'weight', e.target.value)}
 									/>
 									<span>kg</span>
 									<input
 										type="number"
-										className="border border-gray-300 rounded-md p-2 w-20 m-2"
+										className="w-full border border-gray-300 rounded-md p-2 m-2"
 										placeholder="Repetitions"
-										value={detail.repetition}
-										onChange={(e) => handleTrainingDetailChange(index, 'repetition', e.target.value)}
+										value={setDetail.repetition}
+										onChange={(e) => handleTrainingDetailChange(index, setIndex, 'repetition', e.target.value)}
 									/>
 									<span>reps</span>
 								</div>
-							</div>
-						))}
-					</>
-				)}
+							))}
+						</div>
+					))}
+				</div>
 
-				<div className="flex justify-end mt-4">
-					<button onClick={handleSave} className="bg-green-500 text-white rounded-lg px-4 py-2 mr-2">
-						Save
+				<div className="flex justify-between items-center">
+					<button
+						onClick={handleAdd}
+						className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded hover:bg-blue-600"
+					>
+						<span className="text-2xl">+</span>
 					</button>
-					<button onClick={onClose} className="bg-red-500 text-white rounded-lg px-4 py-2">
-						Cancel
-					</button>
+					<div className="flex">
+						<button
+							onClick={handleSave}
+							className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+						>
+							Save
+						</button>
+						<button
+							onClick={onClose}
+							className="ml-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+						>
+							Cancel
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -216,18 +241,11 @@ const TrainingFormModal = ({isOpen, onClose, initialData}) => {
 TrainingFormModal.propTypes = {
 	isOpen: PropTypes.bool.isRequired,
 	onClose: PropTypes.func.isRequired,
-	initialData: PropTypes.shape({
-		date: PropTypes.string.isRequired,
-		muscleGroup: PropTypes.string,
-		exercise: PropTypes.object,
-		trainingDetails: PropTypes.arrayOf(
-			PropTypes.shape({
-				set: PropTypes.number.isRequired,
-				weight: PropTypes.number.isRequired,
-				repetition: PropTypes.number.isRequired
-			})
-		)
-	})
+	initialData: PropTypes.object,
+};
+
+TrainingFormModal.defaultProps = {
+	initialData: null,
 };
 
 export default TrainingFormModal;

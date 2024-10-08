@@ -1,7 +1,36 @@
-import {Link} from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import EmailField from "../components/EmailField.jsx";
+import { registerRequest } from "../service/AuthService.jsx";
+import { useTranslation } from 'react-i18next'; // Импортируйте хук useTranslation
 
 export default function Register() {
+	const { t } = useTranslation(); // Используйте хук для получения функции перевода
+	const [login, setLogin] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [passwordConfirmation, setPasswordConfirmation] = useState('');
+	const [error, setError] = useState('');
+	const navigate = useNavigate();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setError(''); // Reset error message
+		if (password !== passwordConfirmation) {
+			setError(t('register.passwordMismatch')); // Use localization
+			return;
+		}
+
+		try {
+			const response = await registerRequest(login, email, password);
+			// Handle success (e.g., navigate to the login page or show a success message)
+			console.log('Registration successful:', response);
+			navigate('/signin'); // Redirect to sign-in page after successful registration
+		} catch (err) {
+			setError(err.message); // Set error message
+		}
+	};
+
 	return (
 		<>
 			<main className="flex flex-col justify-center p-6 pb-12">
@@ -11,13 +40,13 @@ export default function Register() {
 						<path strokeLinecap="round" strokeLinejoin="round"
 							  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
 					</svg>
-					<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">Create your account</h2>
+					<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">{t('register.createAccount')}</h2>
 				</div>
 				<div
 					className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
-					<form action="#" autoComplete="off" className="space-y-6">
+					<form onSubmit={handleSubmit} autoComplete="off" className="space-y-6">
 						<div>
-							<label htmlFor="login" className="block text-sm font-medium text-gray-700">Login</label>
+							<label htmlFor="login" className="block text-sm font-medium text-gray-700">{t('register.login')}</label>
 							<div className="relative mt-1 rounded-md shadow-sm">
 								<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 									<svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -27,15 +56,18 @@ export default function Register() {
 									</svg>
 								</div>
 								<input type="text" id="login" name="login" required
+									   value={login}
+									   onChange={(e) => setLogin(e.target.value)}
 									   className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"
-									   placeholder="Login"/>
+									   placeholder={t('register.login')}/>
 							</div>
 						</div>
 
-						<EmailField/>
+						<EmailField value={email} onChange={(e) => setEmail(e.target.value)}/>
+
 						<div>
 							<label htmlFor="password"
-								   className="block text-sm font-medium text-gray-700">Password</label>
+								   className="block text-sm font-medium text-gray-700">{t('register.password')}</label>
 							<div className="relative mt-1 rounded-md shadow-sm">
 								<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 									<svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -44,15 +76,16 @@ export default function Register() {
 											  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
 									</svg>
 								</div>
-								<input type="password" id="password" name="password" minLength="8"
+								<input type="password" id="password" name="password" minLength="8" required
+									   value={password}
+									   onChange={(e) => setPassword(e.target.value)}
 									   className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"
-									   placeholder="Minimum 8 characters"/>
+									   placeholder={t('register.passwordPlaceholder')}/>
 							</div>
 						</div>
 
 						<div>
-							<label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">Confirm
-								Password</label>
+							<label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">{t('register.confirmPassword')}</label>
 							<div className="relative mt-1 rounded-md shadow-sm">
 								<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 									<svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -61,26 +94,29 @@ export default function Register() {
 											  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
 									</svg>
 								</div>
-								<input type="password" id="password_confirmation" name="password_confirmation"
-									   className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"
-									   placeholder="Minimum 8 characters"/>
+								<input type="password" id="password_confirmation" name="password_confirmation" required
+									   value={passwordConfirmation}
+									   onChange={(e) => setPasswordConfirmation(e.target.value)}
+									   className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"/>
 							</div>
 						</div>
+
+						{error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+
 						<div>
-							<a href="verify-email.html"
-							   className="flex items-center justify-center rounded-md bg-green-600 py-2 px-4 font-semibold text-white shadow-lg transition duration-150 ease-in-out hover:bg-green-700 hover:shadow-xl focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Sign
-								Up</a>
+							<button
+								type="submit"
+								className="block w-full rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+								{t('register.signUp')} {/* Use localization */}
+							</button>
 						</div>
 					</form>
-
-					<div className="mt-6 flex items-center justify-center">
-
-						<Link to={"/signin"}
-							  className="text-sm font-medium text-green-600 hover:text-green-500"> Already
-							have an account?</Link>
+					<div className="mt-6 text-center">
+						<p className="text-sm text-gray-600">{t('register.alreadyHaveAccount')} <Link
+							to="/signin" className="font-semibold text-green-600 hover:text-green-500">{t('header.signIn')}</Link></p>
 					</div>
 				</div>
 			</main>
 		</>
-	)
+	);
 }
