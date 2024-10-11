@@ -89,7 +89,7 @@ const TrainingForm = ({isOpen, onClose, trainingData}) => {
 
 	const handleSave = async () => {
 		const payload = {
-			id: id,
+			id: id ? id : null,
 			date: date,
 			trainings: trainings.map((training) => ({
 				id: training.id,
