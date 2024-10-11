@@ -52,5 +52,18 @@
 	"passwordMismatch": "Passwords do not match!",
 	"signUp": "Sign Up",
 	"alreadyHaveAccount": "Already have an account?"
+  },
+  "userProfile": {
+	"title": "Profile",
+	"description": "View and manage your personal information.",
+	"firstName": "First Name",
+	"lastName": "Last Name",
+	"email": "Email",
+	"phoneNumber": "Phone Number",
+	"telegramId": "Telegram ID",
+	"height": "Height",
+	"weight": "Weight",
+	"age": "Age",
+	"years": "years"
   }
 }

@@ -10,3 +10,13 @@ export const currentUser = async () => {
 		throw new Error('Request current user failed: ' + error.message);
 	}
 };
+
+export const updateUser = async () => {
+	try {
+		const response = await axiosInstance.post(ApiUrls.USER.CURRENT);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		throw new Error('Request current user failed: ' + error.message);
+	}
+};
