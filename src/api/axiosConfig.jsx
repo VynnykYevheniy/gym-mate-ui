@@ -13,7 +13,9 @@ axiosInstance.interceptors.request.use(
 			: null;
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
+			config.headers["Content-Type"] = "application/json";
 		}
+		console.log(config.data);
 		return config;
 	},
 	(error) => {
@@ -24,6 +26,7 @@ axiosInstance.interceptors.request.use(
 // Обработка ошибок ответа
 axiosInstance.interceptors.response.use(
 	(response) => {
+		console.log(response.data);
 		return response;
 	},
 	async (error) => {
@@ -32,6 +35,7 @@ axiosInstance.interceptors.response.use(
 			originalRequest._retry = true;
 			try {
 				const refreshToken = JSON.parse(localStorage.getItem('token')).refreshToken;
+				console.log(refreshToken);
 				const response = await axios.post(ApiUrls.BASE_URL + '/auth/refresh', {refreshToken});
 				const newToken = response.data;
 

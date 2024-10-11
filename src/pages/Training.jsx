@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import TrainingFormModal from '../components/TrainingFormModal';
-import TrainingsTable from '../components/TrainingsTable'; // Импорт таблицы
+import TrainingsTable from '../components/TrainingsTable';
+import TrainingForm from "../components/TrainingForm.jsx";
 
 const Training = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const Training = () => {
 			</div>
 
 			{/* Модальное окно для записи тренировки */}
-			<TrainingFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
+			<TrainingForm isOpen={isModalOpen} onClose={handleCloseModal} />
 
 			{/* Таблица тренировок */}
 			<TrainingsTable />

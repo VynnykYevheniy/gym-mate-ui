@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import axiosInstance from '../api/axiosConfig'; // Импортируем настроенный экземпляр Axios
 import ApiUrls from "../model/ApiUrls.js";
-import TrainingFormModal from "./TrainingFormModal"; // Импортируем модальное окно
+import SearchBar from './SearchBar.jsx';
+import TrainingForm from "./TrainingForm.jsx"; // Импортируем новый компонент поиска
 
 const TrainingsTable = () => {
 	const [trainings, setTrainings] = useState([]);
@@ -55,16 +56,8 @@ const TrainingsTable = () => {
 		<div className="container mx-auto p-6">
 			<h2 className="text-2xl mb-6 font-semibold text-center">Записи тренировок</h2>
 
-			{/* Строка поиска */}
-			<div className="mb-4">
-				<input
-					type="text"
-					placeholder="Поиск по упражнениям или группам мышц..."
-					value={searchTerm}
-					onChange={(e) => setSearchTerm(e.target.value)} // Обработчик изменения строки поиска
-					className="w-full p-2 border border-gray-300 rounded-lg"
-				/>
-			</div>
+			{/* Используем компонент SearchBar */}
+			<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm}/>
 
 			{loading ? (
 				<p className="text-gray-500 text-center">Загрузка...</p>
@@ -100,10 +93,10 @@ const TrainingsTable = () => {
 				</div>
 			)}
 
-			<TrainingFormModal
+			<TrainingForm
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
-				initialData={selectedTrainingRecord}
+				trainingData={selectedTrainingRecord}
 			/>
 		</div>
 	);

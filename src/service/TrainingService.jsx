@@ -24,9 +24,9 @@ export const fetchExercisesByMuscleGroup = async (muscleGroupId) => {
 };
 
 // Сохранение или обновление тренировки
-export const saveTraining = async (payload, initialData) => {
-	const url = initialData ? ApiUrls.TRAINING_DAY.UPDATE(initialData.id) : ApiUrls.TRAINING_DAY.SAVE;
-	const method = initialData ? 'PUT' : 'POST';
+export const saveTraining = async (payload) => {
+	const url = ApiUrls.TRAINING_DAY.SAVE;
+	const method = payload.id == null ? "POST" : "PUT";
 	try {
 		const response = await axiosInstance({
 			url,
