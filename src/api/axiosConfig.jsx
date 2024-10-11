@@ -34,9 +34,9 @@ axiosInstance.interceptors.response.use(
 		if ((error.response.status === 403 || error.response.status === 401) && !originalRequest._retry) {
 			originalRequest._retry = true;
 			try {
-				const refreshToken = JSON.parse(localStorage.getItem('token')).refreshToken;
-				console.log(refreshToken);
-				const response = await axios.post(ApiUrls.BASE_URL + '/auth/refresh', {refreshToken});
+				const token = JSON.parse(localStorage.getItem('token'));
+				console.log(token);
+				const response = await axios.post(ApiUrls.BASE_URL + '/auth/refresh', {refreshToken: token});
 				const newToken = response.data;
 
 				// Сохраняем новый токен
