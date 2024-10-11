@@ -56,7 +56,7 @@ const TrainingFormFields = ({
 				id={`sets-${index}`}
 				min="1"
 				max="4"
-				value={training.sets || ''}
+				value={training.trainingDetails.length? training.trainingDetails.length : ''}
 				onChange={(e) => handleSetsChange(index, e.target.value)}
 				className="w-full p-2 border border-gray-300 rounded"
 			/>
