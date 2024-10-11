@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {FaChartLine, FaDumbbell, FaHeartbeat, FaRunning} from 'react-icons/fa'; // Иконки FontAwesome
-import feedbackMen1 from 'src/assets/image/feedback-men-1.png';
-import feedbackWomen1 from 'src/assets/image/feedback-women-1.png';
+import feedbackMen1 from '../assets/image/feedback-men-1.png';
+import feedbackWomen1 from '../assets/image/feedback-women-1.png';
 
 const WelcomeComponent = () => {
 	const {t} = useTranslation();

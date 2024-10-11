@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../service/TrainingService.jsx';
 import TrainingFormFields from './TrainingFormFields.jsx';
 
-const TrainingForm = ({isOpen, onClose, trainingData}) => {
+const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	const id = trainingData?.id;
 	const [date, setDate] = useState(id ? trainingData.date : dayjs().format('YYYY-MM-DDTHH:mm'));
 	const [muscleGroups, setMuscleGroups] = useState([]);
@@ -16,9 +16,6 @@ const TrainingForm = ({isOpen, onClose, trainingData}) => {
 		})) : []
 	);
 
-	console.log(trainingData);
-	console.log(trainings);
-	console.log(muscleGroups);
 	useEffect(() => {
 		const loadMuscleGroups = async () => {
 			try {
@@ -38,7 +35,7 @@ const TrainingForm = ({isOpen, onClose, trainingData}) => {
 	};
 
 	const handleAdd = () => {
-		setTrainings((prevTraining) => [
+		setTrainings(prevTraining => [
 			...prevTraining,
 			{
 				muscleGroupId: null,
@@ -89,21 +86,21 @@ const TrainingForm = ({isOpen, onClose, trainingData}) => {
 
 	const handleSave = async () => {
 		const payload = {
-			id: id ? id : null,
+			...(id && {id}), // Добавляем поле id, только если оно не null или undefined
 			date: date,
 			trainings: trainings.map((training) => ({
-				id: training.id,
+				...(training.id && {id: training.id}), // Условно добавляем id тренировки
 				exercise: {
-					id: training.exercise.id,
+					...(training.exercise?.id && {id: training.exercise.id}), // Условно добавляем id упражнения
 					name: training.exercise.name,
 					description: training.exercise.description || "No description",
 					muscleGroup: {
-						id: training.exercise.muscleGroup.id,
+						...(training.exercise.muscleGroup?.id && {id: training.exercise.muscleGroup.id}), // Условно добавляем id группы мышц
 						name: training.exercise.muscleGroup.name,
 					},
 				},
 				trainingDetails: training.trainingDetails.map((detail) => ({
-					id: detail.id,
+					...(detail.id && {id: detail.id}), // Условно добавляем id детали тренировки
 					set: detail.set,
 					weight: detail.weight,
 					repetition: detail.repetition,
@@ -111,13 +108,9 @@ const TrainingForm = ({isOpen, onClose, trainingData}) => {
 			})),
 		};
 		try {
-			if (id) {
-				await saveTraining(payload);
-				alert('Training record updated successfully!');
-			} else {
-				await saveTraining(payload);
-				alert('Training record saved successfully!');
-			}
+			await saveTraining(payload);
+			alert(`Training record ${id ? 'updated' : 'saved'} successfully!`);
+			onTrainingAdded(); // Notify parent component to refresh the training list
 			onClose();
 		} catch (error) {
 			console.error('Error saving training:', error);
@@ -204,6 +197,7 @@ TrainingForm.propTypes = {
 		date: PropTypes.string,
 		trainings: PropTypes.arrayOf(PropTypes.object),
 	}),
+	onTrainingAdded: PropTypes.func.isRequired, // New prop for notifying the parent
 };
 
 export default TrainingForm;
