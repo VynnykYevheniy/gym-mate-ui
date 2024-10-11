@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {FaChartLine, FaDumbbell, FaHeartbeat, FaRunning} from 'react-icons/fa'; // Иконки FontAwesome
+import feedbackMen1 from 'src/assets/image/feedback-men-1.png';
+import feedbackWomen1 from 'src/assets/image/feedback-women-1.png';
 
 const WelcomeComponent = () => {
 	const {t} = useTranslation();
@@ -78,12 +80,12 @@ const WelcomeComponent = () => {
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
 					{[
 						{
-							image: "src/assets/image/feedback-men-1.png",
+							image: feedbackMen1,
 							testimonial: t('welcome.testimonial1'),
 							author: t('welcome.testimonialAuthor1')
 						},
 						{
-							image: "src/assets/image/feedback-women-1.png",
+							image: feedbackWomen1,
 							testimonial: t('welcome.testimonial2'),
 							author: t('welcome.testimonialAuthor2')
 						}
