@@ -1,8 +1,31 @@
 {
   "welcome": {
-	"message": "Welcome to {{appName}}!",
-	"description": "{{appName}} is a gym workout tracking app. Manage your workouts, track progress, and achieve your fitness goals with ease.",
-	"getStarted": "Get Started"
+	"message": "Welcome to ",
+	"description": " is a gym workout tracking app. Manage your workouts, track progress, and achieve your fitness goals with ease.",
+	"getStarted": "Get Started",
+	"featuresTitle": "Why Choose ",
+	"featuresDescription": "Our platform offers top-notch features designed to help you achieve your fitness goals.",
+	"feature1": {
+	  "title": "Track Your Progress",
+	  "description": "Keep a detailed log of your workouts and track your performance."
+	},
+	"feature2": {
+	  "title": "Custom Workouts",
+	  "description": "Create and save personalized workout routines tailored to your needs."
+	},
+	"feature3": {
+	  "title": "Stay Motivated",
+	  "description": "Receive motivational tips and reminders to keep you on track."
+	},
+	"feature4": {
+	  "title": "Community Support",
+	  "description": "Join a community of like-minded individuals and share your journey."
+	},
+	"testimonialsTitle": "What Our Users Say",
+	"testimonial1": "Gym Mate has completely changed the way I work out. I can track every set and see my progress!",
+	"testimonialAuthor1": "John Doe",
+	"testimonial2": "The personalized workouts are exactly what I needed to stay consistent with my fitness goals.",
+	"testimonialAuthor2": "Jane Smith"
   },
   "auth": {
 	"login": "Login",
@@ -11,7 +34,9 @@
 	"invalidCredentials": "Invalid credentials, please try again.\n",
 	"rememberMe": "Remember me",
 	"forgotPassword": "Forgot your password?",
-	"signIn": "Sign in"
+	"signIn": "Sign in",
+	"dontHaveAccount": "Don't have an account?",
+	"signUp": "Sign up"
   },
   "header": {
 	"signIn": "Sign In",

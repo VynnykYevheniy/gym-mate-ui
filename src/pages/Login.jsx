@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom"; // Импортируйте Link
 import {useState} from 'react';
 import Loader from '../components/Loader';
 import WelcomeBackSvg from '../assets/welcome_back.svg';
@@ -60,6 +60,7 @@ export default function Login() {
 						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 						{renderError()}
 						<form onSubmit={handleSubmit} autoComplete="off" className="mt-6 space-y-6">
+							{/* Login Field */}
 							<div>
 								<label htmlFor="login"
 									   className="block text-md font-medium text-gray-700">{t('auth.login')}</label>
@@ -79,6 +80,7 @@ export default function Login() {
 								</div>
 							</div>
 
+							{/* Password Field */}
 							<div>
 								<label htmlFor="password"
 									   className="block text-md font-medium text-gray-700">{t('auth.password')}</label>
@@ -98,6 +100,7 @@ export default function Login() {
 								</div>
 							</div>
 
+							{/* Remember Me and Forgot Password */}
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-2">
 									<input
@@ -115,6 +118,7 @@ export default function Login() {
 								</a>
 							</div>
 
+							{/* Submit Button */}
 							<div>
 								<button
 									type="submit"
@@ -122,6 +126,14 @@ export default function Login() {
 								>
 									{t('auth.signIn')}
 								</button>
+							</div>
+
+							{/* Registration Link */}
+							<div className="mt-4 text-center">
+								<p className="text-sm text-gray-600">
+									{t('auth.dontHaveAccount')} <Link to="/signup"
+																	  className="text-green-500 hover:text-green-600 underline">{t('auth.signUp')}</Link>
+								</p>
 							</div>
 						</form>
 					</div>
