@@ -82,11 +82,11 @@ const Calendar = () => {
 		<div className="flex flex-col items-center justify-center p-4">
 			{/* Переключатель месяцев */}
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
-				<button onClick={prevMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600">
+				<button onClick={prevMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
 					Prev
 				</button>
 				<h2 className="text-xl font-bold">{currentDate.format('MMMM YYYY')}</h2>
-				<button onClick={nextMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600">
+				<button onClick={nextMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
 					Next
 				</button>
 			</div>
@@ -94,10 +94,10 @@ const Calendar = () => {
 			{/* Добавляем рамку для всего календаря */}
 			<div className="border-2 border-gray-400 p-4 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-lg">
 				{/* Заголовки дней недели */}
-				<div className="grid grid-cols-7 gap-2 mb-4">
+				<div className="grid grid-cols-7 gap-1 mb-4">
 					{weekDaysShort.map((day) => (
 						<div key={day}
-							 className="flex items-center justify-center text-center font-bold text-gray-800 p-3">
+							 className="flex items-center justify-center text-center font-bold text-black p-2">
 							{day}
 						</div>
 					))}
@@ -105,7 +105,7 @@ const Calendar = () => {
 				</div>
 
 				{/* Сетка календаря */}
-				<div className="grid grid-cols-7 gap-2">
+				<div className="grid grid-cols-7 gap-2 mt-1">
 					{/* Пустые ячейки для сдвига первого дня месяца */}
 					{Array.from({length: offset}).map((_, index) => (
 						<div key={`empty-${index}`}/>
@@ -120,12 +120,12 @@ const Calendar = () => {
 						return (
 							<div
 								key={day}
-								className={`border p-4 rounded-md flex items-center justify-center cursor-pointer ${
+								className={`border-b-2 border-black p-4 rounded-md flex items-center justify-center cursor-pointer ${
 									isVisited
 										? 'bg-green-200 text-green-800'
 										: weekend
-											? 'bg-red-200 text-red-800'
-											: 'bg-gray-100 cursor-not-allowed' // Блокируем клик на дни без тренировок
+											? 'bg-red-200'
+											: 'bg-gray-100' // Блокируем клик на дни без тренировок
 								}`}
 								onClick={() => {
 									if (isVisited) {
@@ -148,7 +148,7 @@ const Calendar = () => {
 							filteredTrainings.map((trainingRecord) => (
 								<div
 									key={trainingRecord.id}
-									className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
+									className="bg-white border-2 border-gray-400 rounded-xl shadow-lg p-4 cursor-pointer duration-300"
 								>
 									<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
 										{moment(trainingRecord.date).format('MMMM Do YYYY')}
