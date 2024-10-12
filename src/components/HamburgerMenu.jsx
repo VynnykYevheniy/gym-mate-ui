@@ -48,7 +48,7 @@ const HamburgerMenu = () => {
 							<Link to="/training" onClick={handleMenuItemClick}>Training</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/" onClick={handleMenuItemClick}>Calendar</Link>
+							<Link to="/calendar" onClick={handleMenuItemClick}>Calendar</Link>
 						</li>
 						<li className="px-4 py-2 hover:bg-red-600">
 							{/* Закрываем меню и выполняем логаут */}
