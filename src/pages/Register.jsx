@@ -43,7 +43,7 @@ export default function Register() {
 					<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">{t('register.createAccount')}</h2>
 				</div>
 				<div
-					className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
+					className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 					<form onSubmit={handleSubmit} autoComplete="off" className="space-y-6">
 						<div>
 							<label htmlFor="login" className="block text-sm font-medium text-gray-700">{t('register.login')}</label>
@@ -106,7 +106,7 @@ export default function Register() {
 						<div>
 							<button
 								type="submit"
-								className="block w-full rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+								className="block w-full rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
 								{t('register.signUp')} {/* Use localization */}
 							</button>
 						</div>

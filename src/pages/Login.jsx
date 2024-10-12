@@ -57,7 +57,7 @@ export default function Login() {
 						<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">{t('auth.welcomeBack')}</h2>
 					</div>
 					<div
-						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
+						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 						{renderError()}
 						<form onSubmit={handleSubmit} autoComplete="off" className="mt-6 space-y-6">
 							{/* Login Field */}
@@ -122,7 +122,7 @@ export default function Login() {
 							<div>
 								<button
 									type="submit"
-									className="w-full rounded-md border border-transparent bg-green-600 px-4 py-2 text-white font-medium shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+									className="w-full rounded-md border border-transparent bg-green-500 px-4 py-2 text-white font-medium shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 								>
 									{t('auth.signIn')}
 								</button>
