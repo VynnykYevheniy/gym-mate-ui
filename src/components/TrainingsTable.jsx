@@ -11,6 +11,7 @@ import {
 	FaDumbbell,
 	FaHandRock,
 	FaHeartbeat,
+	FaPlus,
 	FaRunning,
 	FaSwimmer,
 	FaWalking
@@ -79,22 +80,6 @@ const TrainingsTable = () => {
 
 	return (
 		<div className="container mx-auto p-6">
-			<div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-				<h2 className="text-4xl sm:text-5xl font-bold text-green-700 tracking-wide text-center sm:text-left mb-4 sm:mb-0">
-					Записи тренировок
-				</h2>
-
-				<button
-					onClick={() => {
-						setSelectedTrainingRecord(null);
-						setIsModalOpen(true);
-					}}
-					className="px-6 py-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
-				>
-					+ Добавить тренировку
-				</button>
-			</div>
-
 			<div className="w-full mb-4">
 				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm}/>
 			</div>
@@ -107,34 +92,32 @@ const TrainingsTable = () => {
 			) : error ? (
 				<div className="text-red-500 text-center">{error}</div>
 			) : (
-				<div className="overflow-auto h-60 sm:h-80 lg:h-96">
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-						{filteredTrainings.length > 0 ? (
-							filteredTrainings.map((trainingRecord) => (
-								<div
-									key={trainingRecord.id}
-									className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
-									onClick={() => handleCardClick(trainingRecord)}
-								>
-									<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
-										{formatDate(trainingRecord.date)}
-									</h3>
-									<div className="flex flex-col mt-4">
-										{trainingRecord.trainings.map((training, index) => (
-											<div key={`${trainingRecord.id}-${index}`}
-												 className="flex items-center mb-4">
-												{muscleGroupIcons[training.exercise.muscleGroup.name] || <span
-													className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
-												<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
-											</div>
-										))}
-									</div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+					{filteredTrainings.length > 0 ? (
+						filteredTrainings.map((trainingRecord) => (
+							<div
+								key={trainingRecord.id}
+								className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
+								onClick={() => handleCardClick(trainingRecord)}
+							>
+								<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
+									{formatDate(trainingRecord.date)}
+								</h3>
+								<div className="flex flex-col mt-4">
+									{trainingRecord.trainings.map((training, index) => (
+										<div key={`${trainingRecord.id}-${index}`}
+											 className="flex items-center mb-4">
+											{muscleGroupIcons[training.exercise.muscleGroup.name] || <span
+												className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
+											<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
+										</div>
+									))}
 								</div>
-							))
-						) : (
-							<div className="text-gray-500 text-center">Записи тренировок отсутствуют.</div>
-						)}
-					</div>
+							</div>
+						))
+					) : (
+						<div className="text-gray-500 text-center">Записи тренировок отсутствуют.</div>
+					)}
 				</div>
 			)
 			}
@@ -147,9 +130,17 @@ const TrainingsTable = () => {
 				trainingData={selectedTrainingRecord}
 				onTrainingAdded={fetchTrainings} // Добавлен коллбэк для обновления тренировок после добавления
 			/>
+			<button
+				onClick={() => {
+					setSelectedTrainingRecord(null);
+					setIsModalOpen(true);
+				}}
+				className="fixed bottom-6 right-6 w-16 h-16 bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-105"
+			>
+				<FaPlus className="h-8 w-8"/>
+			</button>
 		</div>
-	)
-		;
+	);
 };
 
 export default TrainingsTable;

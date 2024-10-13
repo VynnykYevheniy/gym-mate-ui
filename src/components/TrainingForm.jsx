@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../service/TrainingService.jsx';
 import TrainingFormFields from './TrainingFormFields.jsx';
+import {FaPlus} from "react-icons/fa";
 
 const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	const id = trainingData?.id;
@@ -11,8 +12,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	const [trainings, setTrainings] = useState(
 		id ? trainingData.trainings.map(training => ({
 			...training,
-			muscleGroup: training.exercise?.muscleGroup || null, // Инициализация muscleGroup
-			exercise: training.exercise || null, // Инициализация exercise
+			muscleGroup: training.exercise?.muscleGroup || null, // Initialize muscleGroup
+			exercise: training.exercise || null, // Initialize exercise
 		})) : []
 	);
 
@@ -28,7 +29,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		loadMuscleGroups();
 	}, []);
 
-	// Reset the form to initial state
+	// Reset the form to the initial state
 	const resetForm = () => {
 		setTrainings([]);
 		setDate(dayjs().format('YYYY-MM-DDTHH:mm'));
@@ -44,6 +45,9 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				trainingDetails: [],
 			},
 		]);
+	};
+	const handleRemoveTraining = (index) => {
+		setTrainings((prevTrainings) => prevTrainings.filter((_, i) => i !== index));
 	};
 
 	const handleMuscleGroupChange = async (index, muscleGroupId) => {
@@ -86,21 +90,21 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 	const handleSave = async () => {
 		const payload = {
-			...(id && {id}), // Добавляем поле id, только если оно не null или undefined
+			...(id && {id}), // Include id only if it exists
 			date: date,
 			trainings: trainings.map((training) => ({
-				...(training.id && {id: training.id}), // Условно добавляем id тренировки
+				...(training.id && {id: training.id}), // Conditionally include training id
 				exercise: {
-					...(training.exercise?.id && {id: training.exercise.id}), // Условно добавляем id упражнения
+					...(training.exercise?.id && {id: training.exercise.id}), // Conditionally include exercise id
 					name: training.exercise.name,
 					description: training.exercise.description || "No description",
 					muscleGroup: {
-						...(training.exercise.muscleGroup?.id && {id: training.exercise.muscleGroup.id}), // Условно добавляем id группы мышц
+						...(training.exercise.muscleGroup?.id && {id: training.exercise.muscleGroup.id}), // Conditionally include muscle group id
 						name: training.exercise.muscleGroup.name,
 					},
 				},
 				trainingDetails: training.trainingDetails.map((detail) => ({
-					...(detail.id && {id: detail.id}), // Условно добавляем id детали тренировки
+					...(detail.id && {id: detail.id}), // Conditionally include detail id
 					set: detail.set,
 					weight: detail.weight,
 					repetition: detail.repetition,
@@ -133,19 +137,29 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-			<div className="bg-white rounded-lg p-6 w-11/12 sm:w-1/3 max-h-screen overflow-y-auto">
-				<h2 className="text-2xl font-bold mb-4">{id ? 'Edit Training' : 'Add Training'}</h2>
-				<div className="mb-4">
-					<label htmlFor="date" className="block mb-1">Date</label>
+			<div
+				className="bg-green-100 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300"
+				style={{marginTop: '10%', /* Вы можете изменить значение отступа по своему усмотрению */}}
+			>
+				{/* Sticky Header */}
+				<div className="sticky top-0 mb-2 border-b-2 border-b-black">
+					<h2 className="text-3xl font-bold text-gray-900 mb-2">{id ? 'Edit Training' : 'Add Training'}</h2>
+				</div>
+
+				{/* Date Picker */}
+				<div className="m-4 flex items-center">
+					<label htmlFor="date" className="block w-1/4 text-sm font-medium text-gray-700 mb-2">Date</label>
 					<input
 						type="datetime-local"
 						id="date"
 						value={date}
 						onChange={(e) => setDate(e.target.value)}
-						className="w-full p-2 border border-gray-300 rounded"
+						className="w-3/4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
 					/>
 				</div>
-				<div className="overflow-y-auto max-h-80">
+
+				{/* Training Forms */}
+				<div className="flex flex-col mb-6 max-h-80 overflow-y-auto">
 					{trainings.map((training, index) => (
 						<TrainingFormFields
 							key={index}
@@ -156,20 +170,26 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 							handleExerciseChange={handleExerciseChange}
 							handleSetsChange={handleSetsChange}
 							handleTrainingDetailChange={handleTrainingDetailChange}
+							handleRemoveTraining={handleRemoveTraining}
 						/>
 					))}
 				</div>
-				<div className="flex justify-between items-center">
+
+				{/* Action Buttons */}
+				<div className="flex justify-between items-center mt-6">
+					{/* Add Button */}
 					<button
 						onClick={handleAdd}
-						className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded hover:bg-blue-600"
+						className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 transition"
 					>
-						<span className="text-2xl">+</span>
+						<FaPlus className="text-2xl font-bold"></FaPlus>
 					</button>
-					<div className="flex">
+
+					{/* Save and Cancel Buttons */}
+					<div className="flex space-x-4">
 						<button
 							onClick={handleSave}
-							className="mr-2 bg-green-500 text-white p-2 rounded hover:bg-green-600"
+							className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
 						>
 							Save
 						</button>
@@ -177,8 +197,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 							onClick={() => {
 								resetForm();
 								onClose();
-							}} // Reset form when canceling
-							className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+							}}
+							className="bg-red-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-400 transition"
 						>
 							Cancel
 						</button>
