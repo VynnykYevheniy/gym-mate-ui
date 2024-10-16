@@ -23,6 +23,7 @@ class ApiUrls {
 		ALL: `/trainingDay/all`,
 		SAVE: `/trainingDay`,
 		UPDATE: '/trainingDay',
+		DELETE: (id) => `/trainingDay/${id}`,
 	};
 
 	static MUSCLE_GROUP = {

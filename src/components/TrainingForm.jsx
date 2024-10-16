@@ -138,9 +138,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 			<div
-				className="bg-green-100 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300"
-				style={{marginTop: '10%', /* Вы можете изменить значение отступа по своему усмотрению */}}
-			>
+				className="bg-green-100 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
+
 				{/* Sticky Header */}
 				<div className="sticky top-0 mb-2 border-b-2 border-b-black">
 					<h2 className="text-3xl font-bold text-gray-900 mb-2">{id ? 'Edit Training' : 'Add Training'}</h2>
@@ -159,7 +158,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				</div>
 
 				{/* Training Forms */}
-				<div className="flex flex-col mb-6 max-h-80 overflow-y-auto">
+				<div className="flex flex-col mb-6 max-h-[65vh] overflow-y-scroll">
 					{trainings.map((training, index) => (
 						<TrainingFormFields
 							key={index}

@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
+import Swal from 'sweetalert2';
 import axiosInstance from '../api/axiosConfig'; // Импортируем настроенный экземпляр Axios
 import ApiUrls from "../model/ApiUrls.js";
 import SearchBar from './SearchBar.jsx';
 import TrainingForm from "./TrainingForm.jsx";
-import Skeleton from "react-loading-skeleton"; // Импортируем новый компонент поиска
 import {
 	FaBiking,
 	FaChevronUp,
@@ -14,8 +14,10 @@ import {
 	FaPlus,
 	FaRunning,
 	FaSwimmer,
-	FaWalking
-} from 'react-icons/fa'; // Подобранные иконки
+	FaWalking,
+	FaTimes // Импортируем иконку крестика
+} from 'react-icons/fa';
+import Loader from "./Loader.jsx"; // Подобранные иконки
 
 const muscleGroupIcons = {
 	"Ноги": <FaRunning className="text-green-500"/>,      // Иконка для ног (бег)
@@ -70,6 +72,37 @@ const TrainingsTable = () => {
 		setSelectedTrainingRecord(null);
 	};
 
+	const handleDeleteTraining = async (id) => {
+		const result = await Swal.fire({
+			title: 'Вы уверены?',
+			text: 'Вы хотите удалить эту тренировку? Это действие нельзя отменить.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Да, удалить!',
+			cancelButtonText: 'Отмена',
+			customClass: {
+				title: 'font-bold text-lg text-gray-800',
+				text: 'text-gray-700',
+				confirmButton: 'bg-red-500 hover:bg-red-600 text-white',
+				cancelButton: 'bg-blue-500 hover:bg-blue-600 text-white'
+			},
+			backdrop: true,
+		});
+
+		if (result.isConfirmed) {
+			try {
+				await axiosInstance.delete(`${ApiUrls.TRAINING_DAY.DELETE(id)}`); // Путь к API для удаления
+				await fetchTrainings(); // Обновляем список тренировок
+				Swal.fire('Удалено!', 'Тренировка была удалена.', 'success');
+			} catch (error) {
+				Swal.fire('Ошибка!', 'Не удалось удалить тренировку.', 'error');
+				console.error('Error deleting training:', error);
+			}
+		}
+	};
+
 	// Фильтрация тренировок по названию упражнения или группы мышц
 	const filteredTrainings = trainings.filter(trainingRecord => {
 		return trainingRecord.trainings.some(training =>
@@ -85,10 +118,7 @@ const TrainingsTable = () => {
 			</div>
 
 			{loading ? (
-				<div className="flex flex-col items-center">
-					<Skeleton count={3} height={100} className="mb-4 w-full"/>
-					<Skeleton count={1} height={40} width={200}/>
-				</div>
+				<Loader/>
 			) : error ? (
 				<div className="text-red-500 text-center">{error}</div>
 			) : (
@@ -98,17 +128,24 @@ const TrainingsTable = () => {
 							<div
 								key={trainingRecord.id}
 								className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
-								onClick={() => handleCardClick(trainingRecord)}
+								onClick={() => handleCardClick(trainingRecord)} // Удалить вызов для кнопки удаления
 							>
+								<button
+									onClick={(event) => {
+										event.stopPropagation(); // Остановить всплытие события
+										handleDeleteTraining(trainingRecord.id); // Обработчик удаления
+									}}
+									className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors" // Позиционирование и стиль для крестика
+								>
+									<FaTimes className="h-6 w-6"/>
+								</button>
 								<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
 									{formatDate(trainingRecord.date)}
 								</h3>
 								<div className="flex flex-col mt-4">
 									{trainingRecord.trainings.map((training, index) => (
-										<div key={`${trainingRecord.id}-${index}`}
-											 className="flex items-center mb-4">
-											{muscleGroupIcons[training.exercise.muscleGroup.name] || <span
-												className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
+										<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2">
+											{muscleGroupIcons[training.exercise.muscleGroup.name] || <span className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
 											<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
 										</div>
 									))}
@@ -119,11 +156,8 @@ const TrainingsTable = () => {
 						<div className="text-gray-500 text-center">Записи тренировок отсутствуют.</div>
 					)}
 				</div>
-			)
-			}
+			)}
 
-			{/* Передаем функцию fetchTrainings в TrainingForm для обновления данных после сохранения */
-			}
 			<TrainingForm
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
@@ -136,8 +170,9 @@ const TrainingsTable = () => {
 					setIsModalOpen(true);
 				}}
 				className="fixed bottom-6 right-6 w-16 h-16 bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-105"
+				aria-label="Добавить тренировку"
 			>
-				<FaPlus className="h-8 w-8"/>
+				<FaPlus className="text-2xl"/>
 			</button>
 		</div>
 	);
