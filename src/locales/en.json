@@ -1,13 +1,13 @@
 {
   "welcome": {
 	"message": "Welcome to ",
-	"description": " is a gym workout tracking app. Manage your workouts, track progress, and achieve your fitness goals with ease.",
+	"description": "is a comprehensive app for tracking gym workouts. Effortlessly manage your exercise routines, monitor your progress, and reach your fitness goals.",
 	"getStarted": "Get Started",
 	"featuresTitle": "Why Choose ",
 	"featuresDescription": "Our platform offers top-notch features designed to help you achieve your fitness goals.",
 	"feature1": {
 	  "title": "Track Your Progress",
-	  "description": "Keep a detailed log of your workouts and track your performance."
+	  "description": "Keep a detailed log of your workouts and monitor your performance."
 	},
 	"feature2": {
 	  "title": "Custom Workouts",
@@ -15,17 +15,70 @@
 	},
 	"feature3": {
 	  "title": "Stay Motivated",
-	  "description": "Receive motivational tips and reminders to keep you on track."
+	  "description": "Receive tips and reminders to keep your motivation high."
 	},
 	"feature4": {
 	  "title": "Community Support",
 	  "description": "Join a community of like-minded individuals and share your journey."
 	},
+	"feature5": {
+	  "title": "Fitness Challenges",
+	  "description": "Participate in challenges to push your limits and stay engaged."
+	},
+	"feature6": {
+	  "title": "Nutrition Tracking",
+	  "description": "Monitor your dietary habits to complement your fitness goals."
+	},
+	"feature7": {
+	  "title": "Progress Insights",
+	  "description": "Gain insights into your progress with detailed analytics."
+	},
+	"feature8": {
+	  "title": "Live Classes",
+	  "description": "Join live workout classes to stay motivated and learn new techniques."
+	},
 	"testimonialsTitle": "What Our Users Say",
 	"testimonial1": "Gym Mate has completely changed the way I work out. I can track every set and see my progress!",
 	"testimonialAuthor1": "John Doe",
 	"testimonial2": "The personalized workouts are exactly what I needed to stay consistent with my fitness goals.",
-	"testimonialAuthor2": "Jane Smith"
+	"testimonialAuthor2": "Jane Smith",
+	"tipsTitle": "Helpful Tips",
+	"tipsDescription": "Here are some tips to help you get started:",
+	"tip1": "Stay hydrated during your workouts.",
+	"tip2": "Set achievable goals.",
+	"tip3": "Regularly update your workout plan.",
+	"faqTitle": "Frequently Asked Questions",
+	"faqDescription": "Here are some common questions about Gym Mate:",
+	"faq1": {
+	  "question": "How do I create a workout plan?",
+	  "answer": "You can create a workout plan by selecting exercises, setting goals, and saving your routine in the app."
+	},
+	"faq2": {
+	  "question": "Can I share my progress with friends?",
+	  "answer": "Yes! You can share your workout progress with friends and connect with the community."
+	},
+	"faq3": {
+	  "question": "What types of workouts can I track?",
+	  "answer": "You can track a variety of workouts, including strength training, cardio, flexibility exercises, and more."
+	},
+	"faq4": {
+	  "question": "Is there a mobile app available?",
+	  "answer": "Yes, our mobile app is available for both iOS and Android, allowing you to access your workouts on the go."
+	},
+	"faq5": {
+	  "question": "How can I reset my password?",
+	  "answer": "To reset your password, go to the login page, click on 'Forgot Password?', and follow the instructions sent to your email."
+	},
+	"faq6": {
+	  "question": "What should I do if I miss a workout?",
+	  "answer": "Don't worry! Just get back on track as soon as you can and adjust your schedule if needed."
+	},
+	"blogTitle": "Latest Articles",
+	"blogDescription": "Check out our latest articles for tips, workouts, and nutrition advice.",
+	"blogPost1Title": "The Benefits of Strength Training",
+	"blogPost1Summary": "Discover the advantages of incorporating strength training into your fitness routine.",
+	"blogPost2Title": "Nutrition Tips for Fitness Success",
+	"blogPost2Summary": "Learn how proper nutrition can enhance your workout performance."
   },
   "auth": {
 	"login": "Login",
@@ -65,5 +118,9 @@
 	"weight": "Weight",
 	"age": "Age",
 	"years": "years"
-  }
+  },
+  "invalidCredentials": "Invalid credentials. Please check your login and password.",
+  "unauthorizedAccess": "You are not authorized. Please check your credentials.",
+  "serverError": "Server error. Please try again later.",
+  "somethingWentWrong": "Something went wrong. Please try again."
 }
