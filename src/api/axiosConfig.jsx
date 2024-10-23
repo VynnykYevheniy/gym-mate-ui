@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 			try {
 				const token = JSON.parse(localStorage.getItem('token'));
 				console.log(token);
-				const response = await axios.post(ApiUrls.BASE_URL + '/auth/refresh', {refreshToken: token});
+				const response = await axios.post(ApiUrls.BASE_URL + '/auth/refresh', token);
 				const newToken = response.data;
 
 				// Сохраняем новый токен

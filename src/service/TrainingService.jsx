@@ -39,3 +39,14 @@ export const saveTraining = async (payload) => {
 		throw new Error('Failed to save training');
 	}
 };
+
+// Получение упражнений за вібраный месяц
+export const fetchTrainingsByMonth = async (month, year) => {
+	try {
+		const response = await axiosInstance.get(ApiUrls.TRAINING_DAY.ALL_BY_MONTH(month, year));
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching exercises:', error);
+		throw new Error('Failed to fetch exercises');
+	}
+};

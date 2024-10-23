@@ -24,6 +24,7 @@ class ApiUrls {
 		SAVE: `/trainingDay`,
 		UPDATE: '/trainingDay',
 		DELETE: (id) => `/trainingDay/${id}`,
+		ALL_BY_MONTH: (month,year) => `/trainingDay/${month}/${year}`,
 	};
 
 	static MUSCLE_GROUP = {

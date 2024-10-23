@@ -1,99 +1,136 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import moment from 'moment';
+import {
+	FaBiking,
+	FaChevronUp,
+	FaChild,
+	FaDumbbell,
+	FaHandRock,
+	FaHeartbeat,
+	FaRunning,
+	FaSwimmer,
+	FaWalking
+} from "react-icons/fa";
+import {fetchTrainingsByMonth} from "../service/TrainingService.jsx";
 
-// Пример данных тренировок
-const trainingData = [
-	{
-		date: '2024-10-10',
-		gymVisited: true,
-		id: 1,
-		trainings: [{exercise: {name: 'Squat', muscleGroup: {name: 'Legs'}}}]
-	},
-	{
-		date: '2024-10-12',
-		gymVisited: true,
-		id: 2,
-		trainings: [{exercise: {name: 'Bench Press', muscleGroup: {name: 'Chest'}}}]
-	},
-	{
-		date: '2024-11-03',
-		gymVisited: true,
-		id: 3,
-		trainings: [{exercise: {name: 'Deadlift', muscleGroup: {name: 'Back'}}}]
-	},
-	{date: '2024-11-05', gymVisited: false, id: 4, trainings: []},
-];
-
-// Устанавливаем начало недели на понедельник
-moment.updateLocale('en', {
-	week: {
-		dow: 1, // Устанавливаем понедельник как первый день недели (1 = Понедельник)
-	},
-});
-
+const muscleGroupIcons = {
+	"Ноги": <FaRunning className="text-green-500"/>,
+	"Бицепс": <FaHandRock className="text-blue-500"/>,
+	"Предплечье": <FaDumbbell className="text-purple-500"/>,
+	"Плечи": <FaChevronUp className="text-orange-500"/>,
+	"Трицепс": <FaBiking className="text-yellow-500"/>,
+	"Икры": <FaWalking className="text-red-500"/>,
+	"Спина": <FaSwimmer className="text-teal-500"/>,
+	"Грудь": <FaHeartbeat className="text-pink-500"/>,
+	"Пресс": <FaChild className="text-green-500"/>,
+};
 const Calendar = () => {
-	// Состояние для текущего месяца и года
 	const [currentDate, setCurrentDate] = useState(moment());
-	const [selectedDate, setSelectedDate] = useState(null); // Состояние для выбранной даты
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [trainingData, setTrainingData] = useState([]);
 
-	// Функция для переключения месяца вперед
-	const nextMonth = () => {
-		setCurrentDate(currentDate.clone().add(1, 'month'));
+	const loadTrainingsForMonth = async (month, year) => {
+		try {
+			const data = await fetchTrainingsByMonth(month, year);
+			setTrainingData(data);
+		} catch (error) {
+			console.error('Failed to load training data:', error);
+		}
 	};
 
-	// Функция для переключения месяца назад
-	const prevMonth = () => {
-		setCurrentDate(currentDate.clone().subtract(1, 'month'));
+	useEffect(() => {
+		loadTrainingsForMonth(currentDate.month() + 1, currentDate.year());
+	}, [currentDate]);
+
+	const changeMonth = (increment) => {
+		setCurrentDate(currentDate.clone().add(increment, 'month'));
 	};
 
-	// Получение количества дней в текущем месяце
+	const handleDayClick = (date) => {
+		if (isGymVisited(date)) {
+			setSelectedDate(date);
+		} else {
+			setSelectedDate(null); // Set to null if no training was recorded for the day
+		}
+	};
+
 	const daysInMonth = currentDate.daysInMonth();
-
-	// Определение, какой день недели является первым днем месяца
 	const firstDayOfMonth = currentDate.clone().startOf('month').day();
-
-	// Сдвигаем первый день месяца, чтобы начинался с понедельника
 	const offset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-
 	const daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
-
-	// Список сокращенных названий дней недели, начиная с понедельника
 	const weekDaysShort = [...moment.weekdaysShort().slice(1), moment.weekdaysShort()[0]];
 
-	// Проверяем, посещался ли спортзал в конкретный день
-	const isGymVisited = (date) => {
-		return trainingData.some((t) => moment(t.date).isSame(date, 'day') && t.gymVisited);
-	};
+	const isGymVisited = (date) => trainingData.some((t) => moment(t.date).isSame(date, 'day'));
+	const isWeekend = (date) => date.day() === 0 || date.day() === 6;
 
-	// Проверка на выходные дни (суббота и воскресенье)
-	const isWeekend = (date) => {
-		const dayOfWeek = date.day();
-		return dayOfWeek === 6 || dayOfWeek === 0;
-	};
+	const filteredTrainings = selectedDate
+		? trainingData.filter((t) => moment(t.date).isSame(selectedDate, 'day'))
+		: [];
 
-	// Функция для фильтрации тренировок по выбранной дате
-	const filteredTrainings = selectedDate ? trainingData.filter((t) =>
-		moment(t.date).isSame(selectedDate, 'day')
-	) : [];
+	const renderCalendarDays = () => (
+		<div className="grid grid-cols-7 gap-2 mt-1">
+			{Array.from({length: offset}).map((_, index) => (
+				<div key={`empty-${index}`}/>
+			))}
+			{daysArray.map((day) => {
+				const date = currentDate.clone().date(day);
+				const isVisited = isGymVisited(date);
+				const weekend = isWeekend(date);
 
-	// ... остальные части кода
+				return (
+					<div
+						key={day}
+						className={`p-4 rounded-md flex items-center justify-center cursor-pointer ${isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'}`}
+						onClick={() => handleDayClick(date)} // Use handleDayClick here
+					>
+						{day}
+					</div>
+				);
+			})}
+		</div>
+	);
+
+	const renderTrainingRecords = () => (
+		<div className="h-60 sm:h-80 lg:h-96 mt-6 w-full max-w-md">
+			{filteredTrainings.map((trainingRecord) => (
+				<div
+					key={trainingRecord.id}
+					className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
+				>
+					<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
+						{moment(trainingRecord.date).format('MMMM Do YYYY')}
+					</h3>
+					<div className="flex flex-col mt-4">
+						{trainingRecord.trainings.map((training, index) => (
+							<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2">
+								{muscleGroupIcons[training.exercise.muscleGroup.name] || (
+									<span className="text-gray-500">{training.exercise.muscleGroup.name}</span>
+								)}
+								<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	);
 
 	return (
 		<div className="flex flex-col items-center justify-center p-4">
-			{/* Переключатель месяцев */}
+			{/* Month navigation */}
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
-				<button onClick={prevMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+				<button onClick={() => changeMonth(-1)}
+						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
 					Prev
 				</button>
 				<h2 className="text-xl font-bold">{currentDate.format('MMMM YYYY')}</h2>
-				<button onClick={nextMonth} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+				<button onClick={() => changeMonth(1)}
+						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
 					Next
 				</button>
 			</div>
 
-			{/* Добавляем рамку для всего календаря */}
-			<div className="border-2 border-gray-400 p-4 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-lg">
-				{/* Заголовки дней недели */}
+			<div className="border-gray-400 p-4 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-lg">
 				<div className="grid grid-cols-7 gap-1 mb-4">
 					{weekDaysShort.map((day) => (
 						<div key={day}
@@ -104,73 +141,12 @@ const Calendar = () => {
 					<div className="col-span-7 border-b-2 border-gray-600 mt-1"/>
 				</div>
 
-				{/* Сетка календаря */}
-				<div className="grid grid-cols-7 gap-2 mt-1">
-					{/* Пустые ячейки для сдвига первого дня месяца */}
-					{Array.from({length: offset}).map((_, index) => (
-						<div key={`empty-${index}`}/>
-					))}
-
-					{/* Дни месяца */}
-					{daysArray.map((day) => {
-						const date = currentDate.clone().date(day);
-						const isVisited = isGymVisited(date);
-						const weekend = isWeekend(date);
-
-						return (
-							<div
-								key={day}
-								className={`border-b-2 border-black p-4 rounded-md flex items-center justify-center cursor-pointer ${
-									isVisited
-										? 'bg-green-200 text-green-800'
-										: weekend
-											? 'bg-red-200'
-											: 'bg-gray-100' // Блокируем клик на дни без тренировок
-								}`}
-								onClick={() => {
-									if (isVisited) {
-										setSelectedDate(date); // Устанавливаем выбранную дату только если спортзал посещался
-									}
-								}}
-							>
-								{day}
-							</div>
-						);
-					})}
-				</div>
+				{/* Calendar grid */}
+				{renderCalendarDays()}
 			</div>
 
-			{/* Отображение записей тренировок для выбранного дня */}
-			{selectedDate && (
-				<div className="overflow-auto h-60 sm:h-80 lg:h-96 mt-6 w-full max-w-md">
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-						{filteredTrainings.length > 0 ? (
-							filteredTrainings.map((trainingRecord) => (
-								<div
-									key={trainingRecord.id}
-									className="bg-white border-2 border-gray-400 rounded-xl shadow-lg p-4 cursor-pointer duration-300"
-								>
-									<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
-										{moment(trainingRecord.date).format('MMMM Do YYYY')}
-									</h3>
-									<div className="flex flex-col mt-4">
-										{trainingRecord.trainings.map((training, index) => (
-											<div key={`${trainingRecord.id}-${index}`}
-												 className="flex items-center mb-4">
-												<span
-													className="text-gray-500">{training.exercise.muscleGroup.name}</span>
-												<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
-											</div>
-										))}
-									</div>
-								</div>
-							))
-						) : (
-							<div className="text-gray-500 text-center">Записи тренировок отсутствуют.</div>
-						)}
-					</div>
-				</div>
-			)}
+			{/* Displaying training records */}
+			{selectedDate && filteredTrainings.length > 0 ? renderTrainingRecords() : null}
 		</div>
 	);
 };
