@@ -12,8 +12,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	const [trainings, setTrainings] = useState(
 		id ? trainingData.trainings.map(training => ({
 			...training,
-			muscleGroup: training.exercise?.muscleGroup || null, // Initialize muscleGroup
-			exercise: training.exercise || null, // Initialize exercise
+			muscleGroup: training.exercise?.muscleGroup || null,
+			exercise: training.exercise || null,
 		})) : []
 	);
 
@@ -29,7 +29,6 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		loadMuscleGroups();
 	}, []);
 
-	// Reset the form to the initial state
 	const resetForm = () => {
 		setTrainings([]);
 		setDate(dayjs().format('YYYY-MM-DDTHH:mm'));
@@ -46,6 +45,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 			},
 		]);
 	};
+
 	const handleRemoveTraining = (index) => {
 		setTrainings((prevTrainings) => prevTrainings.filter((_, i) => i !== index));
 	};
@@ -90,21 +90,21 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 	const handleSave = async () => {
 		const payload = {
-			...(id && {id}), // Include id only if it exists
+			...(id && {id}),
 			date: date,
 			trainings: trainings.map((training) => ({
-				...(training.id && {id: training.id}), // Conditionally include training id
+				...(training.id && {id: training.id}),
 				exercise: {
-					...(training.exercise?.id && {id: training.exercise.id}), // Conditionally include exercise id
+					...(training.exercise?.id && {id: training.exercise.id}),
 					name: training.exercise.name,
 					description: training.exercise.description || "No description",
 					muscleGroup: {
-						...(training.exercise.muscleGroup?.id && {id: training.exercise.muscleGroup.id}), // Conditionally include muscle group id
+						...(training.exercise.muscleGroup?.id && {id: training.exercise.muscleGroup.id}),
 						name: training.exercise.muscleGroup.name,
 					},
 				},
 				trainingDetails: training.trainingDetails.map((detail) => ({
-					...(detail.id && {id: detail.id}), // Conditionally include detail id
+					...(detail.id && {id: detail.id}),
 					set: detail.set,
 					weight: detail.weight,
 					repetition: detail.repetition,
@@ -114,7 +114,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		try {
 			await saveTraining(payload);
 			alert(`Training record ${id ? 'updated' : 'saved'} successfully!`);
-			onTrainingAdded(); // Notify parent component to refresh the training list
+			onTrainingAdded();
 			onClose();
 		} catch (error) {
 			console.error('Error saving training:', error);
@@ -125,13 +125,13 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	useEffect(() => {
 		if (isOpen) {
 			if (!id) {
-				resetForm(); // Reset form when opening in add mode
+				resetForm();
 			} else {
-				setDate(trainingData.date); // Set date if in edit mode
-				setTrainings(trainingData.trainings); // Set trainings if in edit mode
+				setDate(trainingData.date);
+				setTrainings(trainingData.trainings);
 			}
 		}
-	}, [isOpen, trainingData]); // Dependency array includes trainingData to reset when it changes
+	}, [isOpen, trainingData]);
 
 	if (!isOpen) return null;
 
@@ -158,7 +158,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				</div>
 
 				{/* Training Forms */}
-				<div className="flex flex-col mb-6 max-h-[65vh] overflow-y-scroll">
+				<div
+					className="flex flex-col mb-4 max-h-[60vh] sm:max-h-[70vh] md:max-h-[80vh] lg:max-h-[90vh] overflow-y-scroll">
 					{trainings.map((training, index) => (
 						<TrainingFormFields
 							key={index}
@@ -175,13 +176,13 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				</div>
 
 				{/* Action Buttons */}
-				<div className="flex justify-between items-center mt-6">
+				<div className="flex justify-between items-center">
 					{/* Add Button */}
 					<button
 						onClick={handleAdd}
 						className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 transition"
 					>
-						<FaPlus className="text-2xl font-bold"></FaPlus>
+						<FaPlus className="text-2xl font-bold"/>
 					</button>
 
 					{/* Save and Cancel Buttons */}
@@ -216,7 +217,7 @@ TrainingForm.propTypes = {
 		date: PropTypes.string,
 		trainings: PropTypes.arrayOf(PropTypes.object),
 	}),
-	onTrainingAdded: PropTypes.func.isRequired, // New prop for notifying the parent
+	onTrainingAdded: PropTypes.func.isRequired,
 };
 
 export default TrainingForm;
