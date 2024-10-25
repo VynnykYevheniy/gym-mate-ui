@@ -52,7 +52,7 @@ const UserProfile = () => {
 
 
 	return (
-		<main className="flex flex-col items-center p-6 pb-12">
+		<main className=" flex items-center justify-center flex-col p-4 pb-12 ">
 			{/* Profile Section */}
 			<section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
 				<div
@@ -126,19 +126,24 @@ const UserProfile = () => {
 					))}
 				</ul>
 
-				<WeightChart data={sampleData} />
+
 			</section>
-			{/* Floating Action Button */}
-			<div className="fixed bottom-6 right-6 mb-20">
-				<button
-					aria-label="Edit Profile"
-					onClick={handleEditProfile}
-					className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
-					<FaUserCircle className="h-8 w-8"/>
-				</button>
-			</div>
+			<section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
+				<WeightChart data={sampleData}/>
+			</section>
+				{/* Floating Action Button */}
+				<div className="fixed bottom-6 right-6 mb-20">
+					<button
+						aria-label="Edit Profile"
+						onClick={handleEditProfile}
+						className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
+						<FaUserCircle className="h-8 w-8"/>
+					</button>
+				</div>
+
 		</main>
-	);
+
+);
 };
 
 export default UserProfile;

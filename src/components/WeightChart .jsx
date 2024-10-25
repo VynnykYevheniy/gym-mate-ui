@@ -28,7 +28,7 @@ const WeightChart = ({ data = [] }) => {
     }, [data]);
 
     return (
-        <div className="max-w-4xl mx-auto bg-white p-6 shadow-md rounded-lg h-3/6">
+        <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg h-3/6">
             <h2 className="text-xl font-semibold text-center mb-4">Weight</h2>
             {chartData.labels ? (
                     <div className="h-3/6">
