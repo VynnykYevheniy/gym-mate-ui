@@ -116,7 +116,7 @@ const Calendar = () => {
 	);
 
 	return (
-		<div className="flex flex-col items-center justify-center p-4 pb-20 ">
+		<div className="flex flex-col items-center justify-center p-4 pb-16 ">
 			{/* Month navigation */}
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
 				<button onClick={() => changeMonth(-1)}
