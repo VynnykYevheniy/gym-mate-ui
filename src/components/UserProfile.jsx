@@ -4,11 +4,31 @@ import {useTranslation} from 'react-i18next';
 import {currentUser} from "../service/UserService.jsx";
 import {useEffect, useState} from "react";
 import Loader from "./Loader.jsx";
+import WeightChart from "./WeightChart .jsx"
+
 
 const UserProfile = () => {
 	const {t} = useTranslation();
 	const [user, setUser] = useState(null);
+	const sampleData = [
+		{ date: '2023-10-01', weight: 55 },
+		{ date: '2023-10-02', weight: 58 },
+		{ date: '2023-10-03', weight: 69 },
+		{ date: '2023-10-04', weight: 70 },
+		{ date: '2023-12-04', weight: 80 },
+		{ date: '2023-10-04', weight: 67 },
+		{ date: '2023-10-04', weight: 90 },
+		{ date: '2023-10-04', weight: 76 },
+		{ date: '2023-10-04', weight: 73 },
+		{ date: '2023-10-04', weight: 80 },
+		{ date: '2023-10-04', weight: 90 },
+		{ date: '2023-10-04', weight: 92 },
+		{ date: '2023-10-04', weight: 73 },
+		{ date: '2023-12-04', weight: 79 },
+		{ date: '2023-12-04', weight: 82 },
+		{ date: '2024-10-05', weight: 101 },
 
+	];
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
@@ -105,6 +125,8 @@ const UserProfile = () => {
 						</li>
 					))}
 				</ul>
+
+				<WeightChart data={sampleData} />
 			</section>
 			{/* Floating Action Button */}
 			<div className="fixed bottom-6 right-6 mb-20">
