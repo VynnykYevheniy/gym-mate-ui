@@ -11,7 +11,7 @@ const Loader = () => {
 					<div
 						className="relative w-20 h-20 rounded-full border-4 border-blue-300 border-t-transparent animate-spin"></div>
 				</div>
-				<div className="mt-4 text-xs font-medium text-blue-800">Loading...</div>
+				<div className="mt-11 text-xs font-medium text-blue-800">Loading...</div>
 			</div>
 		</div>
 	);

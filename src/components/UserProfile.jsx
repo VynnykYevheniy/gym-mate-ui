@@ -77,12 +77,12 @@ const UserProfile = () => {
 				</ul>
 
 				{/* Profile Details */}
-				<ul className="space-y-6">
+				<ul className="grid grid-cols-2 md:grid-cols-4 gap-6">
 					{[
 						{
 							icon: <FaPhone className="mr-3 text-blue-600"/>,
 							label: t('userProfile.phoneNumber'),
-							value: user.phoneNumber || '+1234567890',
+							value: user.phoneNumber || '+380681231337',
 							bgColor: 'bg-blue-100',
 							textColor: 'text-blue-600',
 						},
@@ -95,19 +95,19 @@ const UserProfile = () => {
 						},
 					].map((item, index) => (
 						<li key={index}
-							className={`flex items-center justify-between border-2 p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl ${item.bgColor}`}>
-							<div className={`flex items-center justify-center rounded-full p-3 ${item.bgColor}`}>
+							className={`flex items-center justify-between border-2 p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl ${item.bgColor}`}>
+							<div className={`flex items-center justify-center rounded-full ${item.bgColor}`}>
 								{item.icon}
 							</div>
-							<div className="flex flex-col md:flex-row md:items-center md:justify-between ml-4">
-								<span className={`ml-2 ${item.textColor} font-medium`}>{item.value}</span>
+							<div className="flex flex-col md:flex-row md:items-center md:justify-between">
+								<span className={`${item.textColor} font-medium`}>{item.value}</span>
 							</div>
 						</li>
 					))}
 				</ul>
 			</section>
 			{/* Floating Action Button */}
-			<div className="fixed bottom-6 right-6">
+			<div className="fixed bottom-6 right-6 mb-20">
 				<button
 					aria-label="Edit Profile"
 					onClick={handleEditProfile}

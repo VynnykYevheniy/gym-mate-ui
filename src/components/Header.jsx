@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import HamburgerMenu from './HamburgerMenu';
+import Footer from "./Footer.jsx";
 
 export default function Header() {
 	const [token, setToken] = useState(localStorage.getItem('token')); // Инициализируем состояние токена
@@ -47,7 +48,7 @@ export default function Header() {
 	};
 
 	return (
-		<header className="relative flex items-center justify-between p-4 bg-white shadow-lg">
+		<header className="relative flex items-center justify-between p-2 bg-white shadow-lg">
 			<Link to="/" className="flex items-center gap-2">
 				<div className="h-10 w-10 bg-[url('./assets/biceps.svg')] bg-no-repeat bg-contain"/>
 				<span className="text-2xl font-black text-gray-800">

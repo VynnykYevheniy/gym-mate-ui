@@ -91,7 +91,7 @@ const Calendar = () => {
 	);
 
 	const renderTrainingRecords = () => (
-		<div className="h-60 sm:h-80 lg:h-96 mt-6 w-full max-w-md">
+		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
 			{filteredTrainings.map((trainingRecord) => (
 				<div
 					key={trainingRecord.id}
@@ -116,7 +116,7 @@ const Calendar = () => {
 	);
 
 	return (
-		<div className="flex flex-col items-center justify-center p-4">
+		<div className="flex flex-col items-center justify-center p-4 pb-20 ">
 			{/* Month navigation */}
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
 				<button onClick={() => changeMonth(-1)}

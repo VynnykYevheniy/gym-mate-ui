@@ -41,15 +41,6 @@ const HamburgerMenu = () => {
 			{isOpen && (
 				<div className="absolute right-0 w-48 bg-white shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
-						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/" onClick={handleMenuItemClick}>Profile</Link>
-						</li>
-						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/training" onClick={handleMenuItemClick}>Training</Link>
-						</li>
-						<li className="px-4 py-2 hover:bg-green-600">
-							<Link to="/calendar" onClick={handleMenuItemClick}>Calendar</Link>
-						</li>
 						<li className="px-4 py-2 hover:bg-red-600">
 							{/* Закрываем меню и выполняем логаут */}
 							<button onClick={handleLogoutClick}>Log out</button>
