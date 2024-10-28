@@ -34,7 +34,7 @@ export const loginRequest = async (login, password) => {
 export const authenticateTelegramUser = async (userData) => {
 	try {
 		const response = await axiosInstance.post(ApiUrls.AUTH.TELEGRAM, userData);
-		return handleToken(response.data, navigate);
+		return handleToken(response.data);
 	} catch (error) {
 		throw new Error('Telegram authentication failed: ' + error.message);
 	}
@@ -50,8 +50,7 @@ export const registerRequest = async (login, email, password) => {
 	}
 };
 
-
 // Function to log out the user
 export const handleLogout = () => {
-	localStorage.removeItem('token');
+	localStorage.clear();
 };
