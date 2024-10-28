@@ -40,7 +40,7 @@ const HamburgerMenu = () => {
 			</button>
 
 			{isOpen && (
-				<div className="absolute right-0 w-48 bg-white shadow-lg mt-2 rounded-md z-50">
+				<div className="absolute right-0 w-48 bg-slate-50 shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
 						<li className="px-4 py-2 hover:bg-red-600">
 							{/* Закрываем меню и выполняем логаут */}
