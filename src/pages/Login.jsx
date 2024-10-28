@@ -27,6 +27,8 @@ export default function Login() {
 		try {
 			const token = await loginRequest(login, password);
 			if (token) {
+				const user = await currentUser();
+				localStorage.setItem("user", JSON.stringify(user));
 				if (activeTab === 'client') {
 					navigate('/client'); // Route for client
 					localStorage.setItem("profileLink", "/client");
@@ -34,8 +36,6 @@ export default function Login() {
 					navigate('/trainer'); // Route for trainer
 					localStorage.setItem("profileLink", "/trainer");
 				}
-				const user = await currentUser();
-				localStorage.setItem("user", JSON.stringify(user));
 			}
 		} catch (error) {
 			setError(t('invalidCredentials') + error);
