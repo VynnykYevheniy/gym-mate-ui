@@ -89,7 +89,9 @@
 	"forgotPassword": "Forgot your password?",
 	"signIn": "Sign in",
 	"dontHaveAccount": "Don't have an account?",
-	"signUp": "Sign up"
+	"signUp": "Sign up",
+	"client" : "Client",
+	"trainer" : "Trainer"
   },
   "header": {
 	"signIn": "Sign In",

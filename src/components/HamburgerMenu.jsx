@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {handleLogout} from '../service/AuthService.jsx';
 
 const HamburgerMenu = () => {
@@ -16,8 +16,9 @@ const HamburgerMenu = () => {
 	};
 
 	const handleLogoutClick = () => {
-		handleLogout(navigate); // Выполняем логаут
+		handleLogout(); // Выполняем логаут
 		handleMenuItemClick();  // Закрываем меню
+		navigate('/signin');
 	};
 
 	return (

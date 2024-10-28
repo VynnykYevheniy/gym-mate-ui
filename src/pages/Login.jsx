@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom"; // Импортируйте Link
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import Loader from '../components/Loader';
 import WelcomeBackSvg from '../assets/welcome_back.svg';
@@ -6,14 +6,15 @@ import LoginSvg from '../assets/login.svg';
 import PasswordSvg from '../assets/password.svg';
 import ErrorSvg from '../assets/error.svg';
 import {loginRequest} from "../service/AuthService.jsx";
-import {useTranslation} from 'react-i18next'; // Импортируйте хук useTranslation
+import {useTranslation} from 'react-i18next';
 
 export default function Login() {
-	const {t} = useTranslation(); // Используйте хук для получения функции перевода
+	const {t} = useTranslation();
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [activeTab, setActiveTab] = useState('client'); // Track selected tab
 	const navigate = useNavigate();
 
 	const handleInputChange = (setter) => (e) => setter(e.target.value);
@@ -23,19 +24,23 @@ export default function Login() {
 		setLoading(true);
 
 		try {
-			setError("login:" + login);
-			setError("password:" + password);
 			const token = await loginRequest(login, password, navigate);
-			if (!token) {
-				setError(t('invalidCredentials') + error); // Используйте перевод для ошибки
+			if (token) {
+				// Conditional navigation based on activeTab
+				if (activeTab === 'client') {
+					navigate('/client'); // Route for client
+				} else if (activeTab === 'trainer') {
+					navigate('/trainer'); // Route for trainer
+				}
 			}
 		} catch (error) {
-			setError(t('invalidCredentials') + error); // Используйте перевод для ошибки
+			setError(t('invalidCredentials') + error);
 			console.error(error);
 		} finally {
 			setLoading(false);
 		}
 	};
+
 
 	const renderError = () => (
 		error && (
@@ -58,7 +63,25 @@ export default function Login() {
 					</div>
 					<div
 						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
+
+						{/* Tabs for Client and Trainer */}
+						<div className="flex justify-center mb-4">
+							<button
+								className={`px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'client' ? 'text-green-700 border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
+								onClick={() => setActiveTab('client')}
+							>
+								{t('auth.client')}
+							</button>
+							<button
+								className={`ml-4 px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'trainer' ? 'text-green-700 border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
+								onClick={() => setActiveTab('trainer')}
+							>
+								{t('auth.trainer')}
+							</button>
+						</div>
+
 						{renderError()}
+
 						<form onSubmit={handleSubmit} autoComplete="off" className="mt-6 space-y-6">
 							{/* Login Field */}
 							<div>
