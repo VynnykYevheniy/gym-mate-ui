@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import Swal from 'sweetalert2';
-import axiosInstance from '../api/axiosConfig'; // Импортируем настроенный экземпляр Axios
+import axiosInstance from '../api/axiosConfig';
 import ApiUrls from "../model/ApiUrls.js";
 import SearchBar from './SearchBar.jsx';
 import TrainingForm from "./TrainingForm.jsx";
@@ -15,20 +15,20 @@ import {
 	FaRunning,
 	FaSwimmer,
 	FaWalking,
-	FaTimes // Импортируем иконку крестика
+	FaTimes
 } from 'react-icons/fa';
-import Loader from "./Loader.jsx"; // Подобранные иконки
+import Loader from "./Loader.jsx";
 
 const muscleGroupIcons = {
-	"Ноги": <FaRunning className="text-green-500"/>,      // Иконка для ног (бег)
-	"Бицепс": <FaHandRock className="text-blue-500"/>,    // Иконка для бицепса (сжатый кулак)
-	"Предплечье": <FaDumbbell className="text-purple-500"/>, // Иконка для предплечья (гантель)
-	"Плечи": <FaChevronUp className="text-orange-500"/>,   // Иконка для плеч (направление вверх)
-	"Трицепс": <FaBiking className="text-yellow-500"/>,    // Иконка для трицепса (движение на велосипеде — руки активно работают)
-	"Икры": <FaWalking className="text-red-500"/>,        // Иконка для икр (ходьба, ноги в движении)
-	"Спина": <FaSwimmer className="text-teal-500"/>,      // Иконка для спины (плавание — сильная нагрузка на спину)
-	"Грудь": <FaHeartbeat className="text-pink-500"/>,    // Иконка для груди (сердце, ассоциация с грудными мышцами)
-	"Пресс": <FaChild className="text-green-500"/>,       // Иконка для пресса (движение — тело)
+	"Ноги": <FaRunning className="text-green-500"/>,
+	"Бицепс": <FaHandRock className="text-blue-500"/>,
+	"Предплечье": <FaDumbbell className="text-purple-500"/>,
+	"Плечи": <FaChevronUp className="text-orange-500"/>,
+	"Трицепс": <FaBiking className="text-yellow-500"/>,
+	"Икры": <FaWalking className="text-red-500"/>,
+	"Спина": <FaSwimmer className="text-teal-500"/>,
+	"Грудь": <FaHeartbeat className="text-pink-500"/>,
+	"Пресс": <FaChild className="text-green-500"/>,
 };
 
 const TrainingsTable = () => {
@@ -39,12 +39,11 @@ const TrainingsTable = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	// Функция для загрузки тренировок
 	const fetchTrainings = async () => {
 		try {
 			const response = await axiosInstance.get(ApiUrls.TRAINING_DAY.ALL);
 			setTrainings(response.data);
-			console.log(trainings);
+			console.log('Loaded trainings:', response.data);  // Лог для проверки загруженных данных
 		} catch (error) {
 			setError('Ошибка при загрузке данных тренировок.');
 			console.error('Error fetching trainings:', error);
@@ -53,7 +52,6 @@ const TrainingsTable = () => {
 		}
 	};
 
-	// Загружаем тренировки при монтировании компонента
 	useEffect(() => {
 		fetchTrainings();
 	}, []);
@@ -83,19 +81,12 @@ const TrainingsTable = () => {
 			cancelButtonColor: '#3085d6',
 			confirmButtonText: 'Да, удалить!',
 			cancelButtonText: 'Отмена',
-			customClass: {
-				title: 'font-bold text-lg text-gray-800',
-				text: 'text-gray-700',
-				confirmButton: 'bg-red-500 hover:bg-red-600 text-white',
-				cancelButton: 'bg-blue-500 hover:bg-blue-600 text-white'
-			},
-			backdrop: true,
 		});
 
 		if (result.isConfirmed) {
 			try {
-				await axiosInstance.delete(`${ApiUrls.TRAINING_DAY.DELETE(id)}`); // Путь к API для удаления
-				await fetchTrainings(); // Обновляем список тренировок
+				await axiosInstance.delete(`${ApiUrls.TRAINING_DAY.DELETE(id)}`);
+				await fetchTrainings();
 				Swal.fire('Удалено!', 'Тренировка была удалена.', 'success');
 			} catch (error) {
 				Swal.fire('Ошибка!', 'Не удалось удалить тренировку.', 'error');
@@ -104,13 +95,14 @@ const TrainingsTable = () => {
 		}
 	};
 
-	// Фильтрация тренировок по названию упражнения или группы мышц
-	const filteredTrainings = trainings.filter(trainingRecord => {
-		return trainingRecord.trainings.some(training =>
-			training.exercise.muscleGroup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			training.exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
-		);
-	});
+	const filteredTrainings = searchTerm
+		? trainings.filter(trainingRecord =>
+			trainingRecord.trainings.some(training =>
+				training.exercise.muscleGroup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				training.exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
+			)
+		)
+		: trainings;
 
 	return (
 		<div className="container mx-auto p-6">
@@ -124,19 +116,19 @@ const TrainingsTable = () => {
 				<div className="text-red-500 text-center">{error}</div>
 			) : (
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-					{trainings.length > 0 ? (
+					{filteredTrainings.length > 0 ? (
 						filteredTrainings.map((trainingRecord) => (
 							<div
 								key={trainingRecord.id}
 								className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
-								onClick={() => handleCardClick(trainingRecord)} // Удалить вызов для кнопки удаления
+								onClick={() => handleCardClick(trainingRecord)}
 							>
 								<button
 									onClick={(event) => {
-										event.stopPropagation(); // Остановить всплытие события
-										handleDeleteTraining(trainingRecord.id); // Обработчик удаления
+										event.stopPropagation();
+										handleDeleteTraining(trainingRecord.id);
 									}}
-									className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors" // Позиционирование и стиль для крестика
+									className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors"
 								>
 									<FaTimes className="h-6 w-6"/>
 								</button>
@@ -163,7 +155,7 @@ const TrainingsTable = () => {
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
 				trainingData={selectedTrainingRecord}
-				onTrainingAdded={fetchTrainings} // Добавлен коллбэк для обновления тренировок после добавления
+				onTrainingAdded={fetchTrainings}
 			/>
 			<button
 				onClick={() => {

@@ -1,7 +1,6 @@
 import {FaArrowsAltV, FaPhone, FaTelegramPlane, FaUserCircle} from 'react-icons/fa'; // Height icon
 import {GiWeight} from 'react-icons/gi'; // Keeping the GiWeight for weight representation
 import {useTranslation} from 'react-i18next';
-import {currentUser} from "../service/UserService.jsx";
 import {useEffect, useState} from "react";
 import Loader from "./Loader.jsx";
 import WeightChart from "./WeightChart .jsx"
@@ -11,36 +10,26 @@ const UserProfile = () => {
 	const {t} = useTranslation();
 	const [user, setUser] = useState(null);
 	const sampleData = [
-		{ date: '2023-10-01', weight: 55 },
-		{ date: '2023-10-02', weight: 58 },
-		{ date: '2023-10-03', weight: 69 },
-		{ date: '2023-10-04', weight: 70 },
-		{ date: '2023-12-04', weight: 80 },
-		{ date: '2023-10-04', weight: 67 },
-		{ date: '2023-10-04', weight: 90 },
-		{ date: '2023-10-04', weight: 76 },
-		{ date: '2023-10-04', weight: 73 },
-		{ date: '2023-10-04', weight: 80 },
-		{ date: '2023-10-04', weight: 90 },
-		{ date: '2023-10-04', weight: 92 },
-		{ date: '2023-10-04', weight: 73 },
-		{ date: '2023-12-04', weight: 79 },
-		{ date: '2023-12-04', weight: 82 },
-		{ date: '2024-10-05', weight: 101 },
+		{date: '2023-10-01', weight: 55},
+		{date: '2023-10-02', weight: 58},
+		{date: '2023-10-03', weight: 69},
+		{date: '2023-10-04', weight: 70},
+		{date: '2023-12-04', weight: 80},
+		{date: '2023-10-04', weight: 67},
+		{date: '2023-10-04', weight: 90},
+		{date: '2023-10-04', weight: 76},
+		{date: '2023-10-04', weight: 73},
+		{date: '2023-10-04', weight: 80},
+		{date: '2023-10-04', weight: 90},
+		{date: '2023-10-04', weight: 92},
+		{date: '2023-10-04', weight: 73},
+		{date: '2023-12-04', weight: 79},
+		{date: '2023-12-04', weight: 82},
+		{date: '2024-10-05', weight: 101},
 
 	];
 	useEffect(() => {
-		const fetchUserData = async () => {
-			try {
-				const user = await currentUser();
-				console.log(user);
-				setUser(user);
-			} catch (error) {
-				console.error('Ошибка:', error);
-			}
-		};
-
-		fetchUserData(); // Call the function to fetch user data
+		setUser(JSON.parse(localStorage.getItem("user"))); // Call the function to fetch user data
 	}, []); // Empty dependency array ensures this runs only once when the component mounts
 
 	if (!user) {
@@ -131,19 +120,19 @@ const UserProfile = () => {
 			<section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
 				<WeightChart data={sampleData}/>
 			</section>
-				{/* Floating Action Button */}
-				<div className="fixed bottom-6 right-6 mb-20">
-					<button
-						aria-label="Edit Profile"
-						onClick={handleEditProfile}
-						className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
-						<FaUserCircle className="h-8 w-8"/>
-					</button>
-				</div>
+			{/* Floating Action Button */}
+			<div className="fixed bottom-6 right-6 mb-20">
+				<button
+					aria-label="Edit Profile"
+					onClick={handleEditProfile}
+					className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
+					<FaUserCircle className="h-8 w-8"/>
+				</button>
+			</div>
 
 		</main>
 
-);
+	);
 };
 
 export default UserProfile;

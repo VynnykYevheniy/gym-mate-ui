@@ -7,6 +7,7 @@ import PasswordSvg from '../assets/password.svg';
 import ErrorSvg from '../assets/error.svg';
 import {loginRequest} from "../service/AuthService.jsx";
 import {useTranslation} from 'react-i18next';
+import {currentUser} from "../service/UserService.jsx";
 
 export default function Login() {
 	const {t} = useTranslation();
@@ -24,14 +25,17 @@ export default function Login() {
 		setLoading(true);
 
 		try {
-			const token = await loginRequest(login, password, navigate);
+			const token = await loginRequest(login, password);
 			if (token) {
-				// Conditional navigation based on activeTab
 				if (activeTab === 'client') {
 					navigate('/client'); // Route for client
+					localStorage.setItem("profileLink", "/client");
 				} else if (activeTab === 'trainer') {
 					navigate('/trainer'); // Route for trainer
+					localStorage.setItem("profileLink", "/trainer");
 				}
+				const user = await currentUser();
+				localStorage.setItem("user", JSON.stringify(user));
 			}
 		} catch (error) {
 			setError(t('invalidCredentials') + error);
