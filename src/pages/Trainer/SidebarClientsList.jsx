@@ -12,16 +12,19 @@ const SidebarClientsList = () => {
         { id: 1, name: 'Имя Фамилия 1', logo: UserSvg },
         { id: 2, name: 'Имя Фамилия 2', logo: UserSvg },
         { id: 3, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 4, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 5, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
     ];
 
     return (
-        <div className="mt-16 h-full">
+        <div className="">
             {/* Сайдбар с логотипами */}
             <div className="absolute top-16 left-0 h-full bg-gray-800 w-16 flex flex-col items-start justify-start space-y-6">
                 <ul className="flex flex-col items-start space-y-6">
                     {users.map((user) => (
-                        <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer">
-                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10" />
+                        <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 flex items-center">
+                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10 mx-auto" />
                         </li>
                     ))}
                 </ul>
@@ -37,7 +40,7 @@ const SidebarClientsList = () => {
                     <div className="">
                         <ul className="space-y-6">
                             {users.map((user) => (
-                                <li key={user.id} className="flex items-center">
+                                <li key={user.id} className="flex items-center h-16">
                                     {/* Логотип остаётся слева, имя выводится справа */}
                                     <span className="ml-4 text-white">{user.name}</span>
                                 </li>
