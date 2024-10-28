@@ -78,13 +78,15 @@ const Calendar = () => {
 				const weekend = isWeekend(date);
 
 				return (
-					<div
-						key={day}
-						className={`p-4 rounded-md flex items-center justify-center cursor-pointer ${isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'}`}
-						onClick={() => handleDayClick(date)} // Use handleDayClick here
-					>
-						{day}
-					</div>
+					<button className="box-border border-2 border-white rounded-md focus:outline-none focus:border-2 focus:border-green-500">
+						<div
+							key={day}
+							className={`p-4 rounded-md flex items-center justify-center cursor-pointer  ${isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'}`}
+							onClick={() => handleDayClick(date)} // Use handleDayClick here
+						>
+							{day}
+						</div>
+					</button>
 				);
 			})}
 		</div>
@@ -134,7 +136,7 @@ const Calendar = () => {
 				<div className="grid grid-cols-7 gap-1 mb-4">
 					{weekDaysShort.map((day) => (
 						<div key={day}
-							 className="flex items-center justify-center text-center font-bold text-black p-2">
+							 className="flex items-center justify-center text-center font-bold text-black p-2 ">
 							{day}
 						</div>
 					))}

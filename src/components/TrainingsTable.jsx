@@ -44,6 +44,7 @@ const TrainingsTable = () => {
 		try {
 			const response = await axiosInstance.get(ApiUrls.TRAINING_DAY.ALL);
 			setTrainings(response.data);
+			console.log(trainings);
 		} catch (error) {
 			setError('Ошибка при загрузке данных тренировок.');
 			console.error('Error fetching trainings:', error);
@@ -123,7 +124,7 @@ const TrainingsTable = () => {
 				<div className="text-red-500 text-center">{error}</div>
 			) : (
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-					{filteredTrainings.length > 0 ? (
+					{trainings.length > 0 ? (
 						filteredTrainings.map((trainingRecord) => (
 							<div
 								key={trainingRecord.id}

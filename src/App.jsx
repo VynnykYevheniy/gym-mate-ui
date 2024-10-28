@@ -9,6 +9,7 @@ import TelegramWebApp from './components/TelegramWebApp';
 import Training from './pages/Training';
 import PrivateRoute from './components/PrivateRoute';
 import CalendarTraining from "./pages/CalendarTraining.jsx";
+import TrainerProfile from "./pages/Trainer/TrainerProfile.jsx";
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 						</PrivateRoute>
 					}
 				/>
+				<Route path="/trainer" element={<TrainerProfile/>}/>
 
 			</Routes>
 
