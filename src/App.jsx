@@ -9,6 +9,7 @@ import Training from './pages/Training';
 import PrivateRoute from './components/PrivateRoute';
 import CalendarTraining from "./pages/CalendarTraining.jsx";
 import TrainerProfile from "./pages/Trainer/TrainerProfile.jsx";
+import ClientManager from "./pages/Trainer/ClientManager.jsx";
 import UserProfile from "./components/UserProfile.jsx";
 import WelcomeComponent from "./components/WelcomeComponent.jsx";
 
@@ -29,6 +30,7 @@ function App() {
 					<Route path="/training" element={<Training/>}/>
 					<Route path="/trainer" element={<TrainerProfile/>}/>
 					<Route path="/client" element={<UserProfile/>}/>
+					<Route path="/clientmanager" element={<ClientManager/>}/>
 				</Route>
 			</Routes>
 
