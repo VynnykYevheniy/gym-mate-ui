@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa";
 import {fetchTrainingsByMonth} from "../service/TrainingService.jsx";
 import TrainingForm from "./TrainingForm.jsx";
-import dayjs from "dayjs";
 
 const muscleGroupIcons = {
 	"Ноги": <FaRunning className="text-green-500"/>,
@@ -59,10 +58,10 @@ const Calendar = () => {
 	const handleDayClick = (date) => {
 		if (isGymVisited(date)) {
 			const trainingRecord = trainingData.find((t) => moment(t.date).isSame(date, 'day'));
-			setSelectedTrainingRecord(trainingRecord || {date: dayjs(date).format('YYYY-MM-DDTHH:mm')});
+			setSelectedTrainingRecord(trainingRecord || {date: date.format('YYYY-MM-DDTHH:mm')});
 			setSelectedDate(date);
 		} else {
-			setSelectedTrainingRecord({date: dayjs(date).format('YYYY-MM-DDTHH:mm')}); // Store date if no training was recorded
+			setSelectedTrainingRecord({date: date.format('YYYY-MM-DDTHH:mm')}); // Store date if no training was recorded
 			setSelectedDate(date);
 		}
 		console.log(selectedTrainingRecord);

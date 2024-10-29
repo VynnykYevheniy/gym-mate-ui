@@ -7,9 +7,13 @@ import {FaPlus} from "react-icons/fa";
 
 const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	console.log(trainingData);
-	console.log("Data: ", trainingData?.date);
-	const [date, setDate] = useState(trainingData?.date ? trainingData.date : dayjs().format('YYYY-MM-DDTHH:mm'));
-	console.log("To Data: ", date);
+	const [date, setDate] = useState(dayjs().format('YYYY-MM-DDTHH:mm'));
+
+	useEffect(() => {
+		if (trainingData?.date && dayjs(trainingData.date).isValid()) {
+			setDate(trainingData.date);
+		}
+	}, [trainingData]);
 	const id = trainingData?.id;
 	const [muscleGroups, setMuscleGroups] = useState([]);
 	const [trainings, setTrainings] = useState(id ? trainingData.trainings.map(training => ({
@@ -31,10 +35,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	}, []);
 
 	const resetForm = () => {
-		console.log("reset")
 		console.log("REset Data: ", date);
 		setTrainings([]);
-		// setDate(dayjs().format('YYYY-MM-DDTHH:mm'));
 	};
 
 	const handleAdd = () => {
@@ -127,7 +129,6 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 	useEffect(() => {
 		if (isOpen) {
-			console.log("isOpen:",trainingData.date)
 			if (!id) {
 				resetForm();
 			} else {
