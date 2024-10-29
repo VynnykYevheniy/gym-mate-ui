@@ -20,11 +20,11 @@ const SidebarClientsList = () => {
     return (
         <div className="z-10">
             {/* Сайдбар с логотипами */}
-            <div className="absolute top-16 left-0 h-full bg-gray-800 w-16 flex flex-col justify-start">
+            <div className="absolute top-16 left-0 h-full bg-neutral-600   w-16 flex flex-col justify-start">
                 <ul className="flex flex-col ">
                     {users.map((user) => (
                         <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 w-16 flex  items-center justify-center">
-                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10 rounded-full" />
+                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10 rounded-full bg-white" />
                         </li>
                     ))}
                 </ul>
@@ -32,7 +32,7 @@ const SidebarClientsList = () => {
 
             {/* Развернутая информация, если сайдбар открыт */}
             <div
-                className={`absolute top-16 left-16 h-full bg-gray-700 transition-all z-10 duration-300 ${
+                className={`absolute top-16 left-16 h-full bg-neutral-500 transition-all z-10 duration-300 ${
                     isOpen ? 'w-1/2' : 'w-0'
                 } overflow-hidden`}
             >
