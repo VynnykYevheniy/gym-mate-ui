@@ -23,8 +23,8 @@ const SidebarClientsList = () => {
             <div className="absolute top-16 left-0 h-full bg-gray-800 w-16 flex flex-col justify-start">
                 <ul className="flex flex-col ">
                     {users.map((user) => (
-                        <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 flex items-center justify-center">
-                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10" />
+                        <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 w-16 flex  items-center justify-center">
+                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10 rounded-full" />
                         </li>
                     ))}
                 </ul>

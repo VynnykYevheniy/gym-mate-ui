@@ -38,16 +38,16 @@ const ClientManager = () => {
         <main className=" flex items-center justify-center flex-col p-4 pb-12 ml-16">
 
             {/* Profile Section */}
-            <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
+            <section className="w-full max-w-4xl p-6 text-center bg-slate-50 rounded-lg shadow-lg border border-gray-400">
                 <div
                     className="flex flex-row  items-center justify-between sm:items-start sm:space-x-6 ">
                     {/* Profile Picture */}
                     <div
-                        className=" w-32 h-32 overflow-hidden  flex items-center justify-center ring-white">
+                        className=" w-32 h-32 rounded-full border-2 border-b-cyan-50 overflow-hidden  flex items-center justify-center">
                         <img
                             src={UserSvg} // путь к картинке профиля пользователя
                             alt={`${user.firstName} ${user.lastName}`}
-                            className="w-full h-full shadow-xl" // делаем изображение круглым и пропорциональным
+                            className="w-full h-full shadow-xl rounded-full object-cover bg-white" // делаем изображение круглым и пропорциональным
                         />
                     </div>
                     {/* User Info */}
