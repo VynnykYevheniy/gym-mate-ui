@@ -6,16 +6,17 @@ import TrainingFormFields from './TrainingFormFields.jsx';
 import {FaPlus} from "react-icons/fa";
 
 const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
+	console.log(trainingData);
+	console.log("Data: ", trainingData?.date);
+	const [date, setDate] = useState(trainingData?.date ? trainingData.date : dayjs().format('YYYY-MM-DDTHH:mm'));
+	console.log("To Data: ", date);
 	const id = trainingData?.id;
-	const [date, setDate] = useState(id ? trainingData.date : dayjs().format('YYYY-MM-DDTHH:mm'));
 	const [muscleGroups, setMuscleGroups] = useState([]);
-	const [trainings, setTrainings] = useState(
-		id ? trainingData.trainings.map(training => ({
-			...training,
-			muscleGroup: training.exercise?.muscleGroup || null,
-			exercise: training.exercise || null,
-		})) : []
-	);
+	const [trainings, setTrainings] = useState(id ? trainingData.trainings.map(training => ({
+		...training,
+		muscleGroup: training.exercise?.muscleGroup || null,
+		exercise: training.exercise || null,
+	})) : []);
 
 	useEffect(() => {
 		const loadMuscleGroups = async () => {
@@ -30,8 +31,10 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	}, []);
 
 	const resetForm = () => {
+		console.log("reset")
+		console.log("REset Data: ", date);
 		setTrainings([]);
-		setDate(dayjs().format('YYYY-MM-DDTHH:mm'));
+		// setDate(dayjs().format('YYYY-MM-DDTHH:mm'));
 	};
 
 	const handleAdd = () => {
@@ -47,7 +50,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	};
 
 	const handleRemoveTraining = (index) => {
-		setTrainings((prevTrainings) => prevTrainings.filter((_, i) => i !== index));
+		setTrainings(prevTrainings => prevTrainings.filter((_, i) => i !== index));
 	};
 
 	const handleMuscleGroupChange = async (index, muscleGroupId) => {
@@ -124,6 +127,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 	useEffect(() => {
 		if (isOpen) {
+			console.log("isOpen:",trainingData.date)
 			if (!id) {
 				resetForm();
 			} else {
@@ -133,13 +137,28 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		}
 	}, [isOpen, trainingData]);
 
+	const renderTrainingFields = () => (
+		trainings.map((training, index) => (
+			<TrainingFormFields
+				key={index}
+				index={index}
+				training={training}
+				muscleGroups={muscleGroups}
+				handleMuscleGroupChange={handleMuscleGroupChange}
+				handleExerciseChange={handleExerciseChange}
+				handleSetsChange={handleSetsChange}
+				handleTrainingDetailChange={handleTrainingDetailChange}
+				handleRemoveTraining={handleRemoveTraining}
+			/>
+		))
+	);
+
 	if (!isOpen) return null;
 
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 			<div
 				className="bg-green-100 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
-
 				{/* Sticky Header */}
 				<div className="sticky top-0 mb-2 border-b-2 border-b-black">
 					<h2 className="text-3xl font-bold text-gray-900 mb-2">{id ? 'Edit Training' : 'Add Training'}</h2>
@@ -160,24 +179,11 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				{/* Training Forms */}
 				<div
 					className="flex flex-col mb-4 max-h-[60vh] sm:max-h-[70vh] md:max-h-[80vh] lg:max-h-[90vh] overflow-y-scroll">
-					{trainings.map((training, index) => (
-						<TrainingFormFields
-							key={index}
-							index={index}
-							training={training}
-							muscleGroups={muscleGroups}
-							handleMuscleGroupChange={handleMuscleGroupChange}
-							handleExerciseChange={handleExerciseChange}
-							handleSetsChange={handleSetsChange}
-							handleTrainingDetailChange={handleTrainingDetailChange}
-							handleRemoveTraining={handleRemoveTraining}
-						/>
-					))}
+					{renderTrainingFields()}
 				</div>
 
 				{/* Action Buttons */}
 				<div className="flex justify-between items-center">
-					{/* Add Button */}
 					<button
 						onClick={handleAdd}
 						className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 transition"
@@ -185,7 +191,6 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 						<FaPlus className="text-2xl font-bold"/>
 					</button>
 
-					{/* Save and Cancel Buttons */}
 					<div className="flex space-x-4">
 						<button
 							onClick={handleSave}

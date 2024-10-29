@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import moment from 'moment';
 import {
 	FaBiking,
@@ -12,6 +12,8 @@ import {
 	FaWalking
 } from "react-icons/fa";
 import {fetchTrainingsByMonth} from "../service/TrainingService.jsx";
+import TrainingForm from "./TrainingForm.jsx";
+import dayjs from "dayjs";
 
 const muscleGroupIcons = {
 	"Ноги": <FaRunning className="text-green-500"/>,
@@ -24,10 +26,18 @@ const muscleGroupIcons = {
 	"Грудь": <FaHeartbeat className="text-pink-500"/>,
 	"Пресс": <FaChild className="text-green-500"/>,
 };
+
 const Calendar = () => {
 	const [currentDate, setCurrentDate] = useState(moment());
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [trainingData, setTrainingData] = useState([]);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedTrainingRecord, setSelectedTrainingRecord] = useState(null);
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		setSelectedTrainingRecord(null);
+	};
 
 	const loadTrainingsForMonth = async (month, year) => {
 		try {
@@ -48,11 +58,16 @@ const Calendar = () => {
 
 	const handleDayClick = (date) => {
 		if (isGymVisited(date)) {
+			const trainingRecord = trainingData.find((t) => moment(t.date).isSame(date, 'day'));
+			setSelectedTrainingRecord(trainingRecord || {date: dayjs(date).format('YYYY-MM-DDTHH:mm')});
 			setSelectedDate(date);
 		} else {
-			setSelectedDate(null); // Set to null if no training was recorded for the day
+			setSelectedTrainingRecord({date: dayjs(date).format('YYYY-MM-DDTHH:mm')}); // Store date if no training was recorded
+			setSelectedDate(date);
 		}
+		console.log(selectedTrainingRecord);
 	};
+
 
 	const daysInMonth = currentDate.daysInMonth();
 	const firstDayOfMonth = currentDate.clone().startOf('month').day();
@@ -67,7 +82,7 @@ const Calendar = () => {
 		? trainingData.filter((t) => moment(t.date).isSame(selectedDate, 'day'))
 		: [];
 
-	const renderCalendarDays = () => (
+	const renderCalendarDays = useCallback(() => (
 		<div className="grid grid-cols-7 gap-2 mt-1">
 			{Array.from({length: offset}).map((_, index) => (
 				<div key={`empty-${index}`}/>
@@ -78,11 +93,11 @@ const Calendar = () => {
 				const weekend = isWeekend(date);
 
 				return (
-					<button className="box-border border-2 border-white rounded-md focus:outline-none focus:border-2 focus:border-green-500">
+					<button key={day}
+							className="box-border border-2 border-white rounded-md focus:outline-none focus:border-2 focus:border-green-500">
 						<div
-							key={day}
-							className={`p-4 rounded-md flex items-center justify-center cursor-pointer  ${isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'}`}
-							onClick={() => handleDayClick(date)} // Use handleDayClick here
+							className={`p-4 rounded-md flex items-center justify-center cursor-pointer ${isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'}`}
+							onClick={() => handleDayClick(date)}
 						>
 							{day}
 						</div>
@@ -90,7 +105,7 @@ const Calendar = () => {
 				);
 			})}
 		</div>
-	);
+	), [currentDate, trainingData]); // Adding dependencies to avoid stale closures
 
 	const renderTrainingRecords = () => (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
@@ -117,8 +132,19 @@ const Calendar = () => {
 		</div>
 	);
 
+	const renderAddTrainingButton = () => {
+		return (
+			<button
+				onClick={() => setIsModalOpen(true)} // Open the modal on button click
+				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+			>
+				Записать тренировку
+			</button>
+		);
+	};
+
 	return (
-		<div className="flex flex-col items-center justify-center p-4 pb-16 ">
+		<div className="flex flex-col items-center justify-center p-4 pb-16">
 			{/* Month navigation */}
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
 				<button onClick={() => changeMonth(-1)}
@@ -136,7 +162,7 @@ const Calendar = () => {
 				<div className="grid grid-cols-7 gap-1 mb-4">
 					{weekDaysShort.map((day) => (
 						<div key={day}
-							 className="flex items-center justify-center text-center font-bold text-black p-2 ">
+							 className="flex items-center justify-center text-center font-bold text-black p-2">
 							{day}
 						</div>
 					))}
@@ -147,8 +173,15 @@ const Calendar = () => {
 				{renderCalendarDays()}
 			</div>
 
-			{/* Displaying training records */}
-			{selectedDate && filteredTrainings.length > 0 ? renderTrainingRecords() : null}
+			{/* Displaying training records or button for record training */}
+			{selectedDate && filteredTrainings.length > 0 ? renderTrainingRecords() : renderAddTrainingButton()}
+
+			<TrainingForm
+				isOpen={isModalOpen}
+				onClose={handleCloseModal}
+				trainingData={selectedTrainingRecord}
+				onTrainingAdded={() => loadTrainingsForMonth(currentDate.month() + 1, currentDate.year())} // Corrected the function to call
+			/>
 		</div>
 	);
 };
