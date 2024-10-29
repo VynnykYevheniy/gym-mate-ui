@@ -33,6 +33,10 @@ const Calendar = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedTrainingRecord, setSelectedTrainingRecord] = useState(null);
 
+	const handleCardClick = (trainingRecord) => {
+		setSelectedTrainingRecord(trainingRecord);
+		setIsModalOpen(true);
+	};
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
 		setSelectedTrainingRecord(null);
@@ -118,7 +122,8 @@ const Calendar = () => {
 					</h3>
 					<div className="flex flex-col mt-4">
 						{trainingRecord.trainings.map((training, index) => (
-							<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2">
+							<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2"
+								 onClick={() => handleCardClick(trainingRecord)}>
 								{muscleGroupIcons[training.exercise.muscleGroup.name] || (
 									<span className="text-gray-500">{training.exercise.muscleGroup.name}</span>
 								)}
