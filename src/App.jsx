@@ -1,11 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
 import Header from './components/Header';
 import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import TelegramWebApp from './components/TelegramWebApp';
 import Training from './pages/Training';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './service/PrivateRoute.jsx';
 import CalendarTraining from './pages/CalendarTraining.jsx';
 import TrainerProfile from './pages/Trainer/TrainerProfile.jsx';
 import ClientManager from './pages/Trainer/ClientManager.jsx';
@@ -13,6 +14,17 @@ import UserProfile from './components/UserProfile.jsx';
 import WelcomeComponent from './components/WelcomeComponent.jsx';
 
 function App() {
+	const navigate = useNavigate(); // Hook to programmatically navigate
+	const token = localStorage.getItem('token');
+	const profileLink = localStorage.getItem("profileLink");
+
+	useEffect(() => {
+		// Redirect to /client if the token exists
+		if (token) {
+			navigate(profileLink);
+		}
+	}, [navigate, token]); // Dependencies include navigate and token
+
 	return (
 		<>
 			<Header />
