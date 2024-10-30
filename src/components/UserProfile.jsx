@@ -3,31 +3,42 @@ import {GiWeight} from 'react-icons/gi'; // Keeping the GiWeight for weight repr
 import {useTranslation} from 'react-i18next';
 import {useEffect, useState} from "react";
 import Loader from "./Loader.jsx";
-import WeightChart from "./WeightChart .jsx"
+import WeightBMIChart from "./WeightChart .jsx"
 
 
 const UserProfile = () => {
 	const {t} = useTranslation();
 	const [user, setUser] = useState(null);
-	const sampleData = [
+	const weightData = [
 		{date: '2023-10-01', weight: 55},
 		{date: '2023-10-02', weight: 58},
 		{date: '2023-10-03', weight: 69},
 		{date: '2023-10-04', weight: 70},
 		{date: '2023-12-04', weight: 80},
 		{date: '2023-10-04', weight: 67},
-		{date: '2023-10-04', weight: 90},
 		{date: '2023-10-04', weight: 76},
 		{date: '2023-10-04', weight: 73},
 		{date: '2023-10-04', weight: 80},
 		{date: '2023-10-04', weight: 90},
 		{date: '2023-10-04', weight: 92},
-		{date: '2023-10-04', weight: 73},
 		{date: '2023-12-04', weight: 79},
-		{date: '2023-12-04', weight: 82},
-		{date: '2024-10-05', weight: 101},
-
+		{date: '2023-12-04', weight: 82}];
+	const bmiData = [
+		{ date: '2023-10-01', bmi: 18.5 },
+		{ date: '2023-10-02', bmi: 19.0 },
+		{ date: '2023-10-03', bmi: 21.4 },
+		{ date: '2023-10-04', bmi: 21.7 },
+		{ date: '2023-10-05', bmi: 22.1 },
+		{ date: '2023-10-06', bmi: 23.5 },
+		{ date: '2023-10-07', bmi: 24.1 },
+		{ date: '2023-10-08', bmi: 25.3 },
+		{ date: '2023-10-09', bmi: 26.8 },
+		{ date: '2023-10-10', bmi: 27.2 },
+		{ date: '2023-10-11', bmi: 27.5 },
+		{ date: '2023-10-12', bmi: 28.0 },
+		{ date: '2023-10-13', bmi: 28.5 },
 	];
+
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem("user"))); // Call the function to fetch user data
 	}, []); // Empty dependency array ensures this runs only once when the component mounts
@@ -41,9 +52,10 @@ const UserProfile = () => {
 
 
 	return (
-		<main className=" flex items-center justify-center flex-col p-4 pb-12 ">
+		<main className=" flex-col items-center justify-center p-4 pb-12 ">
 			{/* Profile Section */}
-			<section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
+			<section
+				className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400 mb-6">
 				<div
 					className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
 					{/* Profile Picture */}
@@ -117,8 +129,9 @@ const UserProfile = () => {
 
 
 			</section>
-			<section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
-				<WeightChart data={sampleData}/>
+			<section
+				className="w-full max-w-4xl p-2 text-center bg-white rounded-lg shadow-lg border border-gray-400 mb-6">
+				<WeightBMIChart weightData={weightData} bmiData={bmiData}/>
 			</section>
 			{/* Floating Action Button */}
 			<div className="fixed bottom-6 right-6 mb-20">
