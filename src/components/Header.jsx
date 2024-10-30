@@ -49,13 +49,13 @@ export default function Header() {
 	return (
 		<header
 			className="relative flex items-center bg-gradient-to-r from-white to-slate-50 justify-between p-2 bg-slate-50 shadow-lg h-16">
-			<div className="flex items-center gap-2">
+			<Link to="/" className="flex items-center gap-2">
 				<div className="h-10 w-10 bg-[url('./assets/biceps.svg')] bg-no-repeat bg-contain"/>
 				<span className="text-2xl font-black text-gray-800">
 					Gym
 					<span className="text-green-500"> Mate</span>
 				</span>
-			</div>
+			</Link>
 
 			<div className="flex items-center space-x-4">
 				{/* Language selector */}
