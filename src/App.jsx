@@ -20,7 +20,7 @@ function App() {
 
 	useEffect(() => {
 		// Redirect to /client if the token exists
-		if (token) {
+		if (!token) {
 			navigate(profileLink);
 		}
 	}, [navigate, token]); // Dependencies include navigate and token
