@@ -3,7 +3,7 @@ import {GiWeight} from 'react-icons/gi'; // Keeping the GiWeight for weight repr
 import {useTranslation} from 'react-i18next';
 import {useEffect, useState} from "react";
 import Loader from "./Loader.jsx";
-import WeightBMIChart from "./WeightChart .jsx"
+import WeightBMIChart from "./WeightChart.jsx"
 
 
 const UserProfile = () => {

@@ -35,10 +35,10 @@ const ClientManager = () => {
     return (
         <>
             <SidebarClientsList/>
-        <main className=" flex items-center justify-center flex-col p-4 pb-12 ml-16">
+        <main className=" flex items-center justify-center flex-col pb-12 ml-16">
 
             {/* Profile Section */}
-            <section className="w-full max-w-4xl p-6 text-center bg-gradient-to-r from-white to-slate-50 rounded-lg shadow-lg border border-gray-400">
+            <section className="w-full p-6 text-center bg-gradient-to-r from-white to-slate-50 rounded-lg">
                 <div
                     className="flex flex-row  items-center justify-between sm:items-start sm:space-x-6 ">
                     {/* Profile Picture */}
