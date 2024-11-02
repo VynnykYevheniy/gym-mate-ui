@@ -41,8 +41,8 @@ export const authenticateTelegramUser = async (userData) => {
 	}
 };
 
-export const registerRequest = async (login, email, password) => {
-	const requestBody = {login, email, password};
+export const registerRequest = async (login, email, password, role) => {
+	const requestBody = {login, email, password, role};
 	try {
 		const response = await axiosInstance.post(ApiUrls.AUTH.SIGN_UP, requestBody);
 		return response.data; // Return response data on success

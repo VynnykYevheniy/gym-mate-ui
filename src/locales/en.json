@@ -102,11 +102,15 @@
 	"createAccount": "Create your account",
 	"login": "Login",
 	"password": "Password",
-	"passwordPlaceholder": "Minimum 8 characters",
 	"confirmPassword": "Confirm Password",
 	"passwordMismatch": "Passwords do not match!",
 	"signUp": "Sign Up",
-	"alreadyHaveAccount": "Already have an account?"
+	"alreadyHaveAccount": "Already have an account?",
+	"role": {
+	  "role": "Role",
+	  "client" : "Client",
+	  "trainer" : "Trainer"
+	}
   },
   "userProfile": {
 	"title": "Profile",

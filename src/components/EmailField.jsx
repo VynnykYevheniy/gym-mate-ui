@@ -1,14 +1,14 @@
 import {useState} from 'react';
 import ErrorSvg from '../assets/error.svg';
 
-const EmailField = () => {
-	const [email, setEmail] = useState('');
+const EmailField = ({ value, onChange }) => {
 	const [error, setError] = useState('');
 
 	const handleEmailChange = (e) => {
-		setEmail(e.target.value);
+		const emailValue = e.target.value;
+		onChange(emailValue); // Call the onChange prop to update the parent state
 		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		if (e.target.value && !emailRegex.test(e.target.value)) {
+		if (emailValue && !emailRegex.test(emailValue)) {
 			setError('Please enter a valid email address.');
 		} else {
 			setError('');
@@ -25,7 +25,7 @@ const EmailField = () => {
 					type="email"
 					id="email"
 					name="email"
-					value={email}
+					value={value} // Use the value prop for controlled input
 					onChange={handleEmailChange}
 					className={`w-full rounded-md pl-10 pr-10 text-sm ${error ? 'border-red-300 text-red-900 placeholder-red-300' : 'border-gray-300 text-gray-900 placeholder-gray-300'} focus:ring-500`}
 					placeholder="arnold@schwarzenegger.com (optional)"
