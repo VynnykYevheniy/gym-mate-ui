@@ -4,6 +4,7 @@ import ApiUrls from '../model/ApiUrls.js';
 export const handleToken = (token) => {
 	if (token && token.accessToken) {
 		localStorage.setItem('token', JSON.stringify(token));
+		console.log(localStorage.getItem('token'));
 		return token;
 	}
 	return null;

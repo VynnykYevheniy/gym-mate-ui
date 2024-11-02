@@ -1,24 +1,25 @@
-import {useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {handleLogout} from '../service/AuthService.jsx';
+import { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthProvider.jsx";
 
 const HamburgerMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
+	const { logout } = useContext(AuthContext); // Получаем функцию logout из контекста
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
 
 	const handleMenuItemClick = () => {
-		// Close the menu when a menu item is clicked
+		// Закрыть меню, когда элемент меню нажат
 		setIsOpen(false);
 	};
 
 	const handleLogoutClick = () => {
-		handleLogout(); // Выполняем логаут
+		logout(); // Выполняем логаут
 		handleMenuItemClick();  // Закрываем меню
-		navigate('/signin');
+		navigate('/signin'); // Перенаправляем на страницу входа
 	};
 
 	return (

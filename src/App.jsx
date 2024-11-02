@@ -1,5 +1,4 @@
-import {Route, Routes, useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import Header from './components/Header';
 import './App.css';
 import Register from './pages/Register';
@@ -13,21 +12,12 @@ import ClientManager from './pages/Trainer/ClientManager.jsx';
 import UserProfile from './components/UserProfile.jsx';
 import WelcomeComponent from './components/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
+import {AuthProvider} from "./context/AuthProvider.jsx";
 
 function App() {
-	const navigate = useNavigate(); // Hook to programmatically navigate
-	const token = localStorage.getItem('token');
-	const profileLink = localStorage.getItem("profileLink");
-
-	useEffect(() => {
-		// Redirect to /client if the token exists
-		if (!token) {
-			navigate(profileLink);
-		}
-	}, [navigate, profileLink, token]); // Dependencies include navigate and token
 
 	return (
-		<>
+		<AuthProvider>
 			<Header/>
 			<Routes>
 				{/* WelcomeComponent доступен без авторизации */}
@@ -44,10 +34,10 @@ function App() {
 					<Route path="/client" element={<UserProfile/>}/>
 					<Route path="/clientmanager" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>
-					<Route path="/trainer/:id" element={<TrainerProfile />} />
+					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
 				</Route>
 			</Routes>
-		</>
+		</AuthProvider>
 	);
 }
 

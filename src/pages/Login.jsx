@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import Loader from '../components/Loader';
 import WelcomeBackSvg from '../assets/welcome_back.svg';
 import LoginSvg from '../assets/login.svg';
@@ -8,6 +8,7 @@ import ErrorSvg from '../assets/error.svg';
 import {loginRequest} from "../service/AuthService.jsx";
 import {useTranslation} from 'react-i18next';
 import {currentUser} from "../service/UserService.jsx";
+import AuthContext from "../context/AuthProvider.jsx";
 
 export default function Login() {
 	const {t} = useTranslation();
@@ -17,6 +18,7 @@ export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const [activeTab, setActiveTab] = useState('client'); // Track selected tab
 	const navigate = useNavigate();
+	const {login: setAuthToken} = useContext(AuthContext); // Получаем метод login из контекста
 
 	const handleInputChange = (setter) => (e) => setter(e.target.value);
 
@@ -27,6 +29,7 @@ export default function Login() {
 		try {
 			const token = await loginRequest(login, password);
 			if (token) {
+				console.log(token);
 				const user = await currentUser();
 				localStorage.setItem("user", JSON.stringify(user));
 				if (activeTab === 'client') {
@@ -36,6 +39,7 @@ export default function Login() {
 					navigate('/trainer'); // Route for trainer
 					localStorage.setItem("profileLink", "/trainer");
 				}
+				setAuthToken(token);
 			}
 		} catch (error) {
 			setError(t('invalidCredentials') + error);

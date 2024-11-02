@@ -1,47 +1,14 @@
-import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import HamburgerMenu from './HamburgerMenu';
+import AuthContext from "../context/AuthProvider.jsx";
+import {useContext} from "react";
 
 export default function Header() {
-	const [token, setToken] = useState(localStorage.getItem('token')); // Инициализируем состояние токена
+	const {token} = useContext(AuthContext);
 	const {t, i18n} = useTranslation();
+	const profileLink = localStorage.getItem('profileLink') || "/";
 
-	useEffect(() => {
-		const handleTokenChange = () => {
-			setToken(localStorage.getItem('token')); // Обновляем состояние токена при изменении или удалении
-		};
-
-		// Перехватываем изменения токена в localStorage
-		window.addEventListener('storage', handleTokenChange);
-
-		// Переопределяем localStorage.setItem для обновления токена
-		const originalSetItem = localStorage.setItem;
-		localStorage.setItem = function (key, value) {
-			originalSetItem.apply(this, arguments);
-			if (key === 'token') {
-				handleTokenChange(); // Обновляем токен после логина/разлогина
-			}
-		};
-
-		// Переопределяем localStorage.removeItem для отслеживания удаления токена
-		const originalRemoveItem = localStorage.removeItem;
-		localStorage.removeItem = function (key) {
-			originalRemoveItem.apply(this, arguments);
-			if (key === 'token') {
-				handleTokenChange(); // Обновляем токен после его удаления
-			}
-		};
-
-		// Убираем обработчики при размонтировании компонента
-		return () => {
-			window.removeEventListener('storage', handleTokenChange);
-			localStorage.setItem = originalSetItem; // Восстанавливаем оригинальный setItem
-			localStorage.removeItem = originalRemoveItem; // Восстанавливаем оригинальный removeItem
-		};
-	}, []);
-
-	// Функция для смены языка
 	const changeLanguage = (lng) => {
 		i18n.changeLanguage(lng);
 	};
@@ -49,7 +16,7 @@ export default function Header() {
 	return (
 		<header
 			className="relative flex items-center justify-between p-2 bg-white h-16">
-			<Link to="/" className="flex items-center gap-2">
+			<Link to={profileLink} className="flex items-center gap-2">
 				<div className="h-10 w-10 bg-[url('./assets/biceps.svg')] bg-no-repeat bg-contain"/>
 				<span className="text-2xl font-black text-gray-800">
 					Gym
@@ -58,7 +25,6 @@ export default function Header() {
 			</Link>
 
 			<div className="flex items-center space-x-4">
-				{/* Language selector */}
 				<select
 					onChange={(e) => changeLanguage(e.target.value)}
 					className="rounded-md border border-gray-300 bg-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500">
