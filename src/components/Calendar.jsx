@@ -9,10 +9,14 @@ import {
 	FaHeartbeat,
 	FaRunning,
 	FaSwimmer,
+	FaTimes,
 	FaWalking
 } from "react-icons/fa";
 import {fetchTrainingsByMonth} from "../service/TrainingService.jsx";
 import TrainingForm from "./TrainingForm.jsx";
+import Swal from "sweetalert2";
+import axiosInstance from "../api/axiosConfig.jsx";
+import ApiUrls from "../model/ApiUrls.js";
 
 const muscleGroupIcons = {
 	"Ноги": <FaRunning className="text-green-500"/>,
@@ -49,6 +53,34 @@ const Calendar = () => {
 		} catch (error) {
 			console.error('Failed to load training data:', error);
 		}
+	};
+
+	const handleDeleteTraining = async (id) => {
+		const result = await Swal.fire({
+			title: 'Вы уверены?',
+			text: 'Вы хотите удалить эту тренировку? Это действие нельзя отменить.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Да, удалить!',
+			cancelButtonText: 'Отмена',
+		});
+
+		if (result.isConfirmed) {
+			try {
+				await axiosInstance.delete(`${ApiUrls.TRAINING_DAY.DELETE(id)}`);
+				await loadTrainingsForMonth();
+				Swal.fire('Удалено!', 'Тренировка была удалена.', 'success');
+			} catch (error) {
+				Swal.fire('Ошибка!', 'Не удалось удалить тренировку.', 'error');
+				console.error('Error deleting training:', error);
+			}
+		}
+	};
+	const formatDate = (dateString) => {
+		const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+		return new Date(dateString).toLocaleDateString('ru-RU', options);
 	};
 
 	useEffect(() => {
@@ -112,27 +144,39 @@ const Calendar = () => {
 
 	const renderTrainingRecords = () => (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
-			{filteredTrainings.map((trainingRecord) => (
-				<div
-					key={trainingRecord.id}
-					className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
-				>
-					<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
-						{moment(trainingRecord.date).format('MMMM Do YYYY')}
-					</h3>
-					<div className="flex flex-col mt-4">
-						{trainingRecord.trainings.map((training, index) => (
-							<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2"
-								 onClick={() => handleCardClick(trainingRecord)}>
-								{muscleGroupIcons[training.exercise.muscleGroup.name] || (
-									<span className="text-gray-500">{training.exercise.muscleGroup.name}</span>
-								)}
-								<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
-							</div>
-						))}
+			{filteredTrainings.length > 0 ? (
+				filteredTrainings.map((trainingRecord) => (
+					<div
+						key={trainingRecord.id}
+						className="bg-white  border-transparent rounded-xl p-4 cursor-pointer transition-transform duration-200 transform hover:scale-102 hover:border-1 active:scale-98 hover:shadow-lg hover:border-gray-300"
+						onClick={() => handleCardClick(trainingRecord)}
+					>
+						<button
+							onClick={(event) => {
+								event.stopPropagation();
+								handleDeleteTraining(trainingRecord.id);
+							}}
+							className="absolute top-2 right-2 rounded-md border border-slate-100 p-2.5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-500 hover:text-white hover:bg-slate-400 hover:border-slate-400 focus:text-white focus:bg-slate-500 focus:border-slate-500 active:border-slate-600 active:text-white active:bg-slate-600 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+						>
+							<FaTimes className="h-6 w-6"/>
+						</button>
+						<h3 className="text-sm text-gray-400 mb-2 pb-1 text-left">
+							{formatDate(trainingRecord.date)}
+						</h3>
+						<div className="flex flex-col mt-4">
+							{trainingRecord.trainings.map((training, index) => (
+								<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4">
+									{muscleGroupIcons[training.exercise.muscleGroup.name] ||
+										<span className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
+									<p className=" text-m text-gray-800 ml-3">{training.exercise.name}</p>
+								</div>
+							))}
+						</div>
 					</div>
-				</div>
-			))}
+				))
+			) : (
+				<div className="text-gray-400 text-center">Записи тренировок отсутствуют.</div>
+			)}
 		</div>
 	);
 

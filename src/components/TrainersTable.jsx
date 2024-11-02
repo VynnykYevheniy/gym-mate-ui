@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import SearchBar from './SearchBar.jsx';
 import Loader from "./Loader.jsx";
-import { FaStar, FaUserFriends, FaUserTie } from 'react-icons/fa';
-import { fetchTrainers } from "../service/TrainerService.jsx";
-import { fetchUserSubscriptions, subscribeToTrainer, unsubscribeToTrainer } from "../service/ClientService.jsx";
+import {FaStar, FaUserFriends, FaUserTie} from 'react-icons/fa';
+import {fetchTrainers} from "../service/TrainerService.jsx";
+import {fetchUserSubscriptions, subscribeToTrainer, unsubscribeToTrainer} from "../service/ClientService.jsx";
 
 const TrainersTable = () => {
 	const [trainers, setTrainers] = useState([]);
@@ -82,7 +82,8 @@ const TrainersTable = () => {
 								className="flex items-center bg-white border border-gray-50 rounded-xl p-2 cursor-pointer transition-transform duration-200 hover:shadow-lg hover:scale-105 active:scale-95 w-full max-w-lg mx-auto"
 							>
 								{/* Profile Picture */}
-								<div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden mr-3 shadow-sm">
+								<div
+									className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden mr-3 shadow-sm">
 									{trainer.user.photoUrl ? (
 										<img
 											src={trainer.user.photoUrl}
