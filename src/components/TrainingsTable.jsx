@@ -107,7 +107,7 @@ const TrainingsTable = () => {
 	return (
 		<div className="container mx-auto p-6">
 			<div className="w-full mb-4">
-				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm}/>
+				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} phText="Поиск по упражнениям или группам мышц..."/>
 			</div>
 
 			{loading ? (

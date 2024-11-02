@@ -30,6 +30,9 @@ class ApiUrls {
 	static MUSCLE_GROUP = {
 		ALL: `/muscleGroup`,
 	};
+	static TRAINER={
+		ALL: `/trainer`,
+	};
 }
 
 export default ApiUrls;

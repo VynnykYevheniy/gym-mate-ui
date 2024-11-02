@@ -29,25 +29,27 @@ export default function BottomNavbar() {
 
 	return (
 		<div className="fixed inset-x-0 bottom-0 bg-white shadow-lg z-50 h-16">
-			<div className="flex justify-between items-center p-4">
-				<Link to={profileLink || '/'} className="flex flex-col items-center text-gray-500 hover:text-green-600">
-					<img src={UserSvg} alt="Profile Icon" className="h-5 w-5 text-red-400"/>
+			<div className="flex justify-between items-center p-2">
+				<Link to={profileLink || '/'}
+					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={UserSvg} alt="Profile Icon" className="h-6 w-6 mb-1"/>
 					<span>Profile</span>
 				</Link>
-				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-green-600">
-					<img src={CalendarSvg} alt="Calendar Icon" className="h-5 w-5 text-red-400"/>
+				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={CalendarSvg} alt="Calendar Icon" className="h-6 w-6 mb-1"/>
 					<span>Calendar</span>
 				</Link>
-				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-green-600">
-					<img src={WorkoutSvg} alt="Workout Icon" className="h-5 w-5 text-red-400"/>
+				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1"/>
 					<span>Workout</span>
 				</Link>
-				<Link to="/trainer" className="flex flex-col items-center text-gray-500 hover:text-green-600">
-					<img src={Trainer} alt="Trainer Icon" className="h-5 w-5 text-red-400"/>
+				<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
 					<span>Trainer</span>
 				</Link>
-				<Link to="/clientmanager" className="flex flex-col items-center text-gray-500 hover:text-green-600">
-					<img src={ManagerSvg} alt="Manager Icon" className="h-5 w-5 text-red-400"/>
+				<Link to="/clientmanager"
+					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={ManagerSvg} alt="Manager Icon" className="h-6 w-6 mb-1"/>
 					<span>Client Manager</span>
 				</Link>
 			</div>
