@@ -139,7 +139,7 @@ const TrainingsTable = () => {
 									{trainingRecord.trainings.map((training, index) => (
 										<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4">
 											{muscleGroupIcons[training.exercise.muscleGroup.name] || <span className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
-											<p className=" text-m text-gray-800 ml-3">{training.exercise.name}</p>
+											<p className=" text-m text-gray-800 ml-3 text-left">{training.exercise.name}</p>
 										</div>
 									))}
 								</div>

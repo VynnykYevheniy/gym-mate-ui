@@ -62,9 +62,6 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 
 	return (
 		<div className="max-w-4xl mx-auto bg-white" {...handlers}>
-			<h2 className="text-xl font-semibold text-center mb-4">
-				{chartType === 'weight' ? 'Weight' : 'BMI'}
-			</h2>
 			{chartData.labels ? (
 				<div>
 					<Line
@@ -105,10 +102,10 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 			) : (
 				<p className="text-center text-gray-500">No data available</p>
 			)}
-			<p className="text-center text-gray-400 mt-2 align-middle">
+			<p className="text-center text-gray-400 mt-2 align-middle ">
 				{chartType === 'weight' ?
-					<img src={FleckLeftSvg} alt="" className="h-2 w-2"/>
-					: <img src={FleckLeftSvg} alt="" className="h-2 w-2"/>
+					<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
+					: <img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
 				}
 			</p>
 		</div>

@@ -168,7 +168,7 @@ const Calendar = () => {
 								<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4">
 									{muscleGroupIcons[training.exercise.muscleGroup.name] ||
 										<span className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
-									<p className=" text-m text-gray-800 ml-3">{training.exercise.name}</p>
+									<p className=" text-m text-gray-800 ml-3 text-left">{training.exercise.name}</p>
 								</div>
 							))}
 						</div>
@@ -182,12 +182,18 @@ const Calendar = () => {
 
 	const renderAddTrainingButton = () => {
 		return (
-			<button
-				onClick={() => setIsModalOpen(true)} // Open the modal on button click
-				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-			>
-				Записать тренировку
-			</button>
+			<>
+
+
+				<button
+					onClick={() => setIsModalOpen(true)} // Open the modal on button click
+					className="mt-4 px-4 py-2 bg-green-400 text-white rounded hover:bg-green-300 focus:outline-none focus:ring-4 focus:ring-green-500 transition	"
+				>
+					Add Training
+				</button>
+			</>
+
+
 		);
 	};
 
