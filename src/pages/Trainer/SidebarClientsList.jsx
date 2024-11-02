@@ -20,7 +20,7 @@ const SidebarClientsList = () => {
     return (
         <div className="z-10">
             {/* Сайдбар с логотипами */}
-            <div className="absolute top-16 left-0 h-full bg-neutral-600   w-16 flex flex-col justify-start">
+            <div className="absolute top-16 left-0 h-full w-16 flex flex-col justify-start">
                 <ul className="flex flex-col ">
                     {users.map((user) => (
                         <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 w-16 flex  items-center justify-center">

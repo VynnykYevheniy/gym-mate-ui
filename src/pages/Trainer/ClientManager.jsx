@@ -38,7 +38,7 @@ const ClientManager = () => {
         <main className=" flex items-center justify-center flex-col pb-12 ml-16">
 
             {/* Profile Section */}
-            <section className="w-full p-6 text-center bg-gradient-to-r from-white to-slate-50 rounded-lg">
+            <section className="w-full p-6 text-center bg-white rounded-lg">
                 <div
                     className="flex flex-row  items-center justify-between sm:items-start sm:space-x-6 ">
                     {/* Profile Picture */}
@@ -88,11 +88,9 @@ const ClientManager = () => {
                         </li>
                     ))}
                 </ul>
-            </section>
-            <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
                 {/* Additional Stats */}
-                <ul className="py-4 my-6 text-gray-700 flex items-center justify-around border-1 shadow-mb w-full  rounded-lg
-				pb-4 border-y-2">
+                <ul className="py-4 my-6 text-gray-700 flex items-center justify-around shadow-mb w-full  rounded-lg
+				pb-4">
                     <li className="flex flex-col items-center justify-center">
                         <div
                             className="flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-green-400 to-blue-500 shadow-lg ring-2 ring-white border-4 border-blue-300">

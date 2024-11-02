@@ -93,37 +93,7 @@ const TrainerProfile = () => {
                         </p>
                     </div>
 
-                    {/* Profile Details */}
-                    <ul className="grid grid-cols-2 md:grid-cols-2 gap-6">
-                        {[
-                            {
-                                icon: <FaPhone className="mr-3 text-blue-600" />,
-                                label: t('userProfile.phoneNumber'),
-                                value: user.phoneNumber || '+380681231337',
-                                bgColor: 'bg-blue-100',
-                                textColor: 'text-blue-600',
-                            },
-                            {
-                                icon: <FaTelegramPlane className="mr-3 text-teal-600" />,
-                                label: t('@tg_user'),
-                                value: user.email,
-                                bgColor: 'bg-teal-100',
-                                textColor: 'text-teal-600',
-                            },
-                        ].map((item, index) => (
-                            <li
-                                key={index}
-                                className={`flex items-center justify-between border-2 p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl ${item.bgColor}`}>
-                                <div
-                                    className={`flex items-center justify-center rounded-full ${item.bgColor}`}>
-                                    {item.icon}
-                                </div>
-                                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <span className={`${item.textColor} font-medium`}>{item.value}</span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+
                 </div>
                 </section>
                 {/* Additional Stats */}
@@ -157,11 +127,41 @@ const TrainerProfile = () => {
 
             </section>
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
-
+                {/* Profile Details */}
+                <ul className="grid grid-cols-2 md:grid-cols-2 gap-6">
+                    {[
+                        {
+                            icon: <FaPhone className="mr-3 text-blue-600" />,
+                            label: t('userProfile.phoneNumber'),
+                            value: user.phoneNumber || '+380681231337',
+                            bgColor: 'bg-blue-100',
+                            textColor: 'text-blue-600',
+                        },
+                        {
+                            icon: <FaTelegramPlane className="mr-3 text-teal-600" />,
+                            label: t('@tg_user'),
+                            value: user.email,
+                            bgColor: 'bg-teal-100',
+                            textColor: 'text-teal-600',
+                        },
+                    ].map((item, index) => (
+                        <li
+                            key={index}
+                            className={`flex items-center justify-between border-2 p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl ${item.bgColor}`}>
+                            <div
+                                className={`flex items-center justify-center rounded-full ${item.bgColor}`}>
+                                {item.icon}
+                            </div>
+                            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                                <span className={`${item.textColor} font-medium`}>{item.value}</span>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </section>
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-100">
                 <div className="">
-                    <h1 className="text-2xl font-bold text-center mb-8">Photo Gallery</h1>
+                    <h1 className="text-2xl text-center mb-8"></h1>
                     <ImageCarousel images={images}/>
                 </div>
             </section>

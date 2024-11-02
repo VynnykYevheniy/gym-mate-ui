@@ -3,6 +3,7 @@ import 'chart.js/auto';
 import { useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import PropTypes from 'prop-types';
+import FleckLeftSvg from '../assets/FleckLeftSvg.svg'
 
 const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 	const [chartData, setChartData] = useState({});
@@ -104,8 +105,11 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 			) : (
 				<p className="text-center text-gray-500">No data available</p>
 			)}
-			<p className="text-center text-gray-400 mt-2">
-				{chartType === 'weight' ? 'Swipe left or press right arrow to see BMI chart' : 'Swipe right or press left arrow to see Weight chart'}
+			<p className="text-center text-gray-400 mt-2 align-middle">
+				{chartType === 'weight' ?
+					<img src={FleckLeftSvg} alt="" className="h-2 w-2"/>
+					: <img src={FleckLeftSvg} alt="" className="h-2 w-2"/>
+				}
 			</p>
 		</div>
 	);

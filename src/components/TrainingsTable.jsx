@@ -120,7 +120,7 @@ const TrainingsTable = () => {
 						filteredTrainings.map((trainingRecord) => (
 							<div
 								key={trainingRecord.id}
-								className="bg-white border-2 border-transparent rounded-xl shadow-lg p-4 cursor-pointer transition-transform duration-300 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-green-500"
+								className="bg-white  border-transparent rounded-xl p-4 cursor-pointer transition-transform duration-200 transform hover:scale-102 hover:border-1 active:scale-98 hover:shadow-lg hover:border-gray-300"
 								onClick={() => handleCardClick(trainingRecord)}
 							>
 								<button
@@ -128,25 +128,25 @@ const TrainingsTable = () => {
 										event.stopPropagation();
 										handleDeleteTraining(trainingRecord.id);
 									}}
-									className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors"
+									className="absolute top-2 right-2 rounded-md border border-slate-100 p-2.5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-500 hover:text-white hover:bg-slate-400 hover:border-slate-400 focus:text-white focus:bg-slate-500 focus:border-slate-500 active:border-slate-600 active:text-white active:bg-slate-600 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
 								>
 									<FaTimes className="h-6 w-6"/>
 								</button>
-								<h3 className="text-xl font-semibold text-green-700 mb-2 border-b-2 border-green-500 pb-1">
+								<h3 className="text-sm text-gray-400 mb-2 pb-1 text-left">
 									{formatDate(trainingRecord.date)}
 								</h3>
 								<div className="flex flex-col mt-4">
 									{trainingRecord.trainings.map((training, index) => (
-										<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4 border-b-2">
+										<div key={`${trainingRecord.id}-${index}`} className="flex items-center mb-4">
 											{muscleGroupIcons[training.exercise.muscleGroup.name] || <span className="text-gray-500">{training.exercise.muscleGroup.name}</span>}
-											<p className="font-semibold text-lg text-gray-800 ml-3">{training.exercise.name}</p>
+											<p className=" text-m text-gray-800 ml-3">{training.exercise.name}</p>
 										</div>
 									))}
 								</div>
 							</div>
 						))
 					) : (
-						<div className="text-gray-500 text-center">Записи тренировок отсутствуют.</div>
+						<div className="text-gray-400 text-center">Записи тренировок отсутствуют.</div>
 					)}
 				</div>
 			)}

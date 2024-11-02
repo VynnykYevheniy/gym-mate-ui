@@ -159,21 +159,21 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 			<div
-				className="bg-green-100 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
+				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
 				{/* Sticky Header */}
-				<div className="sticky top-0 mb-2 border-b-2 border-b-black">
-					<h2 className="text-3xl font-bold text-gray-900 mb-2">{id ? 'Edit Training' : 'Add Training'}</h2>
+				<div className="sticky top-0 mb-2">
+					<h2 className="text-2xl text-gray-500 mb-2">{id ? 'Correct training' : 'Add Training'}</h2>
 				</div>
 
 				{/* Date Picker */}
 				<div className="m-4 flex items-center">
-					<label htmlFor="date" className="block w-1/4 text-sm font-medium text-gray-700 mb-2">Date</label>
+					<label htmlFor="date" className="block w-1/4 text-sm font-medium text-gray-500 mb-2">Date</label>
 					<input
 						type="datetime-local"
 						id="date"
 						value={date}
 						onChange={(e) => setDate(e.target.value)}
-						className="w-3/4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+						className="w-3/4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
 					/>
 				</div>
 
@@ -187,7 +187,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				<div className="flex justify-between items-center">
 					<button
 						onClick={handleAdd}
-						className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 transition"
+						className="flex items-center justify-center w-12 h-12 bg-green-400 text-white rounded-full shadow-lg hover:bg-green-300 focus:outline-none focus:ring-4 focus:ring-green-500 transition"
 					>
 						<FaPlus className="text-2xl font-bold"/>
 					</button>
@@ -195,7 +195,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 					<div className="flex space-x-4">
 						<button
 							onClick={handleSave}
-							className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
+							className="bg-green-400 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
 						>
 							Save
 						</button>
@@ -204,7 +204,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 								resetForm();
 								onClose();
 							}}
-							className="bg-red-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-400 transition"
+							className="bg-gray-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-400 transition"
 						>
 							Cancel
 						</button>

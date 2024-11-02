@@ -55,12 +55,12 @@ const UserProfile = () => {
 		<main className=" flex-col items-center justify-center p-4 pb-12 ">
 			{/* Profile Section */}
 			<section
-				className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400 mb-6">
+				className="w-full p-6 text-center bg-white rounded-lg mb-6">
 				<div
 					className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
 					{/* Profile Picture */}
 					<div
-						className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 ring-2 ring-white border-4 border-blue-300">
+						className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex items-center justify-center  ring-2 ring-white border-4 border-blue-300">
 						<FaUserCircle className="h-24 w-24 text-white"/> {/* Profile icon */}
 					</div>
 
@@ -72,8 +72,9 @@ const UserProfile = () => {
 
 				</div>
 				{/* Additional Stats */}
-				<ul className="py-4 my-6 text-gray-700 flex items-center justify-around border-1 shadow-mb w-full  rounded-lg
-				pb-4 border-y-2">
+
+				<ul className="py-4 my-6 text-gray-700 flex items-center justify-around shadow-mb w-full  rounded-lg
+				pb-4">
 					<li className="flex flex-col items-center justify-center">
 						<div
 							className="flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-green-400 to-blue-500 shadow-lg ring-2 ring-white border-4 border-blue-300">
@@ -96,6 +97,7 @@ const UserProfile = () => {
 						<div className="text-lg font-semibold">{user.age || 24} y.o</div>
 					</li>
 				</ul>
+
 
 				{/* Profile Details */}
 				<ul className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -130,7 +132,7 @@ const UserProfile = () => {
 
 			</section>
 			<section
-				className="w-full max-w-4xl p-2 text-center bg-white rounded-lg shadow-lg border border-gray-400 mb-6">
+				className="w-full p-2 text-center bg-white rounded-lg mb-6">
 				<WeightBMIChart weightData={weightData} bmiData={bmiData}/>
 			</section>
 			{/* Floating Action Button */}
