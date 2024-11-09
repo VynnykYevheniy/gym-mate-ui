@@ -1,58 +1,100 @@
-import {FaArrowsAltV, FaPhone, FaTelegramPlane, FaUserCircle} from 'react-icons/fa'; // Height icon
-import {GiWeight} from 'react-icons/gi'; // Keeping the GiWeight for weight representation
+import {FaArrowsAltV, FaPhone, FaTelegramPlane, FaUserCircle} from 'react-icons/fa';
+import {GiWeight} from 'react-icons/gi';
 import {useTranslation} from 'react-i18next';
-import {useEffect, useState} from "react";
-import Loader from "./Loader.jsx";
-import WeightBMIChart from "./WeightChart.jsx"
-
+import {useEffect, useState} from 'react';
+import Loader from './Loader.jsx';
+import WeightBMIChart from './WeightChart.jsx';
+import {fetchAnalytics, fetchCurrentAnalytics, updateUser} from "../service/UserService.jsx";
+import EditOptionsDropdown from "./EditButton.jsx";
+import EditProfileModal from "./EditProfileModal.jsx";
 
 const UserProfile = () => {
 	const {t} = useTranslation();
 	const [user, setUser] = useState(null);
-	const weightData = [
-		{date: '2023-10-01', weight: 55},
-		{date: '2023-10-02', weight: 58},
-		{date: '2023-10-03', weight: 69},
-		{date: '2023-10-04', weight: 70},
-		{date: '2023-12-04', weight: 80},
-		{date: '2023-10-04', weight: 67},
-		{date: '2023-10-04', weight: 76},
-		{date: '2023-10-04', weight: 73},
-		{date: '2023-10-04', weight: 80},
-		{date: '2023-10-04', weight: 90},
-		{date: '2023-10-04', weight: 92},
-		{date: '2023-12-04', weight: 79},
-		{date: '2023-12-04', weight: 82}];
-	const bmiData = [
-		{ date: '2023-10-01', bmi: 18.5 },
-		{ date: '2023-10-02', bmi: 19.0 },
-		{ date: '2023-10-03', bmi: 21.4 },
-		{ date: '2023-10-04', bmi: 21.7 },
-		{ date: '2023-10-05', bmi: 22.1 },
-		{ date: '2023-10-06', bmi: 23.5 },
-		{ date: '2023-10-07', bmi: 24.1 },
-		{ date: '2023-10-08', bmi: 25.3 },
-		{ date: '2023-10-09', bmi: 26.8 },
-		{ date: '2023-10-10', bmi: 27.2 },
-		{ date: '2023-10-11', bmi: 27.5 },
-		{ date: '2023-10-12', bmi: 28.0 },
-		{ date: '2023-10-13', bmi: 28.5 },
-	];
+	const [isEditing, setIsEditing] = useState(false);
+	const [editSection, setEditSection] = useState('');
+	const [showDropdown, setShowDropdown] = useState(false);
+	const [formData, setFormData] = useState({
+		firstName: '',
+		lastName: '',
+		phoneNumber: '',
+		email: '',
+		weight: '',
+		height: ''
+	});
+
+	const [weightData, setWeightData] = useState();
+	const [bmiData, setBmiData] = useState();
 
 	useEffect(() => {
-		setUser(JSON.parse(localStorage.getItem("user"))); // Call the function to fetch user data
-	}, []); // Empty dependency array ensures this runs only once when the component mounts
+		const savedUser = JSON.parse(localStorage.getItem("user"));
+		setUser(savedUser);
+		setFormData({
+			firstName: savedUser?.firstName || '',
+			lastName: savedUser?.lastName || '',
+			phoneNumber: savedUser?.phoneNumber || '',
+			email: savedUser?.email || '',
+		});
+
+		const fetchAndSetAnalytics = async () => {
+			const analytics = await fetchAnalytics();
+			const currentAnalytics = await fetchCurrentAnalytics();
+			const weights = [];
+			const bmiData = [];
+
+			analytics.forEach((analytic) => {
+				weights.push({date: analytic.date, weight: analytic.weight});
+				bmiData.push({date: analytic.date, bmi: analytic.bmi});
+			});
+
+			setWeightData(weights);
+			setBmiData(bmiData);
+			setUser((prevUser) => ({
+				...prevUser, // Keep existing user data
+				weight: currentAnalytics.weight,
+				height: currentAnalytics.height
+			}));
+		};
+		fetchAndSetAnalytics();
+	}, []);
+
 
 	if (!user) {
-		return <Loader/>; // Optional: Add a loading state while fetching user data
+		return <Loader/>;
 	}
-	const handleEditProfile = () => {
-		// Логика для открытия формы редактирования профиля
+
+	const handleEditProfile = (section) => {
+		setIsEditing(true);
+		setEditSection(section);
+		setShowDropdown(false); // Close dropdown after selection
 	};
 
+	const toggleDropdown = () => {
+		setShowDropdown(!showDropdown);
+	};
+
+	const handleChange = (e) => {
+		const {name, value} = e.target;
+		setFormData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
+	};
+
+	const handleSaveChanges = async () => {
+		try {
+			const updatedUser = await updateUser({...user, ...formData});
+			setUser(updatedUser);
+			localStorage.setItem("user", JSON.stringify(updatedUser));
+			setIsEditing(false);
+		} catch (error) {
+			console.error('Error updating user profile:', error);
+			alert('Failed to update profile. Please try again.');
+		}
+	};
 
 	return (
-		<main className=" flex-col items-center justify-center p-4 pb-12 ">
+		<main className="flex-col items-center justify-center p-4 pb-12">
 			{/* Profile Section */}
 			<section
 				className="w-full p-6 text-center bg-white rounded-lg mb-6">
@@ -73,11 +115,8 @@ const UserProfile = () => {
 
 				</div>
 				{/* Additional Stats */}
-
 				<ul className="py-4 my-6 text-gray-500 flex items-center justify-around shadow-mb w-full  rounded-lg
 				pb-4">
-
-
 					<li className="flex flex-col items-center justify-center">
 						<div
 							className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-blue-500 shadow-lg ring-2 ring-white border-4 border-blue-300">
@@ -101,9 +140,8 @@ const UserProfile = () => {
 					</li>
 				</ul>
 
-
 				{/* Profile Details */}
-				<ul className="grid grid-cols-2 md:grid-cols-4 gap-6">
+				<ul className="grid grid-cols-1 md:grid-cols-4 gap-2">
 					{[
 						{
 							icon: <FaPhone className="mr-3 text-blue-600"/>,
@@ -148,8 +186,23 @@ const UserProfile = () => {
 				</button>
 			</div>
 
+			{/* Edit Options Dropdown */}
+			<div>
+				<EditOptionsDropdown
+					toggleDropdown={toggleDropdown}
+					showDropdown={showDropdown}
+					handleEditProfile={handleEditProfile}
+				/>
+				<EditProfileModal
+					isEditing={isEditing}
+					editSection={editSection}
+					formData={formData}
+					handleChange={handleChange}
+					handleSaveChanges={handleSaveChanges}
+					setIsEditing={setIsEditing}
+				/>
+			</div>
 		</main>
-
 	);
 };
 

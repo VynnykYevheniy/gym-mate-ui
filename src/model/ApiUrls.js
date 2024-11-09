@@ -11,7 +11,7 @@ class ApiUrls {
 
 	static USER = {
 		CURRENT: `/user/current`,
-		UPDATE: `/user/update`,
+		UPDATE: `/user`,
 		DELETE: `/user/delete`,
 	};
 
@@ -24,14 +24,18 @@ class ApiUrls {
 		SAVE: `/trainingDay`,
 		UPDATE: '/trainingDay',
 		DELETE: (id) => `/trainingDay/${id}`,
-		ALL_BY_MONTH: (month,year) => `/trainingDay/${month}/${year}`,
+		ALL_BY_MONTH: (month, year) => `/trainingDay/${month}/${year}`,
 	};
 
 	static MUSCLE_GROUP = {
 		ALL: `/muscleGroup`,
 	};
-	static TRAINER={
+	static TRAINER = {
 		ALL: `/trainer`,
+	};
+	static ANALYTICS = {
+		ALL: `/analytics`,
+		CURRENT: `/analytics/current`,
 	};
 }
 
