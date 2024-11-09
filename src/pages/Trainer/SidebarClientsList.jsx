@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UserSvg from "../../assets/image/UserSvg.svg"
+import {Link} from "react-router-dom";
 
 const SidebarClientsList = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,9 +24,12 @@ const SidebarClientsList = () => {
             <div className="absolute top-16 left-0 h-full w-16 flex flex-col justify-start">
                 <ul className="flex flex-col ">
                     {users.map((user) => (
-                        <li key={user.id} onClick={handleToggleSidebar} className="cursor-pointer h-16 w-16 flex  items-center justify-center">
-                            <img src={user.logo} alt={`Logo ${user.id}`} className="w-10 h-10 rounded-full bg-white" />
+                        <li key={user.id} onClick={handleToggleSidebar}
+                            className="cursor-pointer h-16 w-16 flex  items-center justify-center">
+                            <img src={/*user.logo*/ "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"} alt={`Logo ${user.id}`} className="w-10 h-10 rounded-full bg-white"/>
                         </li>
+
+
                     ))}
                 </ul>
             </div>
@@ -40,10 +44,14 @@ const SidebarClientsList = () => {
                     <div className="">
                         <ul className="">
                             {users.map((user) => (
-                                <li key={user.id} className="flex items-center h-16">
+                                <>
+                                <Link to={`/clientmanager/${user.id}`}>
+                                    <li key={user.id} className="flex items-center h-16">
                                     {/* Логотип остаётся слева, имя выводится справа */}
                                     <span className="ml-4 text-white">{user.name}</span>
                                 </li>
+                                </Link>
+                                </>
                             ))}
                         </ul>
                     </div>

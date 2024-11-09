@@ -73,7 +73,7 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 								x: {
 									title: {
 										display: true,
-										text: 'Дата',
+										text: 'Date',
 									},
 								},
 								y: {
@@ -102,12 +102,14 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 			) : (
 				<p className="text-center text-gray-500">No data available</p>
 			)}
-			<p className="text-center text-gray-400 mt-2 align-middle ">
-				{chartType === 'weight' ?
-					<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
-					: <img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
-				}
+			{<p className="text-center text-gray-400 mt-2 align-middle ">
+				{//chartType === 'weight' ?
+					//<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
+					//: //<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
+
+			}
 			</p>
+				}
 		</div>
 	);
 };

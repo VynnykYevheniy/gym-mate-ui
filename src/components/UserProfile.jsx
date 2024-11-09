@@ -61,6 +61,7 @@ const UserProfile = () => {
 					{/* Profile Picture */}
 					<div
 						className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex items-center justify-center  ring-2 ring-white border-4 border-blue-300">
+						<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"/>
 						<FaUserCircle className="h-24 w-24 text-white"/> {/* Profile icon */}
 					</div>
 

@@ -13,6 +13,8 @@ import UserProfile from './components/UserProfile.jsx';
 import WelcomeComponent from './components/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
+import TrainingList from "./pages/TrainerList.jsx";
+import TrainingsTable from "./components/TrainingsTable.jsx";
 
 function App() {
 
@@ -29,10 +31,11 @@ function App() {
 				{/* Все остальные маршруты обернуты в PrivateRoute */}
 				<Route element={<PrivateRoute/>}>
 					<Route path="/calendar" element={<CalendarTraining/>}/>
-					<Route path="/training" element={<Training/>}/>
+					<Route path="/training" element={<TrainingsTable/>}/>
 					<Route path="/trainer" element={<TrainerProfile/>}/>
 					<Route path="/client" element={<UserProfile/>}/>
 					<Route path="/clientmanager" element={<ClientManager/>}/>
+					<Route path="/clientmanager/:id" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>
 					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
 				</Route>
