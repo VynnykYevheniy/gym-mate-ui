@@ -16,6 +16,11 @@ const SidebarClientsList = () => {
         { id: 4, name: 'Имя Фамилия 3', logo: UserSvg },
         { id: 5, name: 'Имя Фамилия 3', logo: UserSvg },
         { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
+        { id: 6, name: 'Имя Фамилия 3', logo: UserSvg },
     ];
 
     return (
