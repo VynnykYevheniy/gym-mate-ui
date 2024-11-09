@@ -165,9 +165,9 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 mb-16">
 			<div
-				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300 mb-16">
+				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
 				{/* Sticky Header */}
 				<div className="sticky top-0 mb-2">
 					<h2 className="text-2xl text-gray-500 mb-2">{id ? 'Correct training' : 'Add Training'}</h2>
@@ -187,11 +187,11 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 
 				{/* Training Forms */}
 				<div
-					className="flex flex-col mb-4 max-h-[60vh] sm:max-h-[70vh] md:max-h-[80vh] lg:max-h-[90vh] overflow-y-scroll">
+					className="flex flex-col mb-4 max-h-[50vh] sm:max-h-[50vh] md:max-h-[50vh] lg:max-h-[50vh] overflow-y-scroll">
 					{renderTrainingFields()}
 				</div>
 				{/* Отображение общего тоннажа всей тренировки */}
-				<div className="text-right text-xl text-gray-800 p-4">
+				<div className="text-right text-xl text-gray-800 p-2">
 					Total Training Weight: {calculateTotalWeight()} kg
 				</div>
 

@@ -11,7 +11,7 @@ const TrainingFormFields = ({
 								handleTrainingDetailChange,
 								handleRemoveTraining, // Добавленный пропс
 							}) => (
-	<div className="mb-6 border-l-2 border-gray-300 rounded-lg p-2  bg-white relative">
+	<div className="mb-2 border-l-2 border-gray-300 rounded-lg p-2  bg-white relative">
 		{/* Крестик для удаления тренировки */}
 		<button
 			onClick={() => handleRemoveTraining(index)}
