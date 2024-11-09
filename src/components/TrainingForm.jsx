@@ -165,9 +165,9 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 mb-8">
+		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 			<div
-				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
+				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300 mb-16">
 				{/* Sticky Header */}
 				<div className="sticky top-0 mb-2">
 					<h2 className="text-2xl text-gray-500 mb-2">{id ? 'Correct training' : 'Add Training'}</h2>
