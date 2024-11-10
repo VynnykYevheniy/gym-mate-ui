@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import HamburgerMenu from './HamburgerMenu';
-import AuthContext from "../context/AuthProvider.jsx";
+import HamburgerMenu from './HamburgerMenu.jsx';
+import AuthContext from "../../context/AuthProvider.jsx";
 import {useContext} from "react";
 
 export default function Header() {

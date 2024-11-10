@@ -13,7 +13,7 @@ import {
 	FaWalking
 } from "react-icons/fa";
 import {fetchTrainingsByMonth} from "../service/TrainingService.jsx";
-import TrainingForm from "./TrainingForm.jsx";
+import TrainingForm from "./training/TrainingForm.jsx";
 import Swal from "sweetalert2";
 import axiosInstance from "../api/axiosConfig.jsx";
 import ApiUrls from "../model/ApiUrls.js";
@@ -91,17 +91,17 @@ const Calendar = () => {
 		setCurrentDate(currentDate.clone().add(increment, 'month'));
 	};
 
-	const handleDayClick = (date) => {
+	const handleDayClick = useCallback((date) => {
 		if (isGymVisited(date)) {
 			const trainingRecord = trainingData.find((t) => moment(t.date).isSame(date, 'day'));
 			setSelectedTrainingRecord(trainingRecord || {date: date.format('YYYY-MM-DDTHH:mm')});
 			setSelectedDate(date);
 		} else {
-			setSelectedTrainingRecord({date: date.format('YYYY-MM-DDTHH:mm')}); // Store date if no training was recorded
+			setSelectedTrainingRecord({date: date.format('YYYY-MM-DDTHH:mm')});
 			setSelectedDate(date);
 		}
 		console.log(selectedTrainingRecord);
-	};
+	}, [isGymVisited, selectedTrainingRecord, trainingData]);
 
 
 	const daysInMonth = currentDate.daysInMonth();
@@ -110,7 +110,10 @@ const Calendar = () => {
 	const daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
 	const weekDaysShort = [...moment.weekdaysShort().slice(1), moment.weekdaysShort()[0]];
 
-	const isGymVisited = (date) => trainingData.some((t) => moment(t.date).isSame(date, 'day'));
+	const isGymVisited = useCallback(
+		(date) => trainingData.some((t) => moment(t.date).isSame(date, 'day')),
+		[trainingData]
+	);
 	const isWeekend = (date) => date.day() === 0 || date.day() === 6;
 
 	const filteredTrainings = selectedDate
@@ -140,7 +143,7 @@ const Calendar = () => {
 				);
 			})}
 		</div>
-	), [currentDate, trainingData]); // Adding dependencies to avoid stale closures
+	), [currentDate, daysArray, handleDayClick, isGymVisited, offset]);
 
 	const renderTrainingRecords = () => (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">

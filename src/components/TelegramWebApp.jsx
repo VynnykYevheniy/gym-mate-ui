@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Loader from "./Loader";
-import { authenticateTelegramUser } from "../service/AuthService.jsx";
+import {useCallback, useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import Loader from "./generic/Loader.jsx";
+import {authenticateTelegramUser} from "../service/AuthService.jsx";
 
 const TelegramWebApp = () => {
 	const [loading, setLoading] = useState(true);
@@ -18,25 +18,27 @@ const TelegramWebApp = () => {
 		};
 	};
 
-	const handleError = (message) => {
+	const handleError = useCallback((message) => {
 		setError(message);
 		setLoading(false);
-	};
+	}, [setError, setLoading]);
 
-	const authenticateUser = async (userData) => {
-		setLoading(true);
-		try {
-			const token = await authenticateTelegramUser(userData, navigate);
-			if (!token) {
-				setError('Invalid credentials, please try again.');
+	const authenticateUser = useCallback(
+		async (userData) => {
+			setLoading(true);
+			try {
+				const token = await authenticateTelegramUser(userData, navigate);
+				if (!token) {
+					setError('Invalid credentials, please try again.');
+				}
+			} catch (error) {
+				console.error('Ошибка:', error);
+				handleError('Не удалось аутентифицироваться через Telegram. Пожалуйста, попробуйте снова.');
+			} finally {
+				setLoading(false);
 			}
-		} catch (error) {
-			console.error('Ошибка:', error);
-			handleError('Не удалось аутентифицироваться через Telegram. Пожалуйста, попробуйте снова.');
-		} finally {
-			setLoading(false);
-		}
-	};
+		}, [navigate, setError, handleError, setLoading]
+	);
 
 	useEffect(() => {
 		if (window.Telegram && window.Telegram.WebApp) {
@@ -49,14 +51,14 @@ const TelegramWebApp = () => {
 		} else {
 			handleError("Не удалось загрузить Telegram WebApp API.");
 		}
-	}, [navigate]);
+	}, [authenticateUser, handleError, navigate]);
 
 	// Если есть ошибка, отображаем её
 	if (error) {
 		return <div>{error}</div>;
 	}
 
-	return <Loader loading={loading} />;
+	return <Loader loading={loading}/>;
 };
 
 export default TelegramWebApp;

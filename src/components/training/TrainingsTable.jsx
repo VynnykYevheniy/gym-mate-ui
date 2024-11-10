@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import Swal from 'sweetalert2';
-import axiosInstance from '../api/axiosConfig';
-import ApiUrls from "../model/ApiUrls.js";
-import SearchBar from './SearchBar.jsx';
+import axiosInstance from '../../api/axiosConfig.jsx';
+import ApiUrls from "../../model/ApiUrls.js";
+import SearchBar from '../SearchBar.jsx';
 import TrainingForm from "./TrainingForm.jsx";
 import {
 	FaBiking,
@@ -17,7 +17,7 @@ import {
 	FaWalking,
 	FaTimes
 } from 'react-icons/fa';
-import Loader from "./Loader.jsx";
+import Loader from "../generic/Loader.jsx";
 
 const muscleGroupIcons = {
 	"Ноги": <FaRunning className="text-green-500"/>,

@@ -2,9 +2,9 @@ import {FaArrowsAltV, FaPhone, FaTelegramPlane, FaUserCircle} from 'react-icons/
 import {GiWeight} from 'react-icons/gi';
 import {useTranslation} from 'react-i18next';
 import {useEffect, useState} from 'react';
-import Loader from './Loader.jsx';
+import Loader from '../generic/Loader.jsx';
 import WeightBMIChart from './WeightChart.jsx';
-import {fetchAnalytics, fetchCurrentAnalytics, updateUser} from "../service/UserService.jsx";
+import {fetchAnalytics, fetchCurrentAnalytics, updateUser} from "../../service/UserService.jsx";
 import EditOptionsDropdown from "./EditButton.jsx";
 import EditProfileModal from "./EditProfileModal.jsx";
 
@@ -95,16 +95,16 @@ const UserProfile = () => {
 
 	return (
 		<main className="flex-col items-center justify-center p-4 pb-12">
-			{/* Profile Section */}
+			{/* profile Section */}
 			<section
 				className="w-full p-6 text-center bg-white rounded-lg mb-6">
 				<div
 					className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
-					{/* Profile Picture */}
+					{/* profile Picture */}
 					<div
 						className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex items-center justify-center  ring-2 ring-white border-4 border-blue-300">
-						<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"/>
-						<FaUserCircle className="h-24 w-24 text-white"/> {/* Profile icon */}
+						<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="profile Picture"/>
+						<FaUserCircle className="h-24 w-24 text-white"/> {/* profile icon */}
 					</div>
 
 					{/* User Info */}
@@ -140,7 +140,7 @@ const UserProfile = () => {
 					</li>
 				</ul>
 
-				{/* Profile Details */}
+				{/* profile Details */}
 				<ul className="grid grid-cols-1 md:grid-cols-4 gap-2">
 					{[
 						{

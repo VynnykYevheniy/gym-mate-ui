@@ -1,6 +1,6 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useContext, useState} from 'react';
-import Loader from '../components/Loader';
+import Loader from '../components/generic/Loader.jsx';
 import WelcomeBackSvg from '../assets/welcome_back.svg';
 import LoginSvg from '../assets/login.svg';
 import PasswordSvg from '../assets/password.svg';
@@ -143,7 +143,7 @@ export default function Login() {
 									<label htmlFor="remember"
 										   className="text-sm text-gray-900">{t('auth.rememberMe')}</label>
 								</div>
-								<a href="forgot-password.html"
+								<a href=""
 								   className="text-sm font-medium text-green-500 hover:text-green-600 underline">
 									{t('auth.forgotPassword')}
 								</a>

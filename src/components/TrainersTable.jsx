@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import SearchBar from './SearchBar.jsx';
-import { FaStar, FaUserFriends, FaUserTie } from 'react-icons/fa';
-import { fetchTrainers } from "../service/TrainerService.jsx";
-import { fetchUserSubscriptions, subscribeToTrainer, unsubscribeToTrainer } from "../service/ClientService.jsx";
+import {FaStar, FaUserFriends, FaUserTie} from 'react-icons/fa';
+import {fetchTrainers} from "../service/TrainerService.jsx";
+import {fetchUserSubscriptions, subscribeToTrainer, unsubscribeToTrainer} from "../service/ClientService.jsx";
 
 const TrainersTable = () => {
 	const [trainers, setTrainers] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [error, setError] = useState(null);
-	const [successMessage, setSuccessMessage] = useState('');
 	const [subscriptions, setSubscriptions] = useState([]);
 	const navigate = useNavigate();
 
@@ -33,9 +32,7 @@ const TrainersTable = () => {
 	const handleSubscribe = async (trainerId) => {
 		try {
 			await subscribeToTrainer(trainerId);
-			setSuccessMessage('Вы успешно подписались на тренера!');
-			// Reload trainers data after subscribing
-			await loadTrainers(); // Fetch updated trainers and subscriptions
+			await loadTrainers();
 		} catch (error) {
 			setError(error.message);
 		}
@@ -44,9 +41,7 @@ const TrainersTable = () => {
 	const handleUnsubscribe = async (trainerId) => {
 		try {
 			await unsubscribeToTrainer(trainerId);
-			setSuccessMessage('Вы успешно отписались от тренера!');
-			// Reload trainers data after unsubscribing
-			await loadTrainers(); // Fetch updated trainers and subscriptions
+			await loadTrainers();
 		} catch (error) {
 			setError(error.message);
 		}
@@ -62,7 +57,7 @@ const TrainersTable = () => {
 	return (
 		<div className="container mx-auto p-6">
 			<div className="w-full mb-4">
-				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} phText="Поиск тренера" />
+				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} phText="Поиск тренера"/>
 			</div>
 
 			{error && (
@@ -77,7 +72,7 @@ const TrainersTable = () => {
 							onClick={() => navigate(`/trainer/${trainer.id}`)} // Navigate to TrainerProfile
 							className="flex items-center bg-white border border-gray-50 rounded-xl p-2 cursor-pointer transition-transform duration-200 hover:shadow-lg hover:scale-105 active:scale-95 w-full max-w-lg mx-auto"
 						>
-							{/* Profile Picture */}
+							{/* profile Picture */}
 							<div
 								className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden mr-3 shadow-sm">
 								{trainer.user.photoUrl ? (
@@ -87,7 +82,7 @@ const TrainersTable = () => {
 										className="w-full h-full object-cover"
 									/>
 								) : (
-									<FaUserTie className="text-blue-500 text-xl" />
+									<FaUserTie className="text-blue-500 text-xl"/>
 								)}
 							</div>
 
@@ -100,7 +95,7 @@ const TrainersTable = () => {
 								<div className="flex items-center text-gray-500 space-x-3 mt-1">
 									{/* Rating */}
 									<div className="flex items-center text-sm">
-										<FaStar className="text-yellow-200 mr-1" />
+										<FaStar className="text-yellow-200 mr-1"/>
 										<span className="font-medium">{trainer.averageRating} / 5</span>
 									</div>
 
@@ -109,7 +104,7 @@ const TrainersTable = () => {
 
 									{/* Followers */}
 									<div className="flex items-center text-sm">
-										<FaUserFriends className="text-green-500 mr-1" />
+										<FaUserFriends className="text-green-500 mr-1"/>
 										<span className="font-medium">{trainer.subscribersCount} followers</span>
 									</div>
 								</div>

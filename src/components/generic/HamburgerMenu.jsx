@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider.jsx";
+import AuthContext from "../../context/AuthProvider.jsx";
 
 const HamburgerMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);

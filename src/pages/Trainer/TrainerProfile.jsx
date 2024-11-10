@@ -3,7 +3,7 @@ import {GiWeight} from 'react-icons/gi'; // Keeping the GiWeight for weight repr
 import {useTranslation} from 'react-i18next';
 import {currentUser} from "../../service/UserService.jsx";
 import {useEffect, useState} from "react";
-import Loader from "../../components/Loader.jsx";
+import Loader from "../../components/generic/Loader.jsx";
 import RatingStar from "../../assets/RatingStar.svg";
 import UserPng from "../../assets/png/user.png";
 import ImageCarousel from "../../components/Trainer/ImageCarousel.jsx";
@@ -45,14 +45,14 @@ const TrainerProfile = () => {
 
     return (
         <main className=" flex items-center justify-center flex-col p-4 pb-12 ">
-            {/* Profile Section */}
+            {/* profile Section */}
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-100">
                 <div className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
-                    {/* Profile Picture */}
+                    {/* profile Picture */}
                     <div>
                     <div
                         className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex flex-col items-center justify-center ">
-                        {//<FaUserCircle className="h-24 w-24 text-white" /> {/* Profile icon */}
+                        {//<FaUserCircle className="h-24 w-24 text-white" /> {/* profile icon */}
 
                         }
 
@@ -127,7 +127,7 @@ const TrainerProfile = () => {
 
             </section>
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
-                {/* Profile Details */}
+                {/* profile Details */}
                 <ul className="grid grid-cols-2 md:grid-cols-2 gap-6">
                     {[
                         {

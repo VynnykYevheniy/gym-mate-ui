@@ -10,8 +10,8 @@ import {
 	FaSwimmer,
 	FaUserFriends
 } from 'react-icons/fa';
-import feedbackMen1 from '../assets/image/feedback-men-1.png';
-import feedbackWomen1 from '../assets/image/feedback-women-1.png';
+import feedbackMen1 from '../../assets/image/feedback-men-1.png';
+import feedbackWomen1 from '../../assets/image/feedback-women-1.png';
 
 const WelcomeComponent = () => {
 	const { t } = useTranslation();

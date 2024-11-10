@@ -1,7 +1,7 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../service/TrainingService.jsx';
+import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../../service/TrainingService.jsx';
 import TrainingFormFields from './TrainingFormFields.jsx';
 import {FaPlus} from "react-icons/fa";
 
@@ -34,10 +34,10 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		loadMuscleGroups();
 	}, []);
 
-	const resetForm = () => {
-		console.log("REset Data: ", date);
+	const resetForm = useCallback(() => {
+		console.log("Reset Data: ", date);
 		setTrainings([]);
-	};
+	}, [date, setTrainings]);
 
 	const handleAdd = () => {
 		setTrainings(prevTraining => [
@@ -136,7 +136,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 				setTrainings(trainingData.trainings);
 			}
 		}
-	}, [isOpen, trainingData]);
+	}, [isOpen, trainingData, id, resetForm]);
 
 	const renderTrainingFields = () => (
 		trainings.map((training, index) => (

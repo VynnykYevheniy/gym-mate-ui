@@ -1,5 +1,5 @@
-import React from 'react';
 import {FaUserCircle} from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
 function EditOptionsDropdown({toggleDropdown, showDropdown, handleEditProfile}) {
 	return (
@@ -39,4 +39,9 @@ function EditOptionsDropdown({toggleDropdown, showDropdown, handleEditProfile}) 
 	);
 }
 
+EditOptionsDropdown.propTypes = {
+	toggleDropdown: PropTypes.func.isRequired,
+	showDropdown: PropTypes.bool.isRequired,
+	handleEditProfile: PropTypes.func.isRequired,
+};
 export default EditOptionsDropdown;

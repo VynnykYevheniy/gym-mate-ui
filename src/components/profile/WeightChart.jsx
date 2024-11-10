@@ -1,11 +1,10 @@
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 import 'chart.js/auto';
-import { useEffect, useState } from 'react';
-import { useSwipeable } from 'react-swipeable';
+import {useEffect, useState} from 'react';
+import {useSwipeable} from 'react-swipeable';
 import PropTypes from 'prop-types';
-import FleckLeftSvg from '../assets/FleckLeftSvg.svg'
 
-const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
+const WeightBMIChart = ({weightData = [], bmiData = []}) => {
 	const [chartData, setChartData] = useState({});
 	const [chartType, setChartType] = useState('weight'); // Track which chart to display
 
@@ -107,9 +106,9 @@ const WeightBMIChart = ({ weightData = [], bmiData = [] }) => {
 					//<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
 					//: //<img src={FleckLeftSvg} alt="" className="h-12 w-12"/>
 
-			}
-			</p>
 				}
+			</p>
+			}
 		</div>
 	);
 };

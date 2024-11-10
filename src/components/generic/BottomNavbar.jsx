@@ -1,10 +1,10 @@
 import {Link} from "react-router-dom";
 import { useState, useEffect } from "react";
-import UserSvg from '../assets/image/UserSvg.svg';
-import CalendarSvg from '../assets/image/CalendarSvg.svg';
-import WorkoutSvg from '../assets/image/WorkoutSvg.svg';
-import Trainer from '../assets/Trainer.svg';
-import ManagerSvg from '../assets/manager.svg';
+import UserSvg from '../../assets/image/UserSvg.svg';
+import CalendarSvg from '../../assets/image/CalendarSvg.svg';
+import WorkoutSvg from '../../assets/image/WorkoutSvg.svg';
+import Trainer from '../../assets/Trainer.svg';
+import ManagerSvg from '../../assets/manager.svg';
 
 export default function BottomNavbar() {
 	// Локальное состояние для хранения ссылки на профиль

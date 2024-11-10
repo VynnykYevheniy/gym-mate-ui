@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import Footer from '../components/Footer.jsx'; // Импортируйте ваш компонент Footer
+import Footer from '../components/generic/Footer.jsx'; // Импортируйте ваш компонент Footer
 
 const PrivateRoute = () => {
 	const token = localStorage.getItem('token');

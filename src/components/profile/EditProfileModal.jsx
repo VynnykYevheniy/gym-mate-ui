@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function EditProfileModal({isEditing, editSection, formData, handleChange, handleSaveChanges, setIsEditing}) {
 	if (!isEditing) return null;
@@ -93,4 +93,12 @@ function EditProfileModal({isEditing, editSection, formData, handleChange, handl
 	);
 }
 
+EditProfileModal.propTypes = {
+	isEditing: PropTypes.bool.isRequired,
+	editSection: PropTypes.string.isRequired,
+	formData: PropTypes.object.isRequired,
+	handleChange: PropTypes.func.isRequired,
+	handleSaveChanges: PropTypes.func.isRequired,
+	setIsEditing: PropTypes.func.isRequired,
+};
 export default EditProfileModal;
