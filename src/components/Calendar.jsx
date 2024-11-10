@@ -1,6 +1,8 @@
 import {useCallback, useEffect, useState} from 'react';
 import moment from 'moment';
 import {
+	FaArrowLeft,
+	FaArrowRight,
 	FaBiking,
 	FaChevronUp,
 	FaChild,
@@ -101,7 +103,7 @@ const Calendar = () => {
 			setSelectedDate(date);
 		}
 		console.log(selectedTrainingRecord);
-	}, [isGymVisited, selectedTrainingRecord, trainingData]);
+	}, [selectedTrainingRecord, trainingData]);
 
 
 	const daysInMonth = currentDate.daysInMonth();
@@ -207,12 +209,12 @@ const Calendar = () => {
 			<div className="flex justify-between items-center mb-4 w-full max-w-md">
 				<button onClick={() => changeMonth(-1)}
 						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-					Prev
+					<FaArrowLeft />
 				</button>
 				<h2 className="text-xl font-bold">{currentDate.format('MMMM YYYY')}</h2>
 				<button onClick={() => changeMonth(1)}
 						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-					Next
+					<FaArrowRight />
 				</button>
 			</div>
 
