@@ -5,7 +5,7 @@ import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../.
 import TrainingFormFields from './TrainingFormFields.jsx';
 import {FaPlus} from "react-icons/fa";
 
-const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
+const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 	console.log(trainingData);
 	const [date, setDate] = useState(dayjs().format('YYYY-MM-DDTHH:mm'));
 
@@ -119,7 +119,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onTrainingAdded}) => {
 		try {
 			await saveTraining(payload);
 			alert(`Training record ${id ? 'updated' : 'saved'} successfully!`);
-			onTrainingAdded();
+			onRefresh();
 			onClose();
 		} catch (error) {
 			console.error('Error saving training:', error);
@@ -235,7 +235,7 @@ TrainingForm.propTypes = {
 		date: PropTypes.string,
 		trainings: PropTypes.arrayOf(PropTypes.object),
 	}),
-	onTrainingAdded: PropTypes.func.isRequired,
+	onRefresh: PropTypes.func.isRequired,
 };
 
 export default TrainingForm;
