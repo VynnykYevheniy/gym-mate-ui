@@ -41,3 +41,13 @@ export const fetchCurrentAnalytics = async () => {
 		throw new Error('Request to get all analytics failed: ' + error.message);
 	}
 };
+
+export const addNewAnalytics = async (analitcs) => {
+	try {
+		const response = await axiosInstance.post(ApiUrls.ANALYTICS.ADD, analitcs);
+		return response.data;
+	} catch (error) {
+		console.error('Failed to add new analytics:', error);
+		throw new Error('Request to new analytics failed: ' + error.message);
+	}
+};

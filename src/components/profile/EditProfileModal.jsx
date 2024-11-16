@@ -1,6 +1,14 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-function EditProfileModal({isEditing, editSection, formData, handleChange, handleSaveChanges, setIsEditing}) {
+function EditProfileModal({
+							  isEditing,
+							  editSection,
+							  formData,
+							  handleChange,
+							  handleSaveChanges,
+							  setIsEditing,
+							  handleFileUpload,
+						  }) {
 	if (!isEditing) return null;
 
 	return (
@@ -10,18 +18,37 @@ function EditProfileModal({isEditing, editSection, formData, handleChange, handl
 				<form className="space-y-4">
 					{editSection === 'avatar' && (
 						<div>
-							<label className="block text-gray-700">Profile Picture URL</label>
+							<label className="block text-gray-700">Upload Profile Picture</label>
 							<input
-								type="text"
-								name="avatar"
-								value={formData.avatar || ''}
-								onChange={handleChange}
+								type="file"
+								accept="image/*"
+								onChange={handleFileUpload}
 								className="w-full px-4 py-2 border rounded-lg"
 							/>
 						</div>
 					)}
 					{editSection === 'contact' && (
 						<>
+							<div>
+								<label className="block text-gray-700">First Name</label>
+								<input
+									type="text"
+									name="firstName"
+									value={formData.firstName}
+									onChange={handleChange}
+									className="w-full px-4 py-2 border rounded-lg"
+								/>
+							</div>
+							<div>
+								<label className="block text-gray-700">Last Name</label>
+								<input
+									type="text"
+									name="lastName"
+									value={formData.lastName}
+									onChange={handleChange}
+									className="w-full px-4 py-2 border rounded-lg"
+								/>
+							</div>
 							<div>
 								<label className="block text-gray-700">Phone Number</label>
 								<input
@@ -80,11 +107,16 @@ function EditProfileModal({isEditing, editSection, formData, handleChange, handl
 					)}
 				</form>
 				<div className="flex justify-end mt-4">
-					<button onClick={() => setIsEditing(false)}
-							className="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg">
+					<button
+						onClick={() => setIsEditing(false)}
+						className="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg"
+					>
 						Cancel
 					</button>
-					<button onClick={handleSaveChanges} className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+					<button
+						onClick={handleSaveChanges}
+						className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+					>
 						Save
 					</button>
 				</div>
@@ -100,5 +132,6 @@ EditProfileModal.propTypes = {
 	handleChange: PropTypes.func.isRequired,
 	handleSaveChanges: PropTypes.func.isRequired,
 	setIsEditing: PropTypes.func.isRequired,
+	handleFileUpload: PropTypes.func.isRequired
 };
 export default EditProfileModal;

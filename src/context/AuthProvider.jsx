@@ -5,15 +5,17 @@ const AuthContext = createContext();
 
 export function AuthProvider({children}) {
 	const [token, setToken] = useState(localStorage.getItem('token'));
+	const profileLink = localStorage.getItem("profileLink");
 	const navigate = useNavigate(); // Hook to programmatically navigate
 	useEffect(() => {
 		const savedToken = localStorage.getItem('token');
 		if (savedToken) {
 			setToken(savedToken);
+			navigate(profileLink);
 		} else {
 			navigate('/signin');
 		}
-	}, []);
+	}, [navigate, profileLink, token]);
 
 	const login = (newToken) => {
 		localStorage.setItem('token', JSON.stringify(newToken));

@@ -18,6 +18,7 @@ const UserProfile = () => {
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
+		age: '',
 		email: '',
 		weight: '',
 		height: ''
@@ -28,12 +29,14 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		const savedUser = JSON.parse(localStorage.getItem("user"));
+		console.log(savedUser);
 		setUser(savedUser);
 		setFormData({
 			firstName: savedUser?.firstName || '',
 			lastName: savedUser?.lastName || '',
 			phoneNumber: savedUser?.phoneNumber || '',
 			email: savedUser?.email || '',
+			age: savedUser?.age || ''
 		});
 
 		const fetchAndSetAnalytics = async () => {
@@ -59,15 +62,33 @@ const UserProfile = () => {
 	}, []);
 
 
-	if (!user) {
+	if (!user || !weightData || !bmiData) {
 		return <Loader/>;
 	}
 
 	const handleEditProfile = (section) => {
+
+		if (section === 'contact') {
+			setFormData({
+				firstName: user.firstName || '',
+				lastName: user.lastName || '',
+				phoneNumber: user.phoneNumber || '',
+				email: user.email || '',
+				age: user?.age || ''
+			});
+		} else if (section === 'anthropometry') {
+			setFormData({
+				age: user?.age || '',
+				weight: user?.weight || '',
+				height: user?.height || '',
+			});
+		}
+
 		setIsEditing(true);
 		setEditSection(section);
 		setShowDropdown(false); // Close dropdown after selection
 	};
+
 
 	const toggleDropdown = () => {
 		setShowDropdown(!showDropdown);
@@ -92,6 +113,17 @@ const UserProfile = () => {
 			alert('Failed to update profile. Please try again.');
 		}
 	};
+
+	// const handleSaveAnalytics = async (analytics) => {
+	// 	try {
+	// 		const updateAnalytics = await addNewAnalytics(analytics);
+	// 		setWeightData(updateAnalytics.weight);
+	// 		setBmiData(updateAnalytics.bmi);
+	// 	} catch (error) {
+	// 		console.error('Error updating user profile:', error);
+	// 		alert('Failed to update profile. Please try again.');
+	// 	}
+	// };
 
 	return (
 		<main className="flex-col items-center justify-center p-4 pb-12">
@@ -122,7 +154,7 @@ const UserProfile = () => {
 							className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-blue-500 shadow-lg ring-2 ring-white border-4 border-blue-300">
 							<FaUserCircle className="h-10 w-10 text-white"/> {/* Placeholder for age */}
 						</div>
-						<div className="text-lg ">{user.age || 24} y.o</div>
+						<div className="text-lg ">{user.age || 0} y.o</div>
 					</li>
 					<li className="flex flex-col items-center justify-center">
 						<div
@@ -176,15 +208,6 @@ const UserProfile = () => {
 				className="w-full p-2 text-center bg-white rounded-lg mb-6">
 				<WeightBMIChart weightData={weightData} bmiData={bmiData}/>
 			</section>
-			{/* Floating Action Button */}
-			<div className="fixed bottom-6 right-6 mb-20">
-				<button
-					aria-label="Edit Profile"
-					onClick={handleEditProfile}
-					className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
-					<FaUserCircle className="h-8 w-8"/>
-				</button>
-			</div>
 
 			{/* Edit Options Dropdown */}
 			<div>

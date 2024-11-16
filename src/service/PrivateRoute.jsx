@@ -3,8 +3,6 @@ import Footer from '../components/generic/Footer.jsx'; // Импортируйт
 
 const PrivateRoute = () => {
 	const token = localStorage.getItem('token');
-	console.log(token);
-
 	return token ? (
 		<>
 			<Outlet /> {/* Дочерние маршруты будут отображаться здесь */}
