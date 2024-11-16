@@ -7,6 +7,7 @@ import WeightBMIChart from './WeightChart.jsx';
 import {fetchAnalytics, fetchCurrentAnalytics, updateUser} from "../../service/UserService.jsx";
 import EditOptionsDropdown from "./EditButton.jsx";
 import EditProfileModal from "./EditProfileModal.jsx";
+import BJUCalculator from "../generic/BJUCalculator.jsx";
 
 const UserProfile = () => {
 	const {t} = useTranslation();
@@ -208,6 +209,7 @@ const UserProfile = () => {
 				className="w-full p-2 text-center bg-white rounded-lg mb-6">
 				<WeightBMIChart weightData={weightData} bmiData={bmiData}/>
 			</section>
+			<BJUCalculator/>
 
 			{/* Edit Options Dropdown */}
 			<div>
