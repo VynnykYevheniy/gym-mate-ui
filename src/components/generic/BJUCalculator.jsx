@@ -44,10 +44,10 @@ export default function BJUCalculator() {
 
 	return (
 		<section className="w-full max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg mb-6">
-			<h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">BJU Calculator</h2>
+			<h2 className="text-lg text-center text-gray-800 mb-6">BJU Calculator</h2>
 			<form className="space-y-6" onSubmit={handleCalculate}>
-				<div className="flex flex-col">
-					<label htmlFor="gender" className="text-sm font-medium text-gray-700">Gender</label>
+				<div className="mb-4 flex items-center">
+					<label htmlFor="gender" className="block w-1/4 mb-2 text-sm text-gray-500">Gender</label>
 					<select
 						id="gender"
 						className="p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -58,8 +58,8 @@ export default function BJUCalculator() {
 						<option value="female">Female</option>
 					</select>
 				</div>
-				<div className="flex flex-col">
-					<label htmlFor="weight" className="text-sm font-medium text-gray-700">Weight (kg)</label>
+				<div className="mb-4 flex items-center">
+					<label htmlFor="weight" className="block w-1/4 mb-2 text-sm text-gray-500">Weight (kg)</label>
 					<input
 						type="number"
 						id="weight"
@@ -69,8 +69,8 @@ export default function BJUCalculator() {
 						onChange={(e) => setWeight(e.target.value)}
 					/>
 				</div>
-				<div className="flex flex-col">
-					<label htmlFor="height" className="text-sm font-medium text-gray-700">Height (cm)</label>
+				<div className="mb-4 flex items-center">
+					<label htmlFor="height" className="block w-1/4 mb-2 text-sm text-gray-500">Height (cm)</label>
 					<input
 						type="number"
 						id="height"
@@ -80,8 +80,8 @@ export default function BJUCalculator() {
 						onChange={(e) => setHeight(e.target.value)}
 					/>
 				</div>
-				<div className="flex flex-col">
-					<label htmlFor="age" className="text-sm font-medium text-gray-700">Age</label>
+				<div className="mb-4 flex items-center">
+					<label htmlFor="age" className="block w-1/4 mb-2 text-sm text-gray-500">Age</label>
 					<input
 						type="number"
 						id="age"
@@ -91,11 +91,11 @@ export default function BJUCalculator() {
 						onChange={(e) => setAge(e.target.value)}
 					/>
 				</div>
-				<div className="flex flex-col">
-					<label htmlFor="activity" className="text-sm font-medium text-gray-700">Activity Level</label>
+				<div className="mb-4 flex items-center">
+					<label htmlFor="activity" className="block w-1/4 mb-2 text-sm text-gray-500">Activity Level</label>
 					<select
 						id="activity"
-						className="p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+						className="w-3/4 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition"
 						value={activity}
 						onChange={(e) => setActivity(e.target.value)}
 					>
@@ -104,22 +104,23 @@ export default function BJUCalculator() {
 						<option value="high">High</option>
 					</select>
 				</div>
-				<button
-					type="submit"
-					className="w-full py-3 text-lg font-semibold text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-blue-500 hover:to-green-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-				>
-					{isLoading ? "Calculating..." : "Calculate"}
-				</button>
+
+
+				{/* Show loading spinner during calculation */}
+					{isLoading ? <>
+						<div className="mt-6 text-center">
+							<div
+								className="w-12 h-12 border-4 border-t-4 border-green-600 border-solid rounded-full animate-spin mx-auto"></div>
+							<p className="text-gray-500 mt-4">Calculating...</p>
+						</div>
+					</> : <>
+						<button
+							type="submit"
+							className="bg-green-400 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
+						>Calculate</button>
+					</>
+					}
 			</form>
-
-			{/* Show loading spinner during calculation */}
-			{isLoading && (
-				<div className="mt-6 text-center">
-					<div className="w-16 h-16 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin mx-auto"></div>
-					<p className="text-gray-500 mt-4">Calculating...</p>
-				</div>
-			)}
-
 			{/* Show results after calculation */}
 			{result && !isLoading && (
 				<div className="mt-6 p-6 bg-gradient-to-r from-gray-100 via-white to-gray-100 rounded-lg shadow-inner">
