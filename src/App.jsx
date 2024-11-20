@@ -13,6 +13,7 @@ import WelcomeComponent from './components/generic/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
 import TrainingsTable from "./components/training/TrainingsTable.jsx";
+import WelcomePage from "./pages/WelcomePage.jsx";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
 					<Route path="/clientmanager" element={<ClientManager/>}/>
 					<Route path="/clientmanager/:id" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>
+					<Route path="/welcome" element={<WelcomePage/>}/>
 					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
 				</Route>
 			</Routes>
