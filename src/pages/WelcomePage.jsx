@@ -10,6 +10,7 @@
             weight: "",
             birthDate: { year: "", month: "", day: "" },
             goal: "",
+            logo: "",
         });
 
         const totalSlides = 5; // Общее количество слайдов
@@ -56,6 +57,27 @@
                 reader.readAsDataURL(file);
             }
         };
+        const isNextDisabled = () => {
+            switch (currentSlide) {
+                case 0:
+                    // Slide 1: проверяем поля "name" и "surname"
+                    return !formData.name || !formData.surname;
+                case 1:
+                    // Slide 2: проверяем роль
+                    return !formData.role;
+                case 2:
+                    // Slide 3: проверяем рост, вес и дату рождения
+                    return !formData.height || !formData.weight || !formData.birthDate;
+                case 3:
+                    // Slide 4: проверяем, выбрал ли пользователь цель
+                    return !formData.goal;
+                case 4:
+                    // Slide 5: проверяем, выбран ли логотип
+                    return !formData.logo;
+                default:
+                    return false; // На последнем слайде кнопка "Далее" активна
+            }
+        };
 
 
         return (
@@ -87,15 +109,6 @@
                                     onChange={handleInputChange}
                                     className="mb-3 p-3 border border-gray-300 rounded-lg w-full"
                                 />
-
-
-                                <button
-                                    onClick={handleNextSlide}
-                                    disabled={!formData.name || !formData.surname}
-                                    className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50"
-                                >
-                                    Далее
-                                </button>
                             </div>
 
                             {/* Slide 2: Роль */}
@@ -124,22 +137,6 @@
                                     />
                                     Тренер
                                 </label>
-                                <div className="flex w-full justify-between mt-4">
-                                    <button
-                                        disabled={currentSlide === 0}
-                                        onClick={handlePrevSlide}
-                                        className="bg-gray-300 text-gray-600 px-6 py-2 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-                                    >
-                                        Назад
-                                    </button>
-                                    <button
-                                        onClick={handleNextSlide}
-                                        disabled={!formData.role}
-                                        className="bg-white text-green-500 px-6 py-2 rounded-lg hover:bg-green-100 disabled:opacity-50"
-                                    >
-                                        Далее
-                                    </button>
-                                </div>
                             </div>
 
                             {/* Slide 3: Рост, Вес, Дата рождения */}
@@ -172,22 +169,6 @@
                                         className="mb-3 p-3 border border-gray-300 rounded-lg w-full"
                                     />
                                 </div>
-                                <div className="flex w-full justify-between mt-4">
-                                    <button
-                                        disabled={currentSlide === 0}
-                                        onClick={handlePrevSlide}
-                                        className="bg-gray-300 text-gray-600 px-6 py-2 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-                                    >
-                                        Назад
-                                    </button>
-                                    <button
-                                        onClick={handleNextSlide}
-                                        disabled={!formData.height || !formData.weight || !formData.birthDate}
-                                        className="bg-white text-green-500 px-6 py-2 rounded-lg hover:bg-green-100 disabled:opacity-50"
-                                    >
-                                        Далее
-                                    </button>
-                                </div>
                             </div>
 
                             {/* Slide 4: Цель */}
@@ -205,22 +186,6 @@
                                     <option value="Набрать вес">Набрать вес</option>
                                     <option value="Похудеть">Похудеть</option>
                                 </select>
-                                <div className="flex w-full justify-between mt-4">
-                                    <button
-                                        disabled={currentSlide === 0}
-                                        onClick={handlePrevSlide}
-                                        className="bg-gray-300 text-gray-600 px-6 py-2 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-                                    >
-                                        Назад
-                                    </button>
-                                    <button
-                                        onClick={handleNextSlide}
-                                        disabled={!formData.goal}
-                                        className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50"
-                                    >
-                                        Далее
-                                    </button>
-                                </div>
                             </div>
 
                             {/* Slide 5: Выбор логотипа */}
@@ -291,7 +256,24 @@
 
                         </div>
 
-
+                        {/* Фиксированные кнопки */}
+                        <div className="flex justify-between items-center px-4 py-2">
+                            <button
+                                disabled={currentSlide === 0}
+                                onClick={handlePrevSlide}
+                                className="bg-gray-300 text-gray-600 px-6 py-2 rounded-lg hover:bg-gray-400 disabled:opacity-50"
+                            >
+                                Назад
+                            </button>
+                            {/* Проверка на каждом слайде */}
+                            <button
+                                disabled={isNextDisabled()}
+                                onClick={handleNextSlide}
+                                className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50"
+                            >
+                                Далее
+                            </button>
+                        </div>
                         {/* Статус-бар */}
                         <div className="w-full bg-white h-2">
                             <div
@@ -299,6 +281,8 @@
                                 style={{width: `${((currentSlide + 1) / totalSlides) * 100}%`}}
                             ></div>
                         </div>
+
+
                     </section>
                 </div>
             </main>
