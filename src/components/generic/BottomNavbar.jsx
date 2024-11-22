@@ -49,7 +49,7 @@ export default function BottomNavbar() {
 				</Link>
 				<Link to="/welcome" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
 					<img src={""} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
-					<span>WelcomePage</span>
+					<span>Welcome</span>
 				</Link>
 				<Link to="/clientmanager"
 					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
