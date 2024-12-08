@@ -1,6 +1,6 @@
 class ApiUrls {
-	// static BASE_URL = 'http://localhost:8080/api';
-	static BASE_URL = 'https://gym-manager-co9r.onrender.com/api';
+	static BASE_URL = 'http://localhost:8080/api';
+	// static BASE_URL = 'https://gym-manager-co9r.onrender.com/api';
 
 	static AUTH = {
 		TELEGRAM: `/auth/telegram`,
@@ -35,8 +35,13 @@ class ApiUrls {
 	};
 	static ANALYTICS = {
 		ALL: `/analytics`,
+		ADD: `/analytics`,
 		CURRENT: `/analytics/current`,
 	};
+	static IMAGE = {
+		GET_BY_ID: (id) => `/images/${id}`,
+		UPLOAD: `/images/upload`,
+	}
 }
 
 export default ApiUrls;

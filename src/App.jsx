@@ -14,6 +14,7 @@ import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
 import TrainingsTable from "./components/training/TrainingsTable.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
+import Profile from "./pages/Profile.jsx";
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
 					<Route path="/calendar" element={<CalendarTraining/>}/>
 					<Route path="/training" element={<TrainingsTable/>}/>
 					<Route path="/trainer" element={<TrainerProfile/>}/>
-					<Route path="/client" element={<UserProfile/>}/>
+					<Route path="/client" element={<Profile/>}/>
 					<Route path="/clientmanager" element={<ClientManager/>}/>
 					<Route path="/clientmanager/:id" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>

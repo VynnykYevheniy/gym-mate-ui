@@ -61,8 +61,7 @@ const TrainingsTable = () => {
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
 				trainingData={selectedTrainingRecord}
-				onTrainingAdded={fetchTrainings}
-			/>
+				onRefresh={fetchTrainings}/>
 			<button
 				onClick={() => {
 					setSelectedTrainingRecord(null);

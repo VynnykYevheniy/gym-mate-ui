@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
 			: null;
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
-			config.headers["Content-Type"] = "application/json";
+			// config.headers["Content-Type"] = "application/json";
 		}
 		console.log(config.data);
 		return config;

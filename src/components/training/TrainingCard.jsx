@@ -1,31 +1,31 @@
 import {FaTimes} from 'react-icons/fa';
-import Swal from 'sweetalert2';
 import axiosInstance from '../../api/axiosConfig.jsx';
 import ApiUrls from "../../model/ApiUrls.js";
 import {muscleGroupIcons} from "../../util/muscleGroupIcons.jsx";
 import PropTypes from "prop-types";
+import {showConfirmDialog, showErrorDialog, showSuccessDialog} from "../../util/ModalUtils.jsx";
 
 const TrainingCard = ({trainingRecord, onCardClick, onDelete}) => {
 
 	const handleDeleteTraining = async (id) => {
-		const result = await Swal.fire({
-			title: 'Вы уверены?',
-			text: 'Вы хотите удалить эту тренировку? Это действие нельзя отменить.',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#3085d6',
-			confirmButtonText: 'Да, удалить!',
-			cancelButtonText: 'Отмена',
+		const result = await showConfirmDialog({
+			title: "Вы уверены?",
+			text: "Вы хотите удалить эту тренировку? Это действие нельзя отменить.",
+			confirmButtonText: "Да, удалить!",
 		});
 
 		if (result.isConfirmed) {
 			try {
+				// Выполнение удаления
 				await axiosInstance.delete(`${ApiUrls.TRAINING_DAY.DELETE(id)}`);
 				onDelete();  // Передаем функцию обновления списка тренировок
-				Swal.fire('Удалено!', 'Тренировка была удалена.', 'success');
+				await showSuccessDialog({
+					text: "Тренировка успешно удалена!",
+				});
 			} catch (error) {
-				Swal.fire('Ошибка!', 'Не удалось удалить тренировку.', 'error');
+				await showErrorDialog({
+					text: "Не удалось удалить тренировку. Попробуйте позже.",
+				});
 				console.error('Error deleting training:', error);
 			}
 		}

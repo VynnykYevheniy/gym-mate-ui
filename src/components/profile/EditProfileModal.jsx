@@ -1,212 +1,191 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import {useState} from "react";
+import * as UserService from "../../service/UserService.jsx";
+import Loader from "../generic/Loader.jsx";
+import * as ImageService from "../../service/ImageService.jsx";
 
-function EditProfileModal({
-							  isEditing,
-							  editSection,
-							  formData,
-							  handleChange,
-							  handleSaveChanges,
-							  setIsEditing,
-							  handleFileUpload,
-						  }) {
-	const [selectedColor, setSelectedColor] = useState(formData.logo || "gray");
-	const [uploadedFile, setUploadedFile] = useState(formData.avatarFile || null);
-	if (!isEditing) return null;
+function EditProfileModal({isOpen, onClose}) {
+	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")));
+	const [uploadedFile, setUploadedFile] = useState(null);
+	const [isSaving, setIsSaving] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
-	// Обработка выбора цвета
-	const handleColorSelect = (color) => {
-		setSelectedColor(color);
-		setUploadedFile(null); // Сбросить загруженный файл
-	};
-
-	// Обработка загрузки изображения
+	// Handle file upload for avatar
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			setUploadedFile(URL.createObjectURL(file)); // Создаём локальный preview
-			setSelectedColor(null); // Сбросить выбранный цвет
+			setUploadedFile(URL.createObjectURL(file)); // Local preview
 		}
 	};
 
-	// Сохранение изменений
-	const handleSaveAvatar = () => {
-		handleSaveChanges({
-			logo: selectedColor,
-			avatarFile: uploadedFile,
-		});
-		setIsEditing(false);
+	// Handle form input changes
+	const handleInputChange = (event) => {
+		const {name, value} = event.target;
+		setUserData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
 	};
 
-	return (
-		<div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-			<div className="bg-white rounded-lg p-6 max-w-md w-full">
-				<h2 className="text-2xl text-green-500 mb-4">Edit {editSection}</h2>
-				<form className="space-y-4">
-					{editSection === 'avatar' && (
-						<div className="w-full flex-shrink-0 flex flex-col items-center justify-center p-6 bg-white">
-							{/* Предпросмотр аватара */}
-							<div className="flex items-center justify-center mb-6">
-								<div
-									className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-300"
-									style={{
-										backgroundColor: selectedColor || "transparent",
-									}}
-								>
-									{uploadedFile && (
-										<img
-											src={uploadedFile}
-											alt="avatar preview"
-											className="w-full h-full object-cover"
-										/>
-									)}
-								</div>
-							</div>
+	const handleSave = async () => {
+		setIsSaving(true); // Show loader
+		try {
+			// If a new file is uploaded
+			if (uploadedFile) {
+				const formData = new FormData();
+				formData.append("file", document.getElementById("file-upload").files[0]);
+				console.log(formData);
+				// Upload file to server
+				const uploadResponse = await ImageService.upload(formData);
+				console.log(uploadResponse);
+				// Save image object to localStorage
+				localStorage.setItem("image", JSON.stringify(uploadResponse));
+			}
+			// Update user data
+			const updatedUserData = {
+				...userData,
+				imageId: JSON.parse(localStorage.getItem("image")), // Update imageId
+			};
+			console.log(updatedUserData);
+			// Send updated user data to server
+			const updatedUser = await UserService.update(updatedUserData);
+			console.log(updatedUser);
+			// Save updated user data to localStorage
+			localStorage.setItem("user", JSON.stringify(updatedUser));
 
+			alert("Profile updated successfully!");
+			onClose(); // Close modal
+		} catch (error) {
+			console.error("Error updating profile:", error);
+			alert("Failed to update profile. Please try again later.");
+		} finally {
+			setIsSaving(false); // Hide loader
+		}
+	};
 
+	// Render the avatar section with file upload
+	const renderAvatarSection = () => (
+		<div className="flex flex-col items-center my-6">
+			<div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green-300">
+				{uploadedFile && (
+					<img
+						src={uploadedFile}
+						alt="avatar preview"
+						className="w-full h-full object-cover"
+					/>
+				)}
+			</div>
+			{/* File upload button for avatar */}
+			<label
+				htmlFor="file-upload"
+				className="w-full mt-4 px-6 py-3 bg-green-500 text-white rounded-lg flex items-center justify-center cursor-pointer shadow-lg hover:bg-green-400 transition"
+			>
+				<span className="mr-2">Upload Avatar</span>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					className="w-5 h-5"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+						d="M15 12l4-4m0 0l4 4m-4-4v12"
+					/>
+				</svg>
+				<input
+					id="file-upload"
+					type="file"
+					accept="image/*"
+					onChange={handleFileChange}
+					className="hidden"
+				/>
+			</label>
+		</div>
+	);
 
-							{/* Круглые логотипы на выбор */}
-							<div className="grid grid-cols-5 gap-4 mb-6">
-								{["red", "blue", "green", "yellow", "purple", "orange", "pink", "cyan", "gray", "teal"].map((color, index) => (
-									<div
-										key={index}
-										onClick={() => handleColorSelect(color)} // Передаем название цвета
-										className={`w-16 h-16 rounded-full cursor-pointer border-4 ${
-											formData.logo === color ? "border-green-500" : "border-transparent"
-										}`}
-										style={{backgroundColor: color}} // Используем цвет напрямую
-									/>
-								))}
-							</div>
+	const renderFormFields = () => {
+		const togglePasswordVisibility = () => {
+			setShowPassword((prev) => !prev);
+		};
 
-
-							{/* Загрузка изображения */}
-							<p className="text-gray-700 font-medium mb-2">Или загрузите изображение:</p>
+		return (
+			<div className="space-y-6">
+				{[
+					{label: "First Name", name: "firstName", type: "text"},
+					{label: "Last Name", name: "lastName", type: "text"},
+					{label: "Age", name: "age", type: "number"},
+					{label: "Phone Number", name: "phoneNumber", type: "number"},
+					{label: "Email", name: "email", type: "email"},
+					{
+						label: "Password",
+						name: "password",
+						type: showPassword ? "text" : "password",
+						placeholder: "******",
+					},
+				].map(({label, name, type, placeholder}) => (
+					<div key={name} className="mb-4 flex flex-col">
+						<label className="text-mb text-gray-500 mb-2">{label}</label>
+						<div className="relative">
 							<input
-								type="file"
-								accept="image/*"
-								onChange={handleFileChange}
-								className="w-full px-4 py-2 border rounded-lg mb-4"
+								type={type}
+								name={name}
+								value={name === "password" ? null : userData[name]}
+								onChange={handleInputChange}
+								placeholder={placeholder}
+								className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition w-full"
 							/>
-
-							{/* Кнопки управления */}
-							<div className="flex justify-between items-center">
+							{name === "password" && (
 								<button
-									onClick={() => setIsEditing(false)}
-									className="bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-300"
+									type="button"
+									onClick={togglePasswordVisibility}
+									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
 								>
-									Отмена
+									{showPassword ? "Hide" : "Show"}
 								</button>
-								<button
-									onClick={handleSaveAvatar}
-									className="bg-green-400 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
-									disabled={!selectedColor && !uploadedFile}
-								>
-									Сохранить
-								</button>
-							</div>
-
-
-							<label className="block text-gray-700">Upload Profile Picture</label>
-							<input
-								type="file"
-								accept="image/*"
-								onChange={handleFileUpload}
-								className="w-full px-4 py-2 border rounded-lg"
-							/>
+							)}
 						</div>
-					)}
-					{editSection === 'contact' && (
-						<>
-							<div>
-								<label className="block text-gray-700">First Name</label>
-								<input
-									type="text"
-									name="firstName"
-									value={formData.firstName}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-							<div>
-								<label className="block text-gray-700">Last Name</label>
-								<input
-									type="text"
-									name="lastName"
-									value={formData.lastName}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-							<div>
-								<label className="block text-gray-700">Phone Number</label>
-								<input
-									type="text"
-									name="phoneNumber"
-									value={formData.phoneNumber}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-							<div>
-								<label className="block text-gray-700">Email</label>
-								<input
-									type="email"
-									name="email"
-									value={formData.email}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-						</>
-					)}
-					{editSection === 'anthropometry' && (
-						<>
-							<div>
-								<label className="block text-gray-700">Age</label>
-								<input
-									type="number"
-									name="age"
-									value={formData.age}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-							<div>
-								<label className="block text-gray-700">Weight</label>
-								<input
-									type="number"
-									name="weight"
-									value={formData.weight}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-							<div>
-								<label className="block text-gray-700">Height</label>
-								<input
-									type="number"
-									name="height"
-									value={formData.height}
-									onChange={handleChange}
-									className="w-full px-4 py-2 border rounded-lg"
-								/>
-							</div>
-						</>
-					)}
-				</form>
-				<div className="flex justify-end mt-4">
+					</div>
+				))}
+			</div>
+		);
+	};
+
+	if (!isOpen) return null;
+	return isSaving ? (
+		<Loader/>
+	) : (
+		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 mb-16">
+			<div
+				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300 overflow-y-scroll">
+				{/* Sticky Header */}
+				<div className="sticky mb-2">
+					<h2 className="text-2xl text-gray-500 mb-2">Edit Profile</h2>
+				</div>
+				{/* Avatar Section */}
+				{renderAvatarSection()}
+
+				{/* Form Fields */}
+				{renderFormFields()}
+
+				{/* Save/Cancel Buttons */}
+				<div className="flex space-x-6 mt-6 justify-center">
 					<button
-						onClick={() => setIsEditing(false)}
-						className="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg"
-					>
-						Cancel
-					</button>
-					<button
-						onClick={handleSaveChanges}
-						className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+						onClick={handleSave}
+						className={`bg-green-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition ${
+							isSaving ? "opacity-50 cursor-not-allowed" : ""
+						}`}
+						disabled={isSaving}
 					>
 						Save
+					</button>
+					<button
+						onClick={() => onClose()}
+						className="bg-red-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 transition"
+					>
+						Cancel
 					</button>
 				</div>
 			</div>
@@ -215,12 +194,8 @@ function EditProfileModal({
 }
 
 EditProfileModal.propTypes = {
-	isEditing: PropTypes.bool.isRequired,
-	editSection: PropTypes.string.isRequired,
-	formData: PropTypes.object.isRequired,
-	handleChange: PropTypes.func.isRequired,
-	handleSaveChanges: PropTypes.func.isRequired,
-	setIsEditing: PropTypes.func.isRequired,
-	handleFileUpload: PropTypes.func.isRequired
+	isOpen: PropTypes.bool.isRequired,
+	onClose: PropTypes.func.isRequired,
 };
+
 export default EditProfileModal;
