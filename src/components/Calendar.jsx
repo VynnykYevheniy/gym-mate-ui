@@ -90,7 +90,7 @@ const Calendar = () => {
 
 	const renderTrainingRecords = () => (
 		<TrainingsList
-			trainings={trainings}
+			trainings={filteredTrainings}
 			onRefresh={() => loadTrainingsForMonth(currentDate.month() + 1, currentDate.year())}  // Передаем функцию для обновления списка тренировок
 		/>
 	);
