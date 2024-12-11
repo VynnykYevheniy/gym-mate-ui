@@ -23,7 +23,6 @@ export const getCurrent = async () => {
 
 export const save = async (dataBody) => {
 	try {
-		console.log(dataBody);
 		const response = await axiosInstance.post(ApiUrls.ANALYTICS.ADD, dataBody);
 		return response.data;
 	} catch (error) {

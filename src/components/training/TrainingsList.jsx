@@ -41,7 +41,7 @@ const TrainingsList = ({trainings, onRefresh, searchTerm}) => {
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
 				trainingData={selectedTrainingRecord}
-				onTrainingAdded={onRefresh}  // Перезагружаем список тренировок
+				onRefresh={onRefresh}  // Перезагружаем список тренировок
 			/>
 		</div>
 	);

@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { FaRulerCombined, FaUserCircle } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { MdEdit } from "react-icons/md";
+import {useState} from "react";
+import {FaRulerCombined, FaUserCircle} from "react-icons/fa";
+import {motion} from "framer-motion";
+import {MdEdit} from "react-icons/md";
 import useModal from "../useModal.jsx";
 import EditProfileModal from "./EditProfileModal.jsx";
 import EditBodyModal from "./EditBodyModal.jsx";
+import PropTypes from "prop-types";
 
-const ProfileEditMenu = () => {
-	const { openModal, closeModal, isModalOpen } = useModal(); // Get modal control functions
+const ProfileEditMenu = ({onRefresh}) => {
+	const {openModal, closeModal, isModalOpen} = useModal(); // Get modal control functions
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [activeModal, setActiveModal] = useState(""); // Track active modal (profile or body)
 
@@ -21,8 +22,10 @@ const ProfileEditMenu = () => {
 	};
 
 	const handleModalClose = () => {
-		setActiveModal(""); // Reset active modal
+		setActiveModal(null); // Reset active modal
 		closeModal(); // Close currently opened modal
+		onRefresh();
+		setShowDropdown(false);
 	};
 
 	return (
@@ -44,12 +47,12 @@ const ProfileEditMenu = () => {
 						className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute bottom-[100%] right-0 translate-y-[-10%] w-36 overflow-hidden"
 					>
 						<Option
-							icon={<FaUserCircle className="text-green-500" />}
+							icon={<FaUserCircle className="text-green-500"/>}
 							text="Profile"
 							onClick={() => handleModalOpen("profile")}
 						/>
 						<Option
-							icon={<FaRulerCombined className="text-green-500" />}
+							icon={<FaRulerCombined className="text-green-500"/>}
 							text="Body"
 							onClick={() => handleModalOpen("body")}
 						/>
@@ -63,24 +66,24 @@ const ProfileEditMenu = () => {
 						onClick={toggleDropdown}
 						className="w-14 h-14 flex items-center justify-center rounded-full bg-green-400 text-white shadow-lg hover:bg-green-600 transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 					>
-						<MdEdit className="h-6 w-6" />
+						<MdEdit className="h-6 w-6"/>
 					</button>
 				</motion.div>
 			</div>
 
 			{/* Conditionally render modals based on active state */}
 			{activeModal === "profile" && (
-				<EditProfileModal isOpen={isModalOpen} onClose={handleModalClose} />
+				<EditProfileModal isOpen={isModalOpen} onClose={handleModalClose}/>
 			)}
 			{activeModal === "body" && (
-				<EditBodyModal isOpen={isModalOpen} onClose={handleModalClose} />
+				<EditBodyModal isOpen={isModalOpen} onClose={handleModalClose}/>
 			)}
 		</div>
 	);
 };
 
-const Option = ({ icon, text, onClick }) => (
-	<motion.li
+function Option ({icon, text, onClick}) {
+	return <motion.li
 		variants={itemVariants}
 		onClick={onClick}
 		className="flex items-center gap-2 w-full p-2 text-sm font-medium whitespace-nowrap rounded-md hover:bg-green-100 text-gray-700 hover:text-green-500 transition-colors cursor-pointer"
@@ -88,7 +91,7 @@ const Option = ({ icon, text, onClick }) => (
 		{icon}
 		<span>{text}</span>
 	</motion.li>
-);
+}
 
 const dropdownVariants = {
 	open: {
@@ -123,4 +126,7 @@ const itemVariants = {
 	},
 };
 
+ProfileEditMenu.propTypes = {
+	onRefresh: PropTypes.func.isRequired,
+}
 export default ProfileEditMenu;

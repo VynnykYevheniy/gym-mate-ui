@@ -2,23 +2,79 @@ import WeightBMIChart from "../components/profile/WeightChart.jsx";
 import BJUCalculator from "../components/generic/BJUCalculator.jsx";
 import UserProfile from "../components/profile/UserProfile.jsx";
 import ProfileEditMenu from "../components/profile/ProfileEditMenu.jsx";
+import {useCallback, useEffect, useState} from "react";
+import {currentUser} from "../service/UserService.jsx";
+import * as AnalyticsBodyService from "../service/AnalyticsBodyService.jsx";
+import * as ImageService from "../service/ImageService.jsx";
+import Loader from "../components/generic/Loader.jsx";
 
 const Profile = () => {
+	const [data, setData] = useState({
+		user: null,
+		body: null,
+		image: null,
+		weightData: [],
+		bmiData: [],
+		loading: true,
+	});
+
+	const fetchData = useCallback(async () => {
+		try {
+			// Получение данных пользователя
+			const userData = await currentUser();
+			localStorage.setItem("user", JSON.stringify(userData));
+
+			// Получение данных тела
+			const bodyData = await AnalyticsBodyService.getCurrent();
+
+			// Получение изображения
+			const imageUrl = userData.imageId
+				? await ImageService.getImageById(userData.imageId)
+				: null;
+
+			// Получение аналитики
+			const analytics = await AnalyticsBodyService.getAll();
+			const weights = analytics.map(({date, weight}) => ({date, weight}));
+			const bmiValues = analytics.map(({date, bmi}) => ({date, bmi}));
+
+			// Обновление состояния
+			setData({
+				user: userData,
+				body: bodyData,
+				image: imageUrl,
+				weightData: weights,
+				bmiData: bmiValues,
+				loading: false,
+			});
+		} catch (error) {
+			console.error("Error fetching profile data:", error);
+			setData((prev) => ({...prev, loading: false}));
+		}
+	}, [setData]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	if (data.loading) {
+		return <Loader/>; // Показываем Loader, пока идет загрузка
+	}
+
 	return (
 		<main className="flex-col items-center justify-center p-4 pb-12">
-			{/* profile Section */}
-			<UserProfile/>
+			{/* Profile Section */}
+			<UserProfile user={data.user} body={data.body} image={data.image}/>
 
 			{/* Weight and BMI Chart */}
-			<WeightBMIChart/>
+			<WeightBMIChart weightData={data.weightData} bmiData={data.bmiData}/>
 
 			{/* BJU Calculator */}
 			<BJUCalculator/>
 
 			{/* Edit Options */}
-			<ProfileEditMenu/>
-
+			<ProfileEditMenu onRefresh={fetchData}/>
 		</main>
 	);
-}
+};
+
 export default Profile;

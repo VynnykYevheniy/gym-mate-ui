@@ -1,14 +1,29 @@
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as UserService from "../../service/UserService.jsx";
 import Loader from "../generic/Loader.jsx";
 import * as ImageService from "../../service/ImageService.jsx";
 
 function EditProfileModal({isOpen, onClose}) {
 	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")));
+	const [currentImage, setCurrentImage] = useState(null);
 	const [uploadedFile, setUploadedFile] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
+
+	useEffect(() => {
+		if (userData && userData.imageId) {
+			const fetchImage = async () => {
+				try {
+					const image = await ImageService.getImageById(userData.imageId);
+					setCurrentImage(image);
+				} catch (error) {
+					console.error("Error loading user image", error);
+				}
+			};
+			fetchImage();
+		}
+	}, [userData]);
 
 	// Handle file upload for avatar
 	const handleFileChange = (event) => {
@@ -67,12 +82,21 @@ function EditProfileModal({isOpen, onClose}) {
 	const renderAvatarSection = () => (
 		<div className="flex flex-col items-center my-6">
 			<div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green-300">
-				{uploadedFile && (
+				{/* Показываем текущее изображение или загруженное превью */}
+				{uploadedFile ? (
 					<img
 						src={uploadedFile}
 						alt="avatar preview"
 						className="w-full h-full object-cover"
 					/>
+				) : (
+					currentImage && (
+						<img
+							src={currentImage} // Используем URL текущего изображения
+							alt="current avatar"
+							className="w-full h-full object-cover"
+						/>
+					)
 				)}
 			</div>
 			{/* File upload button for avatar */}

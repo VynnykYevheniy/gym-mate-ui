@@ -2,39 +2,16 @@ import {Line} from 'react-chartjs-2';
 import 'chart.js/auto';
 import {useEffect, useState} from 'react';
 import {useSwipeable} from 'react-swipeable';
-import * as AnalyticsBodyService from "../../service/AnalyticsBodyService.jsx";
+import PropTypes from "prop-types";
 
-const WeightBMIChart = () => {
+const WeightBMIChart = ({weightData, bmiData}) => {
 	const [chartData, setChartData] = useState({});
 	const [chartType, setChartType] = useState('weight'); // Track which chart to display
-	const [weightData, setWeightData] = useState([]);
-	const [bmiData, setBmiData] = useState([]);
-	const [loading, setLoading] = useState(true);
 
 	const handlers = useSwipeable({
 		onSwipedLeft: () => setChartType((prev) => (prev === 'weight' ? 'bmi' : 'weight')),
 		onSwipedRight: () => setChartType((prev) => (prev === 'weight' ? 'bmi' : 'weight')),
 	});
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const analytics = await AnalyticsBodyService.getAll();
-				console.log(analytics);
-				const weights = analytics.map(({date, weight}) => ({date, weight}));
-				const bmiValues = analytics.map(({date, bmi}) => ({date, bmi}));
-
-				setWeightData(weights);
-				setBmiData(bmiValues);
-			} catch (error) {
-				console.error("Failed to fetch analytics data:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	useEffect(() => {
 		let labels = [];
@@ -68,10 +45,6 @@ const WeightBMIChart = () => {
 		}
 	}, [chartType, weightData, bmiData]);
 
-	if (loading) {
-		return <p className="text-center text-gray-500">Загрузка данных...</p>;
-	}
-
 	return (
 		<section className="w-full p-2 text-center bg-white rounded-lg mb-6">
 			<div className="max-w-4xl mx-auto bg-white" {...handlers}>
@@ -83,7 +56,10 @@ const WeightBMIChart = () => {
 							maintainAspectRatio: false,
 							scales: {
 								x: {title: {display: true, text: 'Дата'}},
-								y: {title: {display: true, text: chartType === 'weight' ? 'Вес (кг)' : 'ИМТ'}, beginAtZero: true},
+								y: {
+									title: {display: true, text: chartType === 'weight' ? 'Вес (кг)' : 'ИМТ'},
+									beginAtZero: true
+								},
 							},
 							plugins: {
 								tooltip: {
@@ -103,5 +79,8 @@ const WeightBMIChart = () => {
 		</section>
 	);
 };
-
+WeightBMIChart.propTypes = {
+	weightData: PropTypes.array.isRequired,
+	bmiData: PropTypes.array.isRequired,
+}
 export default WeightBMIChart;

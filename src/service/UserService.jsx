@@ -13,7 +13,6 @@ export const currentUser = async () => {
 
 export const update = async (userData) => {
 	try {
-		console.log(userData)
 		const response = await axiosInstance.put(ApiUrls.USER.UPDATE, userData);
 		return response.data;
 	} catch (error) {

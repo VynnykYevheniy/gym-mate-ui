@@ -3,7 +3,6 @@ import ApiUrls from "../model/ApiUrls.js";
 
 export const upload = async (formData) => {
 	try {
-		console.log(formData);
 		const response = await axiosInstance.post(ApiUrls.IMAGE.UPLOAD, formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
