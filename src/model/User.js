@@ -8,8 +8,10 @@ class User {
 		firstName,
 		lastName,
 		age,
-		imageId
+		imageId,
+		birthday
 	) {
+		this.birthday = birthday || "";
 		this.id = id || null;
 		this.login = login || '';
 		this.email = email || '';

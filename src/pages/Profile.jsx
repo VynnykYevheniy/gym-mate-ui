@@ -53,8 +53,12 @@ const Profile = () => {
 	}, [setData]);
 
 	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
+		// Проверяем наличие токена и отсутствие данных пользователя
+		const token = localStorage.getItem("token");
+		if (token && !data.user) {
+			fetchData();
+		}
+	}, [data.user, fetchData]);
 
 	if (data.loading) {
 		return <Loader/>; // Показываем Loader, пока идет загрузка

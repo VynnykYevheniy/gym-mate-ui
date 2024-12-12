@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import Header from './components/generic/Header.jsx';
 import './App.css';
 import Register from './pages/Register';
@@ -8,7 +8,6 @@ import PrivateRoute from './service/PrivateRoute.jsx';
 import CalendarTraining from './pages/CalendarTraining.jsx';
 import TrainerProfile from './pages/Trainer/TrainerProfile.jsx';
 import ClientManager from './pages/Trainer/ClientManager.jsx';
-import UserProfile from './components/profile/UserProfile.jsx';
 import WelcomeComponent from './components/generic/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
@@ -20,7 +19,8 @@ function App() {
 
 	return (
 		<AuthProvider>
-			<Header/>
+			{/* Показывать Header, только если текущий путь не входит в список исключений */}
+			{!"/welcome".includes(location.pathname) && <Header/>}
 			<Routes>
 				{/* WelcomeComponent доступен без авторизации */}
 				<Route path="/" element={<WelcomeComponent/>}/>
@@ -37,9 +37,11 @@ function App() {
 					<Route path="/clientmanager" element={<ClientManager/>}/>
 					<Route path="/clientmanager/:id" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>
-					<Route path="/welcome" element={<WelcomePage/>}/>
 					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
 				</Route>
+				<Route path="/welcome" element={<WelcomePage/>}/>
+				{/* Обработка несуществующих маршрутов */}
+				<Route path="*" element={<Navigate to="/" replace/>}/>
 			</Routes>
 		</AuthProvider>
 	);

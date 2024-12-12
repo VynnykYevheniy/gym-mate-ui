@@ -11,9 +11,14 @@ axiosInstance.interceptors.request.use(
 		const token = localStorage.getItem('token')
 			? JSON.parse(localStorage.getItem('token')).accessToken
 			: null;
+		// Устанавливаем токен, если он есть
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
-			// config.headers["Content-Type"] = "application/json";
+		}
+
+		// Устанавливаем Content-Type по умолчанию, если он не установлен
+		if (!config.headers["Content-Type"]) {
+			config.headers["Content-Type"] = "application/json";
 		}
 		console.log(config.data);
 		return config;

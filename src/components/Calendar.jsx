@@ -114,19 +114,19 @@ const Calendar = () => {
 
 		<div className="flex flex-col items-center justify-center pb-16">
 			{/* Month navigation */}
-			<div className="flex justify-between items-center mb-4 w-full max-w-md">
+			<div className="flex justify-between items-center mb-2 w-full max-w-md">
 				<button onClick={() => changeMonth(-1)}
-						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+						className="p-4 bg-green-500 text-white rounded hover:bg-green-600">
 					<FaArrowLeft/>
 				</button>
 				<h2 className="text-xl font-bold">{currentDate.format('MMMM YYYY')}</h2>
 				<button onClick={() => changeMonth(1)}
-						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+						className="p-4 bg-green-500 text-white rounded hover:bg-green-600">
 					<FaArrowRight/>
 				</button>
 			</div>
 
-			<div className="border-gray-400 p-4 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-sm">
+			<div className="border-gray-400 p-2 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-sm">
 				<div className="grid grid-cols-7 gap-1 mb-4">
 					{weekDaysShort.map((day) => (
 						<div key={day}

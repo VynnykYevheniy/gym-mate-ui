@@ -43,7 +43,11 @@ export default function BottomNavbar() {
 					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1"/>
 					<span>Workout</span>
 				</Link>
-				<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+				<Link to="/analytics" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
+					<span>Analytics</span>
+				</Link>
+				{/*<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
 					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
 					<span>Trainer</span>
 				</Link>
@@ -55,7 +59,7 @@ export default function BottomNavbar() {
 					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
 					<img src={ManagerSvg} alt="Manager Icon" className="h-6 w-6 mb-1"/>
 					<span>Client Manager</span>
-				</Link>
+				</Link>*/}
 			</div>
 		</div>
 	);
