@@ -28,18 +28,18 @@ export default function Login() {
 
 		try {
 			const token = await loginRequest(login, password);
+			setAuthToken(token);
 			if (token) {
 				console.log(token);
 				const user = await currentUser();
 				localStorage.setItem("user", JSON.stringify(user));
 				if (activeTab === 'client') {
-					navigate('/client'); // Route for client
 					localStorage.setItem("profileLink", "/client");
+					navigate('/client'); // Route for client
 				} else if (activeTab === 'trainer') {
-					navigate('/trainer'); // Route for trainer
 					localStorage.setItem("profileLink", "/trainer");
+					navigate('/trainer'); // Route for trainer
 				}
-				setAuthToken(token);
 			}
 		} catch (error) {
 			setError(t('invalidCredentials') + error);
