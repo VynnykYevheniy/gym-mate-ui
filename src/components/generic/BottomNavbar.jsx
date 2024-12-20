@@ -1,10 +1,9 @@
 import {Link} from "react-router-dom";
-import { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 import UserSvg from '../../assets/image/UserSvg.svg';
 import CalendarSvg from '../../assets/image/CalendarSvg.svg';
 import WorkoutSvg from '../../assets/image/WorkoutSvg.svg';
 import Trainer from '../../assets/Trainer.svg';
-import ManagerSvg from '../../assets/manager.svg';
 
 export default function BottomNavbar() {
 	// Локальное состояние для хранения ссылки на профиль
@@ -43,7 +42,8 @@ export default function BottomNavbar() {
 					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1"/>
 					<span>Workout</span>
 				</Link>
-				<Link to="/analytics" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
+				<Link to="/statistics"
+					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
 					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
 					<span>Analytics</span>
 				</Link>

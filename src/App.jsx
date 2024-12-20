@@ -14,6 +14,7 @@ import {AuthProvider} from "./context/AuthProvider.jsx";
 import TrainingsTable from "./components/training/TrainingsTable.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
 import Profile from "./pages/Profile.jsx";
+import Statistics from "./pages/Statistics.jsx";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
 					<Route path="/clientmanager/:id" element={<ClientManager/>}/>
 					<Route path="/trainers" element={<TrainerList/>}/>
 					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
+					<Route path="/statistics" element={<Statistics/>}/>
 				</Route>
 				<Route path="/welcome" element={<WelcomePage/>}/>
 				{/* Обработка несуществующих маршрутов */}
