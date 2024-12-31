@@ -1,4 +1,4 @@
-import axiosInstance from '../api/axiosConfig.jsx'; // Импортируем настроенный экземпляр Axios
+import axiosInstance from '../api/AxiosConfig.jsx'; // Импортируем настроенный экземпляр Axios
 import ApiUrls from '../model/ApiUrls.js';
 
 export const getAll = async () => {

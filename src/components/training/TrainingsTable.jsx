@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import axiosInstance from '../../api/axiosConfig.jsx';
+import axiosInstance from '../../api/AxiosConfig.jsx';
 import ApiUrls from "../../model/ApiUrls.js";
 import SearchBar from '../SearchBar.jsx';
 import TrainingForm from "./TrainingForm.jsx";

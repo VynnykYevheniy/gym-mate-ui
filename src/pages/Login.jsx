@@ -72,7 +72,7 @@ export default function Login() {
 					<div
 						className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 
-						{/* Tabs for Client and Trainer */}
+						{/* Tabs for Client and trainer */}
 						<div className="flex justify-center mb-4">
 							<button
 								className={`px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'client' ? 'text-green-700 border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}

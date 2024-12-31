@@ -48,11 +48,11 @@ export default function BottomNavbar() {
 					<span>Analytics</span>
 				</Link>
 				{/*<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
-					<span>Trainer</span>
+					<img src={trainer} alt="trainer Icon" className="h-6 w-6 mb-1"/>
+					<span>trainer</span>
 				</Link>
 				<Link to="/welcome" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={""} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
+					<img src={""} alt="trainer Icon" className="h-6 w-6 mb-1"/>
 					<span>Welcome</span>
 				</Link>
 				<Link to="/clientmanager"

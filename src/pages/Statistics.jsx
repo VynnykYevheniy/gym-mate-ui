@@ -1,5 +1,4 @@
-import {useState} from 'react';
-import {Line} from 'react-chartjs-2';
+import {useEffect, useState} from 'react';
 import {
 	CategoryScale,
 	Chart as ChartJS,
@@ -10,6 +9,11 @@ import {
 	Title,
 	Tooltip,
 } from 'chart.js';
+import TimeframeSelector from "../components/statistics/TimeframeSelector.jsx";
+import MuscleGroupSelector from "../components/statistics/MuscleGroupSelector.jsx";
+import ChartSection from "../components/statistics/ChartSection.jsx";
+import StatisticsDetails from "../components/statistics/StatisticsDetails.jsx";
+import {fetchExercisesByMuscleGroup, fetchMuscleGroups} from "../service/TrainingService.jsx";
 
 ChartJS.register(
 	CategoryScale,
@@ -22,20 +26,37 @@ ChartJS.register(
 );
 
 const Statistics = () => {
-	const [selectedExercise, setSelectedExercise] = useState('Bench Press');
-	const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('Chest');
-	const [timeframe, setTimeframe] = useState('Month'); // Default timeframe
-	const [showStatistics, setShowStatistics] = useState(false); // State to toggle statistics visibility
+	const [selectedExercise, setSelectedExercise] = useState('');
+	const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('');
+	const [timeframeMuscle, setTimeframeMuscle] = useState('Month');
+	const [timeframeExercise, setTimeframeExercise] = useState('Month');
+	const [activeTab, setActiveTab] = useState('muscle');
 
-	// Map muscle groups to exercises
-	const exercisesByMuscleGroup = {
-		Chest: ['Bench Press', 'Incline Bench Press', 'Chest Fly'],
-		Back: ['Deadlift', 'Pull-up', 'Bent-over Row'],
-		Legs: ['Squat', 'Leg Press', 'Lunges'],
-		Shoulders: ['Overhead Press', 'Lateral Raise', 'Arnold Press'],
-		Biceps: ['Barbell Curl', 'Hammer Curl', 'Preacher Curl'],
-		Triceps: ['Tricep Dips', 'Tricep Pushdown', 'Skull Crushers'],
-	};
+	const [exercisesByMuscleGroup, setExercisesByMuscleGroup] = useState({
+		name: []
+	});
+
+	useEffect(() => {
+		const loadMuscleGroups = async () => {
+			try {
+				const muscleGroups = await fetchMuscleGroups();
+				setSelectedMuscleGroup(muscleGroups[1].name)
+				const updatedExercisesByMuscleGroup = {};  // создаем новый объект для обновлений
+
+				for (const muscleGroup of muscleGroups) {
+					const exercises = await fetchExercisesByMuscleGroup(muscleGroup.id);
+					updatedExercisesByMuscleGroup[muscleGroup.name] = exercises.map(exercise => exercise.name);
+				}
+
+				setExercisesByMuscleGroup(updatedExercisesByMuscleGroup);  // обновляем состояние один раз
+			} catch (err) {
+				console.error(err);
+			}
+		};
+
+		loadMuscleGroups();
+	}, []);
+
 
 	const labelsByTimeframe = {
 		Week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -55,14 +76,15 @@ const Statistics = () => {
 		Year: [24000, 26000, 28000, 30000, 32000, 34000, 36000, 38000, 40000, 42000, 44000, 46000],
 	};
 
-	const labels = labelsByTimeframe[timeframe];
+	const labelsMuscle = labelsByTimeframe[timeframeMuscle];
+	const labelsExercise = labelsByTimeframe[timeframeExercise];
 
 	const exerciseProgress = {
-		labels,
+		labels: labelsExercise,
 		datasets: [
 			{
 				label: `${selectedExercise} (kg)`,
-				data: exerciseData[timeframe],
+				data: exerciseData[timeframeExercise],
 				borderColor: 'rgba(75, 192, 192, 1)',
 				backgroundColor: 'rgba(75, 192, 192, 0.2)',
 				tension: 0.3,
@@ -71,11 +93,11 @@ const Statistics = () => {
 	};
 
 	const muscleGroupProgress = {
-		labels,
+		labels: labelsMuscle,
 		datasets: [
 			{
 				label: `${selectedMuscleGroup} Volume (kg)`,
-				data: muscleGroupData[timeframe],
+				data: muscleGroupData[timeframeMuscle],
 				borderColor: 'rgba(255, 99, 132, 1)',
 				backgroundColor: 'rgba(255, 99, 132, 0.2)',
 				tension: 0.3,
@@ -83,127 +105,83 @@ const Statistics = () => {
 		],
 	};
 
-	const handleTimeframeChange = (newTimeframe) => {
-		setTimeframe(newTimeframe);
+	const handleTimeframeChangeMuscle = (newTimeframe) => {
+		setTimeframeMuscle(newTimeframe);
 	};
 
-	const handleMuscleGroupChange = (e) => {
-		const newMuscleGroup = e.target.value;
+	const handleTimeframeChangeExercise = (newTimeframe) => {
+		setTimeframeExercise(newTimeframe);
+	};
+
+	const handleMuscleGroupChange = (newMuscleGroup) => {
 		setSelectedMuscleGroup(newMuscleGroup);
-		setSelectedExercise(exercisesByMuscleGroup[newMuscleGroup][0]); // Set first exercise for the new muscle group
+		setSelectedExercise(exercisesByMuscleGroup[newMuscleGroup][0]);
 	};
 
 	return (
 		<main className="w-full mx-auto p-4 mb-16">
 			<div className="space-y-8 overflow-y-auto max-h-screen">
-				{/* Timeframe Filter and Muscle Group / Exercise Selection */}
-				<div className="bg-white shadow rounded-lg p-4">
-					<div className="flex space-x-4 justify-center">
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Week' ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white'}`}
-							onClick={() => handleTimeframeChange('Week')}
-						>
-							Week
-						</button>
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Month' ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white'}`}
-							onClick={() => handleTimeframeChange('Month')}
-						>
-							Month
-						</button>
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Year' ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white'}`}
-							onClick={() => handleTimeframeChange('Year')}
-						>
-							Year
-						</button>
-					</div>
-
-					{/* Muscle Group and Exercise Selection */}
-					<div className="flex space-x-4 justify-center mt-4">
-						<select
-							className="border p-2 rounded"
-							value={selectedMuscleGroup}
-							onChange={handleMuscleGroupChange}
-						>
-							{Object.keys(exercisesByMuscleGroup).map((muscleGroup) => (
-								<option key={muscleGroup} value={muscleGroup}>
-									{muscleGroup}
-								</option>
-							))}
-						</select>
-						<select
-							className="border p-2 rounded"
-							value={selectedExercise}
-							onChange={(e) => setSelectedExercise(e.target.value)}
-						>
-							{exercisesByMuscleGroup[selectedMuscleGroup].map((exercise) => (
-								<option key={exercise} value={exercise}>
-									{exercise}
-								</option>
-							))}
-						</select>
-					</div>
+				{/* Controls Section */}
+				<div className="bg-white shadow rounded-lg p-4 space-y-4">
+					{/* Muscle Group Selector */}
+					<MuscleGroupSelector
+						muscleGroups={exercisesByMuscleGroup}
+						selectedMuscleGroup={selectedMuscleGroup}
+						selectedExercise={selectedExercise}
+						onMuscleGroupChange={handleMuscleGroupChange}
+						onExerciseChange={setSelectedExercise}
+					/>
 				</div>
 
-				{/* Statistics Section: Only displayed when showStatistics is true */}
-				<div className="bg-white shadow rounded-lg p-4">
-					<h2 className="text-lg font-bold mb-4">Exercise Statistics</h2>
-					<div
-						className="space-y-4 bg-gray-50 p-2 shadow-inner shadow-[inset_0px_6px_10px_rgba(0,0,0,0.1)]"
-					>
-						{/* Max Weight */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Max Weight Lifted</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '100 kg' : '150 kg'}
-                </span>
-						</div>
-
-						{/* Total Volume */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Total Volume (kg)</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '5000 kg' : '7500 kg'}
-                </span>
-						</div>
-
-						{/* Record Reps */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Max Reps (per set)</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '15 reps' : '12 reps'}
-                </span>
-						</div>
-
-						{/* Total Sessions */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Total Sessions</span>
-							<span className="font-semibold text-lg">
-                  {selectedMuscleGroup === 'Chest' ? '32 sessions' : '45 sessions'}
-                </span>
-						</div>
-
-						{/* Average Weekly Progress */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Average Weekly Progress</span>
-							<span className="font-semibold text-lg">
-                  {selectedMuscleGroup === 'Chest' ? '1.2 kg/week' : '1.5 kg/week'}
-                </span>
-						</div>
+				{/* Tabs Section */}
+				<div className="bg-white shadow rounded-lg">
+					<div className="flex border-b border-gray-300">
+						<button
+							className={`flex-1 p-2 text-center ${activeTab === 'muscle' ? 'bg-green-400 text-white font-semibold rounded-t-lg' : 'bg-gray-100 text-gray-600'}`}
+							onClick={() => setActiveTab('muscle')}
+						>
+							Muscle Group
+						</button>
+						<button
+							className={`flex-1 p-2 text-center ${activeTab === 'exercise' ? 'bg-green-400 text-white font-semibold rounded-t-lg' : 'bg-gray-100 text-gray-600'}`}
+							onClick={() => setActiveTab('exercise')}
+						>
+							Exercise
+						</button>
 					</div>
-					{/* Chart Section: Exercise Progress */}
-					<div className="bg-white shadow rounded-lg my-6">
-						<h2 className="text-lg font-bold">Exercise Progress</h2>
-						<Line data={exerciseProgress}/>
+					<div className="p-4">
 					</div>
-
-					{/* Chart Section: Muscle Group Progress */}
-					<div className="bg-white shadow rounded-lg my-6">
-						<h2 className="text-lg font-bold">Muscle Group Progress</h2>
-						<Line data={muscleGroupProgress}/>
-					</div>
+					{activeTab === 'muscle' ? (
+						<>
+							<TimeframeSelector
+								timeframe={timeframeMuscle}
+								onTimeframeChange={handleTimeframeChangeMuscle}
+							/>
+							<ChartSection title="Muscle Group Progress" data={muscleGroupProgress}/>
+						</>
+					) : (
+						<>
+							<TimeframeSelector
+								timeframe={timeframeExercise}
+								onTimeframeChange={handleTimeframeChangeExercise}
+							/>
+							<ChartSection title="Exercise Progress" data={exerciseProgress}/>
+						</>
+					)}
 				</div>
+			</div>
+
+			{/* Details Section */
+			}
+			<div className="bg-white shadow rounded-lg p-4">
+				<h2 className="text-lg font-bold mb-4">Details</h2>
+				<StatisticsDetails
+					details={[
+						{label: 'Max Weight Lifted', value: '100 kg'},
+						{label: 'Total Volume', value: '5000 kg'},
+						{label: 'Sessions', value: '30'},
+					]}
+				/>
 			</div>
 		</main>
 	);

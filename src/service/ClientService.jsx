@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosConfig.jsx";
+import axiosInstance from "../api/AxiosConfig.jsx";
 
 
 export const subscribeToTrainer = async (trainerId) => {

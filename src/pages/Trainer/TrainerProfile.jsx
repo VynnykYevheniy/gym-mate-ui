@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import Loader from "../../components/generic/Loader.jsx";
 import RatingStar from "../../assets/RatingStar.svg";
 import UserPng from "../../assets/png/user.png";
-import ImageCarousel from "../../components/Trainer/ImageCarousel.jsx";
+import ImageCarousel from "../../components/trainer/ImageCarousel.jsx";
 
 const images = [
     { id: "1", url: "https://blog.springworks.in/wp-content/uploads/2021/07/14-Jul-21-Employee-Training-and-Development-Program-Examples-1024x1024-1.jpg" },
