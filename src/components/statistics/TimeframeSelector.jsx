@@ -1,5 +1,6 @@
-// Timeframe Selector Component
-const TimeframeSelector = ({ timeframe, onTimeframeChange }) => (
+import PropTypes from "prop-types";
+
+const TimeframeSelector = ({timeframe, onTimeframeChange}) => (
 	<div className="flex space-x-4 justify-center">
 		{['Week', 'Month', 'Year'].map((frame) => (
 			<button
@@ -14,4 +15,9 @@ const TimeframeSelector = ({ timeframe, onTimeframeChange }) => (
 		))}
 	</div>
 );
+
+TimeframeSelector.propTypes = {
+	timeframe: PropTypes.string.isRequired,
+	onTimeframeChange: PropTypes.func.isRequired,
+}
 export default TimeframeSelector;

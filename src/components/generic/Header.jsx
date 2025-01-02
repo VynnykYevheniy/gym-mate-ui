@@ -15,7 +15,7 @@ export default function Header() {
 
 	return (
 		<header
-			className="relative flex items-center justify-between p-2 bg-white h-16">
+			className="relative flex items-center justify-between p-2 bg-white h-12">
 			<Link to={profileLink} className="flex items-center gap-2">
 				<div className="h-10 w-10 bg-[url('./assets/biceps.svg')] bg-no-repeat bg-contain"/>
 				<span className="text-2xl font-black text-gray-800">

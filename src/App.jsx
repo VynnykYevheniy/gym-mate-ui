@@ -21,7 +21,8 @@ function App() {
 	return (
 		<AuthProvider>
 			{/* Показывать Header, только если текущий путь не входит в список исключений */}
-			{!"/welcome".includes(location.pathname) && <Header/>}
+			{/*{!"/welcome".includes(location.pathname) && <Header/>}*/}
+			<Header/>
 			<Routes>
 				{/* WelcomeComponent доступен без авторизации */}
 				<Route path="/" element={<WelcomeComponent/>}/>

@@ -119,6 +119,7 @@ const Statistics = () => {
 	};
 
 	return (
+
 		<main className="w-full mx-auto p-4 mb-16">
 			<div className="space-y-8 overflow-y-auto max-h-screen">
 				{/* Controls Section */}

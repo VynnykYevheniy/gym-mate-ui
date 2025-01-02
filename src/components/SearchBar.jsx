@@ -1,4 +1,6 @@
-const SearchBar = ({ searchTerm, onSearchChange , phText}) => {
+import PropTypes from "prop-types";
+
+const SearchBar = ({searchTerm, onSearchChange, phText}) => {
 	return (
 		<div className="mb-4">
 			<input
@@ -11,5 +13,11 @@ const SearchBar = ({ searchTerm, onSearchChange , phText}) => {
 		</div>
 	);
 };
+
+SearchBar.propsTypes = {
+	searchTerm: PropTypes.string.isRequired,
+	onSearchChange: PropTypes.func.isRequired,
+	phText: PropTypes.string.isRequired
+}
 
 export default SearchBar;

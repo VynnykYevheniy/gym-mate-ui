@@ -1,10 +1,10 @@
-import TrainersTable from "../components/TrainersTable.jsx";
+import TrainersTable from "../components/trainer/TrainersTable.jsx";
 
-const TrainingList = () => {
+const Trainings = () => {
 
 	return (
 		<TrainersTable/>
 	);
 };
 
-export default TrainingList;
+export default Trainings;

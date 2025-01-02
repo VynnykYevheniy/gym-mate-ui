@@ -4,11 +4,11 @@ const Loader = () => {
 			<div className="flex flex-col items-center">
 				<div className="relative">
 					<div
-						className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-blue-500 to-green-500 animate-ping"></div>
+						className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-white to-green-500 animate-ping"></div>
 					<div
 						className="relative w-20 h-20 rounded-full border-4 border-blue-300 border-t-transparent animate-spin"></div>
 				</div>
-				<div className="mt-11 text-xs font-medium text-blue-800">Loading...</div>
+				<div className="mt-11 text-xs font-medium text-green-500">Loading...</div>
 			</div>
 		</div>
 	);

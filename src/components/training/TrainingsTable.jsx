@@ -17,7 +17,6 @@ const TrainingsTable = () => {
 		isModalOpen,
 		selectedTrainingRecord,
 		setIsModalOpen,
-		setSelectedTrainingRecord,
 		handleCloseModal,
 	} = useTrainingModal();
 
@@ -64,7 +63,6 @@ const TrainingsTable = () => {
 				onRefresh={fetchTrainings}/>
 			<button
 				onClick={() => {
-					setSelectedTrainingRecord(null);
 					setIsModalOpen(true);
 				}}
 				className="fixed bottom-6 mb-12 right-6 w-14 h-14 bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-105"
