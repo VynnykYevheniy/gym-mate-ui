@@ -34,9 +34,9 @@ class ApiUrls {
 		ALL: `/trainer`,
 	};
 	static ANALYTICS = {
-		ALL: `/analytics`,
-		ADD: `/analytics`,
-		CURRENT: `/analytics/current`,
+		ALL: `/body`,
+		ADD: `/body`,
+		CURRENT: `/body/current`,
 	};
 	static IMAGE = {
 		GET_BY_ID: (id) => `/images/${id}`,
