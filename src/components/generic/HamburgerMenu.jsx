@@ -33,11 +33,11 @@ const HamburgerMenu = () => {
 				tabIndex={0}
 			>
 				<span
-					className={`block w-6 h-1 bg-green-600 transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''} mb-1`}></span>
+					className={`block w-6 h-1 bg-primary transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''} mb-1`}></span>
 				<span
-					className={`block w-6 h-1 bg-green-600 transition-opacity duration-100 ${isOpen ? 'opacity-0' : 'opacity-100'} mb-1`}></span>
+					className={`block w-6 h-1 bg-primary transition-opacity duration-100 ${isOpen ? 'opacity-0' : 'opacity-100'} mb-1`}></span>
 				<span
-					className={`block w-6 h-1 bg-green-600 transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+					className={`block w-6 h-1 bg-primary transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
 			</button>
 
 			{isOpen && (

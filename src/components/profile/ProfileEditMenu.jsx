@@ -64,7 +64,7 @@ const ProfileEditMenu = ({onRefresh}) => {
 						aria-haspopup="true"
 						aria-expanded={showDropdown}
 						onClick={toggleDropdown}
-						className="w-14 h-14 flex items-center justify-center rounded-full bg-green-400 text-white shadow-lg hover:bg-green-600 transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+						className="w-14 h-14 flex items-center justify-center rounded-full bg-primary text-white shadow-lg hover:bg-green-600 transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 					>
 						<MdEdit className="h-6 w-6"/>
 					</button>

@@ -10,7 +10,7 @@ function UserProfile({ user, body, image }) {
 			<div className="flex flex-row items-start justify-between sm:items-start sm:space-x-6">
 				{/* Profile Picture */}
 				<div
-					className="w-32 h-32 rounded-full overflow-hidden border-4 border-green-300 flex items-center justify-center bg-gray-200">
+					className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary flex items-center justify-center bg-gray-200">
 					{image ? (
 						<img
 							src={image}
@@ -32,21 +32,21 @@ function UserProfile({ user, body, image }) {
 			<ul className="py-4 my-6 text-gray-500 flex items-center justify-around">
 				{[
 					{
-						icon: <FaBirthdayCake className="h-10 w-10 text-green-400"/>,
+						icon: <FaBirthdayCake className="h-10 w-10 text-primary"/>,
 						value: `${user?.age || 0} y.o`
 					},
 					{
-						icon: <GiWeight className="h-10 w-10 text-green-400"/>,
+						icon: <GiWeight className="h-10 w-10 text-primary"/>,
 						value: `${body?.weight || 75} kg`
 					},
 					{
-						icon: <FaArrowsAltV className="h-10 w-10 text-green-400"/>,
+						icon: <FaArrowsAltV className="h-10 w-10 text-primary"/>,
 						value: `${body?.height || 175} cm`
 					},
 				].map((item, index) => (
 					<li key={index} className="flex flex-col items-center justify-center">
 						<div
-							className="flex items-center justify-center w-20 h-20 rounded-full border-4 border-green-300">
+							className="flex items-center justify-center w-20 h-20 rounded-full border-4 border-primary">
 							{item.icon}
 						</div>
 						<span className="text-lg">{item.value}</span>
@@ -64,7 +64,7 @@ function UserProfile({ user, body, image }) {
 						textColor: 'text-blue-600',
 					},
 					{
-						icon: <FaTelegramPlane className="mr-3 text-teal-600"/>,
+						icon: <FaTelegramPlane className="mr-3 text-primary"/>,
 						label: t('userProfile.email'),
 						value: user?.email || 'email@example.com',
 						bgColor: 'bg-teal-100',

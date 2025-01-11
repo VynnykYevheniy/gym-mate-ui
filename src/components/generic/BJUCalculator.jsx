@@ -116,7 +116,7 @@ export default function BJUCalculator() {
 					</> : <>
 						<button
 							type="submit"
-							className="bg-green-400 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
+							className="bg-primary text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
 						>Calculate</button>
 					</>
 					}

@@ -31,20 +31,20 @@ export default function BottomNavbar() {
 			<div className="flex justify-between items-center p-2">
 				<Link to={profileLink || '/'}
 					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={UserSvg} alt="Profile Icon" className="h-6 w-6 mb-1"/>
+					<img src={UserSvg} alt="Profile Icon" className="h-6 w-6 mb-1 text-primary"/>
 					<span>Profile</span>
 				</Link>
 				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={CalendarSvg} alt="Calendar Icon" className="h-6 w-6 mb-1"/>
+					<img src={CalendarSvg} alt="Calendar Icon" className="h-6 w-6 mb-1 text-primary"/>
 					<span>Calendar</span>
 				</Link>
 				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1"/>
+					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1 text-primary"/>
 					<span>Workout</span>
 				</Link>
 				<Link to="/statistics"
 					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1"/>
+					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1 text-primary"/>
 					<span>Analytics</span>
 				</Link>
 				{/*<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">

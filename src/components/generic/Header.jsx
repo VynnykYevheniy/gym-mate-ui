@@ -20,14 +20,14 @@ export default function Header() {
 				<div className="h-10 w-10 bg-[url('./assets/biceps.svg')] bg-no-repeat bg-contain"/>
 				<span className="text-2xl font-black text-gray-800">
 					Gym
-					<span className="text-green-500"> Mate</span>
+					<span className="text-primary"> Mate</span>
 				</span>
 			</Link>
 
 			<div className="flex items-center space-x-4">
 				<select
 					onChange={(e) => changeLanguage(e.target.value)}
-					className="rounded-md border border-gray-300 bg-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500">
+					className="rounded-md border border-gray-300 bg-white shadow-sm focus:border-primary focus:ring focus:ring-primary">
 					<option value="en">Eng</option>
 					<option value="uk">Укр</option>
 					<option value="ru">Рус</option>
@@ -41,7 +41,7 @@ export default function Header() {
 					<ul className="list-none flex space-x-2">
 						<li>
 							<Link
-								className="nav-link rounded-md bg-green-500 py-2 px-4 font-semibold text-white shadow-lg transition duration-150 ease-in-out hover:bg-green-600 hover:shadow-xl focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+								className="nav-link rounded-md bg-primary py-2 px-4 font-semibold text-white shadow-lg transition duration-150 ease-in-out hover:bg-primary hover:shadow-xl focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
 								to="/signin">
 								{t('header.signIn')}
 							</Link>

@@ -10,18 +10,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        orange: {
-          500: "#f97316",
-        },
-        pink: {
-          500: "#ec4899",
-        },
-        cyan: {
-          500: "#06b6d4",
-        },
-        teal: {
-          500: "#14b8a6",
-        },
+        primary: "#15803d", // Добавляем цвет primary
       },
       backgroundSize: {
         auto: "auto",
