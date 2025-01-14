@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#15803d", // Добавляем цвет primary
+        primary: "#22C55E", // Добавляем цвет primary
       },
       backgroundSize: {
         auto: "auto",
