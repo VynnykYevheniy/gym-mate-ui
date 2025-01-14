@@ -19,11 +19,11 @@ const CalendarGrid = ({currentDate, trainings, onDayClick}) => {
 		<div className="border-gray-400 p-2 w-full max-w-md sm:max-w-lg bg-white rounded-lg shadow-sm">
 			<div className="grid grid-cols-7 gap-1 mb-4">
 				{weekDaysShort.map((day) => (
-					<div key={day} className="flex items-center justify-center text-center font-bold text-black p-2">
+					<div key={day} className="flex items-center justify-center text-center font-bold text-secondTextColor p-2">
 						{day}
 					</div>
 				))}
-				<div className="col-span-7 border-b-2 border-gray-600 mt-1"/>
+				<div className="col-span-7 border-b-2 border-secondTextColor mt-1"/>
 			</div>
 
 			<div className="grid grid-cols-7 gap-2 mt-1">
@@ -40,7 +40,7 @@ const CalendarGrid = ({currentDate, trainings, onDayClick}) => {
 								className="box-border border-2 border-white rounded-md">
 							<div
 								className={`p-4 rounded-md flex items-center justify-center cursor-pointer ${
-									isVisited ? 'bg-green-200 text-green-800' : weekend ? 'bg-red-200' : 'bg-gray-100'
+									isVisited ? 'bg-primary text-primaryHover' : weekend ? 'bg-red-200' : 'bg-gray-100'
 								}`}
 							>
 								{day}

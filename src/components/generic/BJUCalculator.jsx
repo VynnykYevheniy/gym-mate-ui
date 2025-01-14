@@ -43,8 +43,8 @@ export default function BJUCalculator() {
 	};
 
 	return (
-		<section className="w-full max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg mb-6">
-			<h2 className="text-lg text-center text-gray-800 mb-6">BJU Calculator</h2>
+		<section className="w-full max-w-lg mx-auto bg-defaultInfoSectionColor">
+			<h2 className="text-lg text-center text-secondTextColor mb-6">BJU Calculator</h2>
 			<form className="space-y-6" onSubmit={handleCalculate}>
 				<div className="mb-4 flex items-center">
 					<label htmlFor="gender" className="block w-1/4 mb-2 text-sm text-gray-500">Gender</label>
@@ -59,7 +59,7 @@ export default function BJUCalculator() {
 					</select>
 				</div>
 				<div className="mb-4 flex items-center">
-					<label htmlFor="weight" className="block w-1/4 mb-2 text-sm text-gray-500">Weight (kg)</label>
+					<label htmlFor="weight" className="block w-1/4 mb-2 text-sm text-secondTextColor">Weight (kg)</label>
 					<input
 						type="number"
 						id="weight"
@@ -70,7 +70,7 @@ export default function BJUCalculator() {
 					/>
 				</div>
 				<div className="mb-4 flex items-center">
-					<label htmlFor="height" className="block w-1/4 mb-2 text-sm text-gray-500">Height (cm)</label>
+					<label htmlFor="height" className="block w-1/4 mb-2 text-sm text-secondTextColor">Height (cm)</label>
 					<input
 						type="number"
 						id="height"
@@ -110,13 +110,13 @@ export default function BJUCalculator() {
 					{isLoading ? <>
 						<div className="mt-6 text-center">
 							<div
-								className="w-12 h-12 border-4 border-t-4 border-green-600 border-solid rounded-full animate-spin mx-auto"></div>
-							<p className="text-gray-500 mt-4">Calculating...</p>
+								className="w-12 h-12 border-4 border-t-4 border-primaryHover border-solid rounded-full animate-spin mx-auto"></div>
+							<p className="text-secondTextColor mt-4">Calculating...</p>
 						</div>
 					</> : <>
 						<button
 							type="submit"
-							className="bg-primary text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
+							className="bg-primary text-white px-6 py-3 rounded-lg shadow-md hover:bg-primaryHover focus:outline-none focus:ring-4 focus:ring-primary transition"
 						>Calculate</button>
 					</>
 					}
@@ -124,11 +124,11 @@ export default function BJUCalculator() {
 			{/* Show results after calculation */}
 			{result && !isLoading && (
 				<div className="mt-6 p-6 bg-gradient-to-r from-gray-100 via-white to-gray-100 rounded-lg shadow-inner">
-					<h3 className="text-xl font-semibold text-gray-800 mb-4">Results:</h3>
-					<p className="text-lg text-gray-700">Calories: {result.calories} kcal</p>
-					<p className="text-lg text-gray-700">Proteins: {result.proteins} g</p>
-					<p className="text-lg text-gray-700">Fats: {result.fats} g</p>
-					<p className="text-lg text-gray-700">Carbs: {result.carbs} g</p>
+					<h3 className="text-xl font-semibold text-secondTextColor mb-4">Results:</h3>
+					<p className="text-lg text-secondTextColor">Calories: {result.calories} kcal</p>
+					<p className="text-lg text-secondTextColor">Proteins: {result.proteins} g</p>
+					<p className="text-lg text-secondTextColor">Fats: {result.fats} g</p>
+					<p className="text-lg text-secondTextColor">Carbs: {result.carbs} g</p>
 				</div>
 			)}
 		</section>

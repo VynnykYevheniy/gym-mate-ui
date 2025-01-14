@@ -65,7 +65,7 @@ const Profile = () => {
 	}
 
 	return (
-		<main className="flex-col items-center justify-center p-4 pb-12">
+		<main>
 			{/* Profile Section */}
 			<UserProfile user={data.user} body={data.body} image={data.image}/>
 

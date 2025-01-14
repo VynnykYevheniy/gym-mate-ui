@@ -289,7 +289,11 @@ Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/
 :-moz-ui-invalid {
 	box-shadow: none;
 }
-
+section{
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	margin-bottom: 1.5rem;
+}
 /*
 Add the correct vertical alignment in Chrome and Firefox.
 */
@@ -622,10 +626,18 @@ html {
 	overflow-x: hidden;
 	font-size: 16px;
 }
+main{
+	background-color: #FAFAFA;
+	padding: 1rem;
+	padding-bottom: 3rem;
+	justify-content:center;
+	align-items: center;
+	flex-direction: column;
+}
+
 body {
 	overflow-x: hidden;
 	--tw-bg-opacity: 1;
-	background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 	background-image: url("/images/body-bg.svg");
 	background-size: cover;
 	background-repeat: no-repeat;

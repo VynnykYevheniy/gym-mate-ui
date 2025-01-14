@@ -199,7 +199,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 				<div className="flex justify-between items-center">
 					<button
 						onClick={handleAdd}
-						className="flex items-center justify-center w-12 h-12 bg-green-400 text-white rounded-full shadow-lg hover:bg-green-300 focus:outline-none focus:ring-4 focus:ring-green-500 transition"
+						className="flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primaryHover focus:outline-none focus:ring-4 focus:ring-primaryHover transition"
 					>
 						<FaPlus className="text-2xl font-bold"/>
 					</button>
@@ -207,7 +207,7 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 					<div className="flex space-x-4">
 						<button
 							onClick={handleSave}
-							className="bg-green-400 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 transition"
+							className="bg-primary text-white px-6 py-3 rounded-lg shadow-md hover:bg-primaryHover focus:outline-none focus:ring-4 focus:ring-primaryHover transition"
 						>
 							Save
 						</button>

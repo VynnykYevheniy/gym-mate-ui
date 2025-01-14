@@ -94,25 +94,25 @@ const Statistics = () => {
 	};
 
 	return (
-		<main className="w-full mx-auto p-4 mb-16">
+		<main className="w-full mx-auto">
 			<div className="space-y-8 overflow-y-auto max-h-screen">
 				{/* Timeframe Filter and Muscle Group / Exercise Selection */}
-				<div className="bg-white shadow rounded-lg p-4">
+				<section className="bg-defaultInfoSectionColor rounded-lg">
 					<div className="flex space-x-4 justify-center">
 						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Week' ? 'bg-primary text-white' : 'bg-primary text-white'}`}
+							className={`px-4 py-2 rounded ${timeframe === 'Week' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
 							onClick={() => handleTimeframeChange('Week')}
 						>
 							Week
 						</button>
 						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Month' ? 'bg-primary text-white' : 'bg-primary text-white'}`}
+							className={`px-4 py-2 rounded ${timeframe === 'Month' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
 							onClick={() => handleTimeframeChange('Month')}
 						>
 							Month
 						</button>
 						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Year' ? 'bg-primary text-white' : 'bg-primary text-white'}`}
+							className={`px-4 py-2 rounded ${timeframe === 'Year' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
 							onClick={() => handleTimeframeChange('Year')}
 						>
 							Year
@@ -144,17 +144,15 @@ const Statistics = () => {
 							))}
 						</select>
 					</div>
-				</div>
+				</section>
 
 				{/* Statistics Section: Only displayed when showStatistics is true */}
-				<div className="bg-white shadow rounded-lg p-4">
-					<h2 className="text-lg text-center text-gray-800 mb-6">Exercise Statistics</h2>
-					<div
-						className="space-y-4 bg-gray-50 p-2 shadow-inner shadow-[inset_0px_6px_10px_rgba(0,0,0,0.1)]"
-					>
+				<section className="bg-defaultInfoSectionColor rounded-lg text-secondTextColor">
+					<h2 className="text-lg text-center mb-6">Exercise Statistics</h2>
+					<div className="space-y-4 p-2">
 						{/* Max Weight */}
 						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Max Weight Lifted</span>
+							<span className="">Max Weight Lifted</span>
 							<span className="font-semibold text-lg">
                   {selectedExercise === 'Bench Press' ? '100 kg' : '150 kg'}
                 </span>
@@ -193,17 +191,17 @@ const Statistics = () => {
 						</div>
 					</div>
 					{/* Chart Section: Exercise Progress */}
-					<div className="bg-white shadow rounded-lg my-6">
-						<h2 className="text-lg text-center text-gray-800 mb-6">Exercise Progress</h2>
+					<div className="bg-white rounded-lg my-6">
+						<h2 className="text-lg text-center  mb-6">Exercise Progress</h2>
 						<Line data={exerciseProgress}/>
 					</div>
 
 					{/* Chart Section: Muscle Group Progress */}
-					<div className="bg-white shadow rounded-lg my-6">
-						<h2 className="text-lg text-center text-gray-800 mb-6">Muscle Group Progress</h2>
+					<div className="bg-white  rounded-lg my-6">
+						<h2 className="text-lg text-center mb-6">Muscle Group Progress</h2>
 						<Line data={muscleGroupProgress}/>
 					</div>
-				</div>
+				</section>
 			</div>
 		</main>
 	);

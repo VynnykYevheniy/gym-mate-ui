@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 function UserProfile({ user, body, image }) {
 	const {t} = useTranslation();
 	return (
-		<section className="w-full p-6 text-center bg-white rounded-lg mb-6">
+		<section className="w-full text-center bg-defaultInfoSectionColor">
 			<div className="flex flex-row items-start justify-between sm:items-start sm:space-x-6">
 				{/* Profile Picture */}
 				<div
@@ -25,11 +25,11 @@ function UserProfile({ user, body, image }) {
 				<div className="text-right sm:text-right">
 					<h2 className="text-2xl">{`${user?.firstName || 'First Name'}`}</h2>
 					<h2 className="text-2xl">{`${user?.lastName || 'Last Name'}`}</h2>
-					<p className="text-gray-500">@{user?.login || 'username'}</p>
+					<p className="text-secondTextColor">@{user?.login || 'username'}</p>
 				</div>
 			</div>
 			{/* Additional Stats */}
-			<ul className="py-4 my-6 text-gray-500 flex items-center justify-around">
+			<ul className="py-4 my-6 text-secondTextColor flex items-center justify-around">
 				{[
 					{
 						icon: <FaBirthdayCake className="h-10 w-10 text-primary"/>,
