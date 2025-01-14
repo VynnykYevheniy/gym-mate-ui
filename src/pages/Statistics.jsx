@@ -190,18 +190,18 @@ const Statistics = () => {
                 </span>
 						</div>
 					</div>
+				</section>
 					{/* Chart Section: Exercise Progress */}
-					<div className="bg-white rounded-lg my-6">
+					<section className="bg-white rounded-lg my-6">
 						<h2 className="text-lg text-center  mb-6">Exercise Progress</h2>
 						<Line data={exerciseProgress}/>
-					</div>
+					</section>
 
 					{/* Chart Section: Muscle Group Progress */}
-					<div className="bg-white  rounded-lg my-6">
+					<section className="bg-white  rounded-lg my-6">
 						<h2 className="text-lg text-center mb-6">Muscle Group Progress</h2>
 						<Line data={muscleGroupProgress}/>
-					</div>
-				</section>
+					</section>
 			</div>
 		</main>
 	);
