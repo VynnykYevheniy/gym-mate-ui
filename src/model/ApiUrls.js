@@ -1,7 +1,7 @@
 class ApiUrls {
 	// static BASE_URL = 'http://localhost:8080/api';
-	//static BASE_URL = 'https://gym-manager-co9r.onrender.com/api';
-	static BASE_URL = 'http://192.168.0.194:8080/api';
+	static BASE_URL = 'https://gym-manager-co9r.onrender.com/api';
+	// static BASE_URL = 'http://192.168.0.194:8080/api';
 
 	static AUTH = {
 		TELEGRAM: `/auth/telegram`,
