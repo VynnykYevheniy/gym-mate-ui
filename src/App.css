@@ -289,11 +289,6 @@ Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/
 :-moz-ui-invalid {
 	box-shadow: none;
 }
-section{
-	padding: 1.5rem;
-	border-radius: 0.5rem;
-	margin-bottom: 1.5rem;
-}
 /*
 Add the correct vertical alignment in Chrome and Firefox.
 */

@@ -46,7 +46,7 @@ const WeightBMIChart = ({weightData, bmiData}) => {
 	}, [chartType, weightData, bmiData]);
 
 	return (
-		<section className="w-full  rounded-lg">
+		<section>
 			<div className="max-w-4xl mx-auto bg-white" {...handlers}>
 				{chartData.labels ? (
 					<Line

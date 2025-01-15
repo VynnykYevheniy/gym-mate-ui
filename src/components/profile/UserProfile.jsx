@@ -3,10 +3,10 @@ import {GiWeight} from 'react-icons/gi';
 import {useTranslation} from 'react-i18next';
 import PropTypes from "prop-types";
 
-function UserProfile({ user, body, image }) {
+function UserProfile({user, body, image}) {
 	const {t} = useTranslation();
 	return (
-		<section className="w-full text-center bg-defaultInfoSectionColor">
+		<section>
 			<div className="flex flex-row items-start justify-between sm:items-start sm:space-x-6">
 				{/* Profile Picture */}
 				<div
