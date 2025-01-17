@@ -1,15 +1,15 @@
-import {useCallback} from "react";
+import {useCallback, useState} from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import WeekDaysHeader from "./WeekDaysHeader";
 import CalendarDays from "./CalendarDays";
 
-const CalendarGrid = ({currentDate, trainings, onDayClick}) => {
+const CalendarGrid = ({currentDate, trainings, onDayClick, selectedDate}) => {
 	const daysInMonth = currentDate.daysInMonth();
 	const firstDayOfMonth = currentDate.clone().startOf("month").day();
 	const offset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-	const daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
 
+	const daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
 	const isGymVisited = useCallback(
 		(date) => trainings.some((t) => moment(t.date).isSame(date, "day")),
 		[trainings]
@@ -26,6 +26,7 @@ const CalendarGrid = ({currentDate, trainings, onDayClick}) => {
 				isGymVisited={isGymVisited}
 				isWeekend={isWeekend}
 				onDayClick={onDayClick}
+				selectedDate={selectedDate}
 			/>
 		</div>
 	);
@@ -35,6 +36,7 @@ CalendarGrid.propTypes = {
 	currentDate: PropTypes.instanceOf(moment).isRequired,
 	trainings: PropTypes.arrayOf(PropTypes.shape({})),
 	onDayClick: PropTypes.func,
+	isSelected: PropTypes.bool
 };
 
 export default CalendarGrid;

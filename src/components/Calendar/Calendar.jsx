@@ -3,9 +3,9 @@ import moment from 'moment';
 import * as TrainingService from "../../service/TrainingService.jsx";
 import CalendarGrid from "./CalendarGrid.jsx";
 import CalendarNavigation from "./CalendarNavigation.jsx";
-import TrainingForm from "../training/TrainingForm.jsx";
-import TrainingsList from "../training/TrainingsList.jsx";
-import useTrainingModal from "../training/useTrainingModal.jsx";
+import TrainingForm from "../Training/TrainingForm.jsx";
+import TrainingsList from "../Training/TrainingsList.jsx";
+import useTrainingModal from "../Training/useTrainingModal.jsx";
 import AddTrainingButton from "./AddTrainingButton.jsx";
 import Loader from "../generic/Loader.jsx";
 
@@ -29,7 +29,7 @@ const Calendar = () => {
 			const data = await TrainingService.fetchTrainingsByMonth(month, year);
 			setTrainings(data);
 		} catch (error) {
-			console.error('Failed to load training data:', error);
+			console.error('Failed to load Training data:', error);
 		} finally {
 			setIsLoading(false); // Отключаем индикатор загрузки
 		}
@@ -54,7 +54,7 @@ const Calendar = () => {
 		: [];
 
 	return (
-		<div className="flex flex-col items-center justify-center pb-16">
+		<main className="flex flex-col items-center justify-center pb-16">
 			{isLoading ? ( // Показываем Loader, пока данные загружаются
 				<Loader />
 			) : (
@@ -67,6 +67,7 @@ const Calendar = () => {
 						currentDate={currentDate}
 						trainings={trainings}
 						onDayClick={handleDayClick}
+						selectedDate={selectedDate}
 					/>
 					{selectedDate && filteredTrainings.length > 0 ? (
 						<TrainingsList
@@ -84,7 +85,7 @@ const Calendar = () => {
 					/>
 				</>
 			)}
-		</div>
+		</main>
 	);
 };
 
