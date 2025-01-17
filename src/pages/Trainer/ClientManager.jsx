@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import SidebarClientsList from "./SidebarClientsList.jsx";
 import {GiWeight} from "react-icons/gi";
 import {FaArrowsAltV, FaPhone, FaTelegramPlane, FaUserCircle} from "react-icons/fa";
-import Calendar from "../../components/calendar/Calendar.jsx";
+import Calendar from "../../components/Calendar/Calendar.jsx";
 import Loader from "../../components/generic/Loader.jsx";
 
 
