@@ -90,11 +90,11 @@ const WelcomePage = () => {
 			// Save the data through the service
 			await AnalyticsBodyService.save(data);
 
-			alert("Profile updated successfully!");
+			alert("ProfileInfo updated successfully!");
 			navigate("/"); // Навигация после сохранения
 		} catch (error) {
-			console.error("Error updating profile:", error);
-			alert("Failed to update profile. Please try again later.");
+			console.error("Error updating ProfileInfo:", error);
+			alert("Failed to update ProfileInfo. Please try again later.");
 		}
 	};
 	const fields = [

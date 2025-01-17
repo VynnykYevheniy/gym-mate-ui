@@ -5,3 +5,8 @@
 section {
 	@apply w-full p-6 rounded-lg mb-6 text-center bg-defaultInfoSectionColor;
 }
+
+/* Специфичный класс для иконок в статистике пользователя */
+.user-stat-icon {
+	@apply h-10 w-10 text-primary;
+}

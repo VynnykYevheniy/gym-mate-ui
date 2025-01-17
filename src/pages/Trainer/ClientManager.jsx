@@ -36,11 +36,11 @@ const ClientManager = () => {
 			<SidebarClientsList/>
 			<main className=" flex items-center justify-center flex-col pb-12 ml-16">
 
-				{/* Profile Section */}
+				{/* ProfileInfo Section */}
 				<section className="w-full p-2 text-center bg-white rounded-lg">
 					<div
 						className="flex flex-row  items-center justify-between sm:items-start sm:space-x-6 ">
-						{/* Profile Picture */}
+						{/* ProfileInfo Picture */}
 						<div
 							className=" w-32 h-32 rounded-full border-2 border-b-cyan-50 overflow-hidden  flex items-center justify-center">
 							<img
@@ -57,7 +57,7 @@ const ClientManager = () => {
 					</div>
 
 
-					{/* Profile Details */}
+					{/* ProfileInfo Details */}
 					<ul className="grid gap-2 text-right grid-cols-1 md:grid-cols-2 mt-5">
 						{[
 							{

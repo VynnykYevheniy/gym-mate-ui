@@ -1,7 +1,7 @@
-import WeightBMIChart from "../components/profile/WeightChart.jsx";
+import WeightBMIChart from "../components/Profile/WeightChart.jsx";
 import BJUCalculator from "../components/generic/BJUCalculator.jsx";
-import UserProfile from "../components/profile/UserProfile.jsx";
-import ProfileEditMenu from "../components/profile/ProfileEditMenu.jsx";
+import ProfileInfo from "../components/Profile/ProfileInfo.jsx";
+import ProfileEditMenu from "../components/Profile/ProfileEditMenu.jsx";
 import {useCallback, useEffect, useState} from "react";
 import {currentUser} from "../service/UserService.jsx";
 import * as AnalyticsBodyService from "../service/AnalyticsBodyService.jsx";
@@ -47,7 +47,7 @@ const Profile = () => {
 				loading: false,
 			});
 		} catch (error) {
-			console.error("Error fetching profile data:", error);
+			console.error("Error fetching ProfileInfo data:", error);
 			setData((prev) => ({...prev, loading: false}));
 		}
 	}, [setData]);
@@ -66,8 +66,8 @@ const Profile = () => {
 
 	return (
 		<main>
-			{/* Profile Section */}
-			<UserProfile user={data.user} body={data.body} image={data.image}/>
+			{/* ProfileInfo Section */}
+			<ProfileInfo user={data.user} body={data.body} image={data.image}/>
 
 			{/* Weight and BMI Chart */}
 			<WeightBMIChart weightData={data.weightData} bmiData={data.bmiData}/>

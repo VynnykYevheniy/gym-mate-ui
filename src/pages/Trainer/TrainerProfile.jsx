@@ -45,14 +45,14 @@ const TrainerProfile = () => {
 
     return (
         <main className=" flex items-center justify-center flex-col p-4 pb-12 ">
-            {/* profile Section */}
+            {/* ProfileInfo Section */}
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-100">
                 <div className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
-                    {/* profile Picture */}
+                    {/* ProfileInfo Picture */}
                     <div>
                     <div
                         className="w-32 h-32 rounded-full overflow-hidden shadow-xl flex flex-col items-center justify-center ">
-                        {//<FaUserCircle className="h-24 w-24 text-white" /> {/* profile icon */}
+                        {//<FaUserCircle className="h-24 w-24 text-white" /> {/* ProfileInfo icon */}
 
                         }
 
@@ -127,7 +127,7 @@ const TrainerProfile = () => {
 
             </section>
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-400">
-                {/* profile Details */}
+                {/* ProfileInfo Details */}
                 <ul className="grid grid-cols-2 md:grid-cols-2 gap-6">
                     {[
                         {
@@ -168,7 +168,7 @@ const TrainerProfile = () => {
             {/* Floating Action Button */}
             <div className="fixed bottom-6 right-6 mb-20">
                 <button
-                    aria-label="Edit Profile"
+                    aria-label="Edit ProfileInfo"
                     onClick={handleEditProfile}
                     className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition">
                     <FaUserCircle className="h-8 w-8"/>

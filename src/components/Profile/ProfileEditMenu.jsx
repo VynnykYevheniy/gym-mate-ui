@@ -3,14 +3,14 @@ import {FaRulerCombined, FaUserCircle} from "react-icons/fa";
 import {motion} from "framer-motion";
 import {MdEdit} from "react-icons/md";
 import useModal from "../useModal.jsx";
-import EditProfileModal from "./EditProfileModal.jsx";
-import EditBodyModal from "./EditBodyModal.jsx";
+import EditProfileModal from "./Modal/Profile/EditProfileModal.jsx";
+import EditBodyModal from "./Modal/Body/EditBodyModal.jsx";
 import PropTypes from "prop-types";
 
 const ProfileEditMenu = ({onRefresh}) => {
 	const {openModal, closeModal, isModalOpen} = useModal(); // Get modal control functions
 	const [showDropdown, setShowDropdown] = useState(false);
-	const [activeModal, setActiveModal] = useState(""); // Track active modal (profile or body)
+	const [activeModal, setActiveModal] = useState(""); // Track active modal (ProfileInfo or body)
 
 	const toggleDropdown = () => {
 		setShowDropdown(!showDropdown);
@@ -48,7 +48,7 @@ const ProfileEditMenu = ({onRefresh}) => {
 					>
 						<Option
 							icon={<FaUserCircle className="text-green-500"/>}
-							text="Profile"
+							text="ProfileInfo"
 							onClick={() => handleModalOpen("profile")}
 						/>
 						<Option
@@ -60,7 +60,7 @@ const ProfileEditMenu = ({onRefresh}) => {
 
 					{/* Edit button */}
 					<button
-						aria-label="Edit Profile"
+						aria-label="Edit ProfileInfo"
 						aria-haspopup="true"
 						aria-expanded={showDropdown}
 						onClick={toggleDropdown}
