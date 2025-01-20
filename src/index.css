@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+	@apply flex-col items-center justify-center p-4 pb-12;
+}
+
 section {
 	@apply w-full p-6 rounded-lg mb-6 text-center bg-defaultInfoSectionColor;
 }

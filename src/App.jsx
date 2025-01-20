@@ -5,16 +5,16 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import TelegramWebApp from './components/TelegramWebApp';
 import PrivateRoute from './service/PrivateRoute.jsx';
-import CalendarTraining from './pages/CalendarTraining.jsx';
+import Calendar from './pages/Calendar.jsx';
 import TrainerProfile from './pages/Trainer/TrainerProfile.jsx';
 import ClientManager from './pages/Trainer/ClientManager.jsx';
 import WelcomeComponent from './components/generic/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
-import Training from "./components/Training/Training.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
 import Profile from "./pages/Profile.jsx";
 import Statistics from "./pages/Statistics.jsx";
+import Training from "./pages/Training.jsx";
 
 function App() {
 
@@ -32,7 +32,7 @@ function App() {
 
 				{/* Все остальные маршруты обернуты в PrivateRoute */}
 				<Route element={<PrivateRoute/>}>
-					<Route path="/calendar" element={<CalendarTraining/>}/>
+					<Route path="/calendar" element={<Calendar/>}/>
 					<Route path="/training" element={<Training/>}/>
 					<Route path="/trainer" element={<TrainerProfile/>}/>
 					<Route path="/client" element={<Profile/>}/>

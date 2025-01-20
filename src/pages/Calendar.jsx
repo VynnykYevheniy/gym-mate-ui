@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import moment from 'moment';
-import * as TrainingService from "../../service/TrainingService.jsx";
-import CalendarGrid from "./CalendarGrid.jsx";
-import CalendarNavigation from "./CalendarNavigation.jsx";
-import TrainingDayForm from "../Training/TrainingDayForm/TrainingDayForm.jsx";
-import TrainingsList from "../Training/TrainingsList.jsx";
-import useTrainingModal from "../Training/useTrainingModal.jsx";
-import AddTrainingButton from "./AddTrainingButton.jsx";
-import Loader from "../generic/Loader.jsx";
+import * as TrainingService from "../service/TrainingService.jsx";
+import CalendarGrid from "../components/Calendar/CalendarGrid.jsx";
+import CalendarNavigation from "../components/Calendar/CalendarNavigation.jsx";
+import TrainingDayForm from "../components/Training/TrainingDayForm/TrainingDayForm.jsx";
+import TrainingsList from "../components/Training/TrainingsList.jsx";
+import useTrainingModal from "../components/Training/useTrainingModal.jsx";
+import AddTrainingButton from "../components/Calendar/AddTrainingButton.jsx";
+import Loader from "../components/generic/Loader.jsx";
 
 const Calendar = () => {
 	const [currentDate, setCurrentDate] = useState(moment());
@@ -44,7 +44,7 @@ const Calendar = () => {
 	};
 
 	const handleDayClick = useCallback((date) => {
-		const trainingRecord = trainings.find((t) => moment(t.date).isSame(date, 'day')) || { date: date.format('YYYY-MM-DDTHH:mm') };
+		const trainingRecord = trainings.find((t) => moment(t.date).isSame(date, 'day')) || {date: date.format('YYYY-MM-DDTHH:mm')};
 		setSelectedTrainingRecord(trainingRecord);
 		setSelectedDate(date);
 	}, [setSelectedTrainingRecord, trainings]);
@@ -54,9 +54,9 @@ const Calendar = () => {
 		: [];
 
 	return (
-		<main className="flex flex-col items-center justify-center pb-16">
+		<main>
 			{isLoading ? ( // Показываем Loader, пока данные загружаются
-				<Loader />
+				<Loader/>
 			) : (
 				<>
 					<CalendarNavigation
@@ -75,7 +75,7 @@ const Calendar = () => {
 							onRefresh={() => loadTrainingsForMonth(currentDate.month() + 1, currentDate.year())}
 						/>
 					) : (
-						<AddTrainingButton onClick={() => setIsModalOpen(true)} />
+						<AddTrainingButton onClick={() => setIsModalOpen(true)}/>
 					)}
 					<TrainingDayForm
 						isOpen={isModalOpen}
