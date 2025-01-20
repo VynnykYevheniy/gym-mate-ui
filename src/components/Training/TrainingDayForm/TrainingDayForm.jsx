@@ -1,12 +1,14 @@
-import {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../../service/TrainingService.jsx';
-import TrainingFormFields from './TrainingFormFields.jsx';
-import {FaPlus} from "react-icons/fa";
+import {fetchExercisesByMuscleGroup, fetchMuscleGroups, saveTraining} from '../../../service/TrainingService.jsx';
+import ActionButtons from "./ActionButtons.jsx";
+import TitleForm from "./TitleForm.jsx";
+import DateTrainingDay from "./DateTrainingDay.jsx";
+import TotalWeightDisplay from "./TotalWeightDisplay.jsx";
+import TrainingForms from "./TrainingForms.jsx";
 
-const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
-	console.log(trainingData);
+const TrainingDayForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 	const [date, setDate] = useState(dayjs().format('YYYY-MM-DDTHH:mm'));
 
 	useEffect(() => {
@@ -50,6 +52,10 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 			},
 		]);
 	};
+	const handleCancel = () => {
+		resetForm();
+		onClose();
+	}
 
 	const handleRemoveTraining = (index) => {
 		setTrainings(prevTrainings => prevTrainings.filter((_, i) => i !== index));
@@ -122,8 +128,8 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 			onRefresh();
 			onClose();
 		} catch (error) {
-			console.error('Error saving training:', error);
-			alert('Error saving training record.');
+			console.error('Error saving Training:', error);
+			alert('Error saving Training record.');
 		}
 	};
 
@@ -138,26 +144,14 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 		}
 	}, [isOpen, trainingData, id, resetForm]);
 
-	const renderTrainingFields = () => (
-		trainings.map((training, index) => (
-			<TrainingFormFields
-				key={index}
-				index={index}
-				training={training}
-				muscleGroups={muscleGroups}
-				handleMuscleGroupChange={handleMuscleGroupChange}
-				handleExerciseChange={handleExerciseChange}
-				handleSetsChange={handleSetsChange}
-				handleTrainingDetailChange={handleTrainingDetailChange}
-				handleRemoveTraining={handleRemoveTraining}
-			/>
-		))
-	);
 
 	//Function CalculateTotalWeight
 	const calculateTotalWeight = () => {
 		return trainings.reduce((total, training) => {
-			const exerciseWeight = training.trainingDetails.reduce((sum, {weight, repetition}) => sum + (weight * repetition), 0);
+			const exerciseWeight = training.trainingDetails.reduce((sum, {
+				weight,
+				repetition
+			}) => sum + (weight * repetition), 0);
 			return total + exerciseWeight;
 		}, 0);
 	};
@@ -168,66 +162,29 @@ const TrainingForm = ({isOpen, onClose, trainingData, onRefresh}) => {
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 mb-16">
 			<div
 				className="bg-zinc-50 rounded-lg p-4 w-11/12 sm:w-1/2 max-h-[90vh] shadow-2xl transform transition-all duration-300">
-				{/* Sticky Header */}
-				<div className="sticky top-0 mb-2">
-					<h2 className="text-2xl text-gray-500 mb-2">{id ? 'Correct training' : 'Add Training'}</h2>
-				</div>
 
-				{/* Date Picker */}
-				<div className="m-4 flex items-center">
-					<label htmlFor="date" className="block w-1/4 text-sm font-medium text-gray-500 mb-2">Date</label>
-					<input
-						type="datetime-local"
-						id="date"
-						value={date}
-						onChange={(e) => setDate(e.target.value)}
-						className="w-3/4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-					/>
-				</div>
+				<TitleForm id={id}/>
 
-				{/* Training Forms */}
-				<div
-					className="flex flex-col mb-4 max-h-[50vh] sm:max-h-[50vh] md:max-h-[50vh] lg:max-h-[50vh] overflow-y-scroll">
-					{renderTrainingFields()}
-				</div>
-				{/* Отображение общего тоннажа всей тренировки */}
-				<div className="text-right text-xl text-gray-800 p-2">
-					Total Training Weight: {calculateTotalWeight()} kg
-				</div>
+				<DateTrainingDay date={date} onDateChange={setDate}/>
 
-				{/* Action Buttons */}
-				<div className="flex justify-between items-center">
-					<button
-						onClick={handleAdd}
-						className="flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primaryHover focus:outline-none focus:ring-4 focus:ring-primaryHover transition"
-					>
-						<FaPlus className="text-2xl font-bold"/>
-					</button>
+				<TrainingForms trainings={trainings}
+						   muscleGroups={muscleGroups}
+						   handleMuscleGroupChange={handleMuscleGroupChange}
+						   handleExerciseChange={handleExerciseChange}
+						   handleSetsChange={handleSetsChange}
+						   handleTrainingDetailChange={handleTrainingDetailChange}
+						   handleRemoveTraining={handleRemoveTraining}/>
 
-					<div className="flex space-x-4">
-						<button
-							onClick={handleSave}
-							className="bg-primary text-white px-6 py-3 rounded-lg shadow-md hover:bg-primaryHover focus:outline-none focus:ring-4 focus:ring-primaryHover transition"
-						>
-							Save
-						</button>
-						<button
-							onClick={() => {
-								resetForm();
-								onClose();
-							}}
-							className="bg-gray-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-400 transition"
-						>
-							Cancel
-						</button>
-					</div>
-				</div>
+				<TotalWeightDisplay totalWeight={calculateTotalWeight()}/>
+
+				<ActionButtons onSave={handleSave} onCancel={handleCancel} onAdd={handleAdd}/>
+
 			</div>
 		</div>
 	);
 };
 
-TrainingForm.propTypes = {
+TrainingDayForm.propTypes = {
 	isOpen: PropTypes.bool.isRequired,
 	onClose: PropTypes.func.isRequired,
 	trainingData: PropTypes.shape({
@@ -238,4 +195,4 @@ TrainingForm.propTypes = {
 	onRefresh: PropTypes.func.isRequired,
 };
 
-export default TrainingForm;
+export default TrainingDayForm;

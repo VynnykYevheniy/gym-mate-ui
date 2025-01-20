@@ -11,7 +11,7 @@ import ClientManager from './pages/Trainer/ClientManager.jsx';
 import WelcomeComponent from './components/generic/WelcomeComponent.jsx';
 import TrainerList from "./pages/TrainerList.jsx";
 import {AuthProvider} from "./context/AuthProvider.jsx";
-import TrainingsTable from "./components/training/TrainingsTable.jsx";
+import Training from "./components/Training/Training.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
 import Profile from "./pages/Profile.jsx";
 import Statistics from "./pages/Statistics.jsx";
@@ -33,7 +33,7 @@ function App() {
 				{/* Все остальные маршруты обернуты в PrivateRoute */}
 				<Route element={<PrivateRoute/>}>
 					<Route path="/calendar" element={<CalendarTraining/>}/>
-					<Route path="/training" element={<TrainingsTable/>}/>
+					<Route path="/training" element={<Training/>}/>
 					<Route path="/trainer" element={<TrainerProfile/>}/>
 					<Route path="/client" element={<Profile/>}/>
 					<Route path="/clientmanager" element={<ClientManager/>}/>

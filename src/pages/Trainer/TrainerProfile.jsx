@@ -45,7 +45,7 @@ const TrainerProfile = () => {
 
     return (
         <main className=" flex items-center justify-center flex-col p-4 pb-12 ">
-            {/* ProfileInfo Section */}
+            {/* ProfileInfo Selection */}
             <section className="w-full max-w-4xl p-6 text-center bg-white rounded-lg shadow-lg border border-gray-100">
                 <div className="flex flex-row items-center justify-between sm:items-start sm:space-x-6 ">
                     {/* ProfileInfo Picture */}

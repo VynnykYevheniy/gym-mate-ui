@@ -2,13 +2,13 @@ import {useEffect, useState} from 'react';
 import axiosInstance from '../../api/AxiosConfig.jsx';
 import ApiUrls from "../../model/ApiUrls.js";
 import SearchBar from '../SearchBar.jsx';
-import TrainingForm from "./TrainingForm.jsx";
-import {FaPlus} from 'react-icons/fa';
+import TrainingDayForm from "./TrainingDayForm/TrainingDayForm.jsx";
 import Loader from "../generic/Loader.jsx";
 import TrainingsList from "./TrainingsList.jsx";
 import useTrainingModal from "./useTrainingModal.jsx";
+import AddTrainingButton from "./AddTrainingButton.jsx";
 
-const TrainingsTable = () => {
+const Training = () => {
 	const [trainings, setTrainings] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [loading, setLoading] = useState(true);
@@ -38,12 +38,9 @@ const TrainingsTable = () => {
 	}, []);
 
 	return (
-		<div className="container mx-auto p-6">
-			<div className="w-full mb-4">
-				<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm}
-						   phText="Поиск по упражнениям или группам мышц..."/>
-			</div>
-
+		<main className="container mx-auto p-6">
+			<SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm}
+					   phText="Поиск по упражнениям или группам мышц..."/>
 			{loading ? (
 				<Loader/>
 			) : error ? (
@@ -56,22 +53,14 @@ const TrainingsTable = () => {
 				/>
 			)}
 
-			<TrainingForm
+			<TrainingDayForm
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
 				trainingData={selectedTrainingRecord}
 				onRefresh={fetchTrainings}/>
-			<button
-				onClick={() => {
-					setIsModalOpen(true);
-				}}
-				className="fixed bottom-6 mb-12 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:bg-primaryHover transition-transform transform hover:scale-105"
-				aria-label="Добавить тренировку"
-			>
-				<FaPlus className="text-2xl"/>
-			</button>
-		</div>
+			<AddTrainingButton onClick={() => setIsModalOpen(true)}/>
+		</main>
 	);
 };
 
-export default TrainingsTable;
+export default Training;

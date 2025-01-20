@@ -36,7 +36,7 @@ const ClientManager = () => {
 			<SidebarClientsList/>
 			<main className=" flex items-center justify-center flex-col pb-12 ml-16">
 
-				{/* ProfileInfo Section */}
+				{/* ProfileInfo Selection */}
 				<section className="w-full p-2 text-center bg-white rounded-lg">
 					<div
 						className="flex flex-row  items-center justify-between sm:items-start sm:space-x-6 ">

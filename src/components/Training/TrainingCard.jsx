@@ -26,7 +26,7 @@ const TrainingCard = ({trainingRecord, onCardClick, onDelete}) => {
 				await showErrorDialog({
 					text: "Не удалось удалить тренировку. Попробуйте позже.",
 				});
-				console.error('Error deleting training:', error);
+				console.error('Error deleting Training:', error);
 			}
 		}
 	};

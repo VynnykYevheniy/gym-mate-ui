@@ -1,6 +1,6 @@
 import TrainingCard from './TrainingCard'; // Импортируем компонент карточки тренировки
 import useTrainingModal from './useTrainingModal';
-import TrainingForm from "./TrainingForm.jsx";
+import TrainingDayForm from "./TrainingDayForm/TrainingDayForm.jsx";
 import PropTypes from "prop-types"; // Импортируем кастомный хук
 
 const TrainingsList = ({trainings, onRefresh, searchTerm}) => {
@@ -37,7 +37,7 @@ const TrainingsList = ({trainings, onRefresh, searchTerm}) => {
 			)}
 
 			{/* Модальное окно для тренировки */}
-			<TrainingForm
+			<TrainingDayForm
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
 				trainingData={selectedTrainingRecord}

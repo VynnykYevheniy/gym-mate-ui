@@ -1,9 +1,9 @@
-import TrainingsTable from '../components/training/TrainingsTable.jsx';
+import Training from '../components/Training/Training.jsx';
 
 const Training = () => {
 
 	return (
-		<TrainingsTable/>
+		<Training/>
 	);
 };
 

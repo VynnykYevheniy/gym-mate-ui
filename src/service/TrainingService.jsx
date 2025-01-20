@@ -35,8 +35,8 @@ export const saveTraining = async (payload) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error('Error saving training:', error);
-		throw new Error('Failed to save training');
+		console.error('Error saving Training:', error);
+		throw new Error('Failed to save Training');
 	}
 };
 

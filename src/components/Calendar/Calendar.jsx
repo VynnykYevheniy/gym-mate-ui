@@ -3,7 +3,7 @@ import moment from 'moment';
 import * as TrainingService from "../../service/TrainingService.jsx";
 import CalendarGrid from "./CalendarGrid.jsx";
 import CalendarNavigation from "./CalendarNavigation.jsx";
-import TrainingForm from "../Training/TrainingForm.jsx";
+import TrainingDayForm from "../Training/TrainingDayForm/TrainingDayForm.jsx";
 import TrainingsList from "../Training/TrainingsList.jsx";
 import useTrainingModal from "../Training/useTrainingModal.jsx";
 import AddTrainingButton from "./AddTrainingButton.jsx";
@@ -77,7 +77,7 @@ const Calendar = () => {
 					) : (
 						<AddTrainingButton onClick={() => setIsModalOpen(true)} />
 					)}
-					<TrainingForm
+					<TrainingDayForm
 						isOpen={isModalOpen}
 						onClose={handleCloseModal}
 						trainingData={selectedTrainingRecord}
