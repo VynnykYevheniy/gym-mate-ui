@@ -1,6 +1,6 @@
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Header from './components/generic/Header.jsx';
-import './App.css';
+import './index.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import TelegramWebApp from './components/TelegramWebApp';
