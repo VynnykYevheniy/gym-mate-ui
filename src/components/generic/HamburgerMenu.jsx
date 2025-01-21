@@ -40,12 +40,12 @@ const HamburgerMenu = () => {
 			{isOpen && (
 				<div className="absolute right-0 w-48 bg-slate-50 shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
-						<li className="px-4 py-2 hover:bg-primaryHover">
+						<Link to={'/settings'}><li className="px-4 py-2 hover:bg-primaryHover" onClick={handleSettingsClick}>
 							{/* Закрываем меню и выполняем логаут */}
-							<Link to={'/settings'}>
 								<button onClick={handleSettingsClick}>Settings</button>
-							</Link>
+
 						</li>
+						</Link>
 					</ul>
 				</div>
 			)}
