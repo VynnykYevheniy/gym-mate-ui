@@ -14,3 +14,8 @@ section {
 .user-stat-icon {
 	@apply h-10 w-10 text-primary;
 }
+
+/* */
+.button-back {
+	@apply flex items-center px-4 py-2 mb-4 text-secondTextColor bg-white	 rounded-lg hover:bg-primaryHover hover:text-white active:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}

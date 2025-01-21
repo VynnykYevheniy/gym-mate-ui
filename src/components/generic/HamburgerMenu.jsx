@@ -1,11 +1,9 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthProvider.jsx";
+import { useState } from 'react';
+import {Link, useNavigate} from "react-router-dom";
 
 const HamburgerMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
-	const { logout } = useContext(AuthContext); // Получаем функцию logout из контекста
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -15,12 +13,11 @@ const HamburgerMenu = () => {
 		// Закрыть меню, когда элемент меню нажат
 		setIsOpen(false);
 	};
-
-	const handleLogoutClick = () => {
-		logout(); // Выполняем логаут
-		handleMenuItemClick();  // Закрываем меню
-		navigate('/signin'); // Перенаправляем на страницу входа
+	const handleSettingsClick = () => {
+		handleMenuItemClick();
+		navigate('/settings');
 	};
+
 
 	return (
 		<div className="relative">
@@ -43,9 +40,11 @@ const HamburgerMenu = () => {
 			{isOpen && (
 				<div className="absolute right-0 w-48 bg-slate-50 shadow-lg mt-2 rounded-md z-50">
 					<ul className="py-2">
-						<li className="px-4 py-2 hover:bg-red-600">
+						<li className="px-4 py-2 hover:bg-primaryHover">
 							{/* Закрываем меню и выполняем логаут */}
-							<button onClick={handleLogoutClick}>Log out</button>
+							<Link to={'/settings'}>
+								<button onClick={handleSettingsClick}>Settings</button>
+							</Link>
 						</li>
 					</ul>
 				</div>

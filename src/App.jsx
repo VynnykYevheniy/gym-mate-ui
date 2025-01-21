@@ -15,6 +15,7 @@ import WelcomePage from "./pages/WelcomePage.jsx";
 import Profile from "./pages/Profile.jsx";
 import Statistics from "./pages/Statistics.jsx";
 import Training from "./pages/Training.jsx";
+import Settings from "./pages/Settings";
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
 					<Route path="/trainers" element={<TrainerList/>}/>
 					<Route path="/trainer/:id" element={<TrainerProfile/>}/>
 					<Route path="/statistics" element={<Statistics/>}/>
+					<Route path="/settings" element={<Settings/>}/>
 				</Route>
 				<Route path="/welcome" element={<WelcomePage/>}/>
 				{/* Обработка несуществующих маршрутов */}
