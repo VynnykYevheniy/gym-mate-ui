@@ -9,7 +9,7 @@ const MenuSection = ({ sectionName, items, onMenuClick }) => (
                 {items.map((item, index) => (
                     <MenuItem
                         key={index}
-                        iconSrc={item.iconSrc}
+                        iconClass={item.iconClass}
                         label={item.label}
                         onClick={() => onMenuClick(item.component)}
                     />

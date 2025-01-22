@@ -14,25 +14,26 @@ const Settings = () => {
 
     const menuSections = {
         Account: [
-            { iconSrc: "/path-to-profile-icon.svg", label: "Profile", component: null },
-            { iconSrc: "/path-to-account-icon.svg", label: "Account", component: null },
-            { iconSrc: "/path-to-notifications-icon.svg", label: "Notifications", component: "notifications" },
+            {iconClass: "fa-regular fa-user", label: "Profile", component: null},
+            {iconClass: "fa-solid fa-file-invoice", label: "Account", component: null},
+            {iconClass: "fa-solid fa-check", label: "Notifications", component: "notifications"},
         ],
         Preferences: [
-            { iconSrc: "/path-to-theme-icon.svg", label: "Theme", component: null },
-            { iconSrc: "/path-to-units-svg", label: "Units", component: null },
-            { iconSrc: "/path-to-language-icon.svg", label: "Language", component: "language" },
-            { iconSrc: "/path-to-workouts-icon.svg", label: "Workouts", component: null },
-            { iconSrc: "/path-to-integrations-icon.svg", label: "Integrations", component: null },
-            { iconSrc: "/path-to-export-import-icon.svg", label: "Export Import Data", component: null },
+            {iconClass: "fa-solid fa-droplet", label: "Theme", component: null},
+            {iconClass: "fa-solid fa-ruler", label: "Units", component: null},
+            {iconClass: "fa-solid fa-language", label: "Language", component: "language"},
+
+            {iconClass: "fa-solid fa-dumbbell", label: "Workouts", component: null},
+            {iconClass: "fa-regular fa-handshake", label: "Integrations", component: null},
+            {iconClass: "fa-solid fa-file-export", label: "Export Import Data", component: null},
         ],
         Guides: [
-            { iconSrc: "/path-to-start-icon.svg", label: "Getting Started", component: null },
-            { iconSrc: "/path-to-docs-icon.svg", label: "Documentation", component: null },
+            {iconClass: "fa-solid fa-bars", label: "Getting Started", component: null },
+            { iconClass: "fa-regular fa-file", label: "Documentation", component: null },
         ],
         Help: [
-            { iconSrc: "/path-to-faq-icon.svg", label: "FAQ", component: null },
-            { iconSrc: "/path-to-support-icon.svg", label: "Support", component: null },
+            { iconClass: "fa-soolid fa-question", label: "FAQ", component: null },
+            { iconClass: "fa-solid fa-phone", label: "Support", component: null },
         ],
     };
 

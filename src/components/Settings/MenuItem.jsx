@@ -1,12 +1,14 @@
 import React from "react";
 
-const MenuItem = ({ iconSrc, label, onClick }) => (
+const MenuItem = ({ iconClass, label, onClick }) => (
     <li
-        className="flex items-center p-2 px-4 hover:bg-primaryHover hover:text-white cursor-pointer"
+        className="flex items-center justify-between p-2 px-4 hover:bg-primaryHover hover:text-white cursor-pointer"
         onClick={onClick}
     >
-        <img src={iconSrc} alt={`${label} Icon`} className="w-6 h-6 mr-4" />
-        <span>{label}</span>
+        <div className="flex items-center h-6 ">
+            <i className={`${iconClass} mr-4 text-primary`}></i> {/* Иконка Font Awesome */}
+            <span>{label}</span>
+        </div>
     </li>
 );
 

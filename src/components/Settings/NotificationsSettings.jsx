@@ -17,6 +17,7 @@ const NotificationsSettings = ({ onBack }) => {
     const renderSettings = (title, items) => (
         <div className="mb-8">
             <p className="text-secondTextColor text-xl mb-4">{title}</p>
+            <section className="p-0">
             <ul className="space-y-4">
                 {items.map(([key, label]) => (
                     <li key={key} className="flex items-center justify-between p-2 px-4">
@@ -28,6 +29,7 @@ const NotificationsSettings = ({ onBack }) => {
                     </li>
                 ))}
             </ul>
+            </section>
         </div>
     );
 
