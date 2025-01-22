@@ -5,6 +5,7 @@ import AuthContext from "../context/AuthProvider.jsx";
 import SettingsMain from "../components/Settings/SettingsMain";
 import LanguageSettings from "../components/Settings/LanguageSettings.jsx";
 import NotificationsSettings from "../components/Settings/NotificationsSettings.jsx";
+import ThemeSettings from "../components/Settings/ThemeSettings.jsx";
 
 const Settings = () => {
     const [activeComponent, setActiveComponent] = useState("main");
@@ -19,7 +20,7 @@ const Settings = () => {
             {iconClass: "fa-solid fa-check", label: "Notifications", component: "notifications"},
         ],
         Preferences: [
-            {iconClass: "fa-solid fa-droplet", label: "Theme", component: null},
+            {iconClass: "fa-solid fa-droplet", label: "Theme", component: "theme"},
             {iconClass: "fa-solid fa-ruler", label: "Units", component: null},
             {iconClass: "fa-solid fa-language", label: "Language", component: "language"},
 
@@ -90,6 +91,16 @@ const Settings = () => {
                     } ${transitionDirection === "right" ? "transform translate-x-full" : ""}`}
                 >
                     <NotificationsSettings onBack={handleBackClick} />
+                </div>
+            )}
+            {/* Theme Settings */}
+            {activeComponent === "theme" && (
+                <div
+                    className={`inset-0 transition-transform duration-300 ease-in-out ${
+                        transitionDirection === "left" ? "transform translate-x-0" : ""
+                    } ${transitionDirection === "right" ? "transform translate-x-full" : ""}`}
+                >
+                    <ThemeSettings onBack={handleBackClick} />
                 </div>
             )}
 

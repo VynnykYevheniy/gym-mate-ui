@@ -2,7 +2,7 @@ import React from "react";
 
 const MenuItem = ({ iconClass, label, onClick }) => (
     <li
-        className="flex items-center justify-between p-2 px-4 hover:bg-primaryHover hover:text-white cursor-pointer"
+        className="flex items-center justify-between p-2 px-4  hover:text-black cursor-pointer"
         onClick={onClick}
     >
         <div className="flex items-center h-6 ">

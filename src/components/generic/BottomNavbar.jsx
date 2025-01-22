@@ -29,23 +29,25 @@ export default function BottomNavbar() {
 	return (
 		<div className="fixed inset-x-0 bottom-0 bg-white shadow-lg z-50 h-16">
 			<div className="flex justify-between items-center p-2">
-				<Link to={profileLink || '/'}
-					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={UserSvg} alt="ProfileInfo Icon" className="h-6 w-6 mb-1 text-primary"/>
-					<span>ProfileInfo</span>
+				<Link
+					to={profileLink || "/"}
+					className="flex flex-col items-center text-gray-500 hover:text-green-600 w-1/4"
+				>
+					<i className="fa-regular fa-user h-6 w-6 mb-1 text-4xl text-primary hover:text-primaryHover" />
+
 				</Link>
-				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={CalendarSvg} alt="Calendar Icon" className="h-6 w-6 mb-1 text-primary"/>
-					<span>Calendar</span>
+				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+					<i className="fa-regular fa-calendar h-6 w-6 mb-1 text-4xl text-primary" />
+
 				</Link>
-				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={WorkoutSvg} alt="Workout Icon" className="h-6 w-6 mb-1 text-primary"/>
-					<span>Workout</span>
+				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+					<i className="fa-solid fa-dumbbell h-6 w-6 mb-1 text-4xl text-primary" />
+
 				</Link>
 				<Link to="/statistics"
-					  className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
-					<img src={Trainer} alt="Trainer Icon" className="h-6 w-6 mb-1 text-primary"/>
-					<span>Analytics</span>
+					  className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+					<i className="fa-solid fa-database h-6 w-6 mb-1 text-4xl text-primary"/>
+
 				</Link>
 				{/*<Link to="/trainers" className="flex flex-col items-center text-gray-500 hover:text-green-600 text-sm">
 					<img src={trainer} alt="trainer Icon" className="h-6 w-6 mb-1"/>

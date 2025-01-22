@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#22C55E", // Добавляем цвет primary, color button,
+        primary: "var(--primary-color)", // Динамический цвет // Добавляем цвет primary, color button, голотипы
         primaryHover: "#16a34a", // onHover color buttons
         secondTextColor: "#6b7280", // default color text on white background
         pageBackgroundColor: "#FAFAFA", // background color in App.css main block every page

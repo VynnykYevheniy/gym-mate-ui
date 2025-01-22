@@ -13,9 +13,9 @@ const LanguageSettings = ({ onBack }) => {
                 <p className="text-secondTextColor text-xl mb-4">Language Settings</p>
                 <section className="mb-8 p-0">
                     <ul className="space-y-4">
-                        <li className="flex items-center p-2 px-4 hover:bg-primaryHover">UA</li>
-                        <li className="flex items-center p-2 px-4 hover:bg-primaryHover">ENG</li>
-                        <li className="flex items-center p-2 px-4 hover:bg-primaryHover">PN</li>
+                        <li className="flex items-center p-2 px-4 hover:text-black">UA</li>
+                        <li className="flex items-center p-2 px-4 hover:text-black">ENG</li>
+                        <li className="flex items-center p-2 px-4 hover:text-black">PN</li>
                     </ul>
 
                 </section>

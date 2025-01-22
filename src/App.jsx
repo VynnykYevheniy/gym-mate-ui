@@ -1,6 +1,7 @@
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Header from './components/generic/Header.jsx';
 import './index.css';
+import { useTheme } from "./components/ThemeContext";
 import Register from './pages/Register';
 import Login from './pages/Login';
 import TelegramWebApp from './components/TelegramWebApp';
@@ -18,6 +19,9 @@ import Training from "./pages/Training.jsx";
 import Settings from "./pages/Settings";
 
 function App() {
+	const { primaryColor } = useTheme();
+	// Обновляем CSS переменную
+	document.documentElement.style.setProperty("--primary-color", primaryColor);
 
 	return (
 		<AuthProvider>
