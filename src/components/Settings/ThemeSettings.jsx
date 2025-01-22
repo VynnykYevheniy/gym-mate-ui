@@ -2,10 +2,11 @@ import React from "react";
 import { useTheme } from "../../components/ThemeContext";
 
 const ThemeSettings = ({ onBack }) => {
-    const { setPrimaryColor } = useTheme();
+    const { setColors } = useTheme();
 
-    const handleColorChange = (color) => {
-        setPrimaryColor(color);
+    const handleColorChange = (primaryColor, primaryHoverColor) => {
+        setPrimaryColor(primaryColor);
+        setPrimaryHoverColor(primaryHoverColor);
     };
 
     return (
@@ -20,19 +21,20 @@ const ThemeSettings = ({ onBack }) => {
                         <ul className="space-y-4">
                             <li
                                 className="flex items-center p-2 px-4 hover:text-black cursor-pointer"
-                                onClick={() => handleColorChange("#22C55E")}
+                                onClick={() => setColors("#22C55E", "#16A34A")}
                             >
                                 Green (Default)
                             </li>
                             <li
                                 className="flex items-center p-2 px-4 hover:text-black cursor-pointer"
-                                onClick={() => handleColorChange("#3B82F6")}
+                                onClick={() => setColors("#3B82F6", "#2563EB")}
                             >
                                 Blue
                             </li>
                             <li
                                 className="flex items-center p-2 px-4 hover:text-black cursor-pointer"
-                                onClick={() => handleColorChange("#EF4444")}
+                                onClick={() => setColors("#EF4444", "#B91C1C")}
+
                             >
                                 Red
                             </li>

@@ -23,6 +23,7 @@ function App() {
 	// Обновляем CSS переменную
 	document.documentElement.style.setProperty("--primary-color", primaryColor);
 
+
 	return (
 		<AuthProvider>
 			{/* Показывать Header, только если текущий путь не входит в список исключений */}
