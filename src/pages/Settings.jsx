@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider.jsx";
 import SettingsMain from "../components/Settings/SettingsMain";
 import LanguageSettings from "../components/Settings/LanguageSettings.jsx";
+import NotificationsSettings from "../components/Settings/NotificationsSettings.jsx";
 
 const Settings = () => {
     const [activeComponent, setActiveComponent] = useState("main");
@@ -15,7 +16,7 @@ const Settings = () => {
         Account: [
             { iconSrc: "/path-to-profile-icon.svg", label: "Profile", component: null },
             { iconSrc: "/path-to-account-icon.svg", label: "Account", component: null },
-            { iconSrc: "/path-to-notifications-icon.svg", label: "Notifications", component: null },
+            { iconSrc: "/path-to-notifications-icon.svg", label: "Notifications", component: "notifications" },
         ],
         Preferences: [
             { iconSrc: "/path-to-theme-icon.svg", label: "Theme", component: null },
@@ -79,6 +80,18 @@ const Settings = () => {
                     <LanguageSettings onBack={handleBackClick} />
                 </div>
             )}
+
+            {/* Notifications Settings */}
+            {activeComponent === "notifications" && (
+                <div
+                    className={`inset-0 transition-transform duration-300 ease-in-out ${
+                        transitionDirection === "left" ? "transform translate-x-0" : ""
+                    } ${transitionDirection === "right" ? "transform translate-x-full" : ""}`}
+                >
+                    <NotificationsSettings onBack={handleBackClick} />
+                </div>
+            )}
+
         </div>
     );
 };
