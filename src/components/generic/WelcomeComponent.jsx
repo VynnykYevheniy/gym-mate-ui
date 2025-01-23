@@ -131,7 +131,7 @@ const WelcomeComponent = () => {
 			</section>
 
 			{/* FAQ Section */}
-			<section className="mx-auto mt-10 max-w-5xl p-10 text-center">
+			<section className="mx-auto max-w-5xl p-10 text-center">
 				<h2 className="text-4xl font-extrabold mb-4 text-primary">{t('welcome.faqTitle')}</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					{[
@@ -151,7 +151,7 @@ const WelcomeComponent = () => {
 			</section>
 
 			{/* Blog Section */}
-			<section className="mx-auto mt-10 max-w-5xl p-8 text-center">
+			<section className="mx-auto max-w-5xl p-8 text-center">
 				<h2 className="text-4xl font-extrabold mb-4 text-primary">{t('welcome.blogTitle')}</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					{[
