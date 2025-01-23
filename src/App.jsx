@@ -53,6 +53,7 @@ function App() {
 				<Route path="/welcome" element={<WelcomePage/>}/>
 				{/* Обработка несуществующих маршрутов */}
 				<Route path="*" element={<Navigate to="/" replace/>}/>
+
 			</Routes>
 		</AuthProvider>
 	);

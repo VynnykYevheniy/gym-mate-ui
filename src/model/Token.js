@@ -1,4 +1,4 @@
-class Token {
+className Token {
 	constructor(accessToken, expiresIn, refreshToken, refreshExpiresIn) {
 		this.accessToken = accessToken;
 		this.expiresIn = expiresIn;

@@ -1,44 +1,47 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-	FaBicycle,
-	FaChartLine,
-	FaDumbbell,
-	FaHeartbeat,
-	FaMountain,
-	FaRunning,
-	FaSwimmer,
-	FaUserFriends
-} from 'react-icons/fa';
 import feedbackMen1 from '../../assets/image/feedback-men-1.png';
 import feedbackWomen1 from '../../assets/image/feedback-women-1.png';
+import heroPerson from '../../assets/image/hero-person.png';
 
 const WelcomeComponent = () => {
 	const { t } = useTranslation();
 
 	return (
-		<main className="flex flex-col justify-center p-2 ">
+		<main className="flex flex-col justify-center p-0">
+			<Link to="/signin">
+				<button className="bg-primary text-white font-semibold py-4 px-6 rounded-lg shadow-md hover:bg-primaryHover transition duration-200 transform hover:scale-105 w-1/2 fixed bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+					{t('welcome.getStarted')}
+				</button>
+			</Link>
+			<div className="relative mx-auto mt-0 w-full max-w-5xl p-8 text-center bg-cover bg-center" style={{
+				backgroundImage: `url(${heroPerson	})`,
+				backgroundAttachment: "fixed",
+				backgroundSize: "cover",
+				backgroundPosition: "center",
+				height: "100vh",
+				bgcolor: "green",
+			}}>
 
+
+			{/* Затемняющий слой поверх картинки */}
+			<div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 			{/* Hero Section */}
-			<section className="mx-auto mt-0 w-full max-w-5xl p-8 text-center">
+			<div className=" relative mx-auto mt-40 w-full max-w-5xl p-8 text-center z-20 ">
 				<div className="mt-0 space-y-8">
-					<h1 className="text-3xl font-extrabold text-secondTextColor text-center">
+					<h1 className="text-3xl font-extrabold text-white text-center">
 						{t('welcome.message')}
 						<span className="text-primary font-extrabold"> Gym Mate</span>
 					</h1>
-					<p className="text-xl text-secondTextColor text-center">
+					<p className="text-xl text-white text-center">
 						<span className="text-primary font-bold">Gym Mate</span>, {t('welcome.description')}
 					</p>
-					<Link to="/signin">
-						<button className="bg-primary text-white font-semibold py-4 px-6 rounded-lg shadow-md hover:bg-primaryHover transition duration-200 transform hover:scale-105 w-full mt-6">
-							{t('welcome.getStarted')}
-						</button>
-					</Link>
-				</div>
-			</section>
 
+				</div>
+			</div>
+			</div>
 			{/* Product Information Section */}
-			<section className="mx-auto max-w-5xl p-8">
+			<div className="relative mx-auto max-w-5xl p-8">
 				<h2 className="text-3xl font-extrabold mb-4">
 					{t('welcome.featuresTitle')}
 					<span className="text-primary font-extrabold"> Gym Mate</span>?
@@ -101,7 +104,7 @@ const WelcomeComponent = () => {
 				</div>
 				{//<p className="text-secondTextColor mb-8">{t('welcome.featuresDescription')}</p>
 				}
-			</section>
+			</div>
 
 			{/* Client Testimonials Section */}
 			<section className="mx-auto max-w-5xl p-8 text-center bg-white ">
