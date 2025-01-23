@@ -53,10 +53,10 @@ export default function Register() {
 	return (
 		<main className="flex flex-col justify-center p-6 pb-12">
 			<div className="mx-auto max-w-md">
-				<svg className="mx-auto h-12 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+				<svg className="mx-auto h-12 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
 					<path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
 				</svg>
-				<h2 className="mt-2 text-2xl font-bold text-gray-900 sm:mt-6 sm:text-3xl">{t('register.createAccount')}</h2>
+				<h2 className="mt-2 text-2xl font-bold text-secondTextColor sm:mt-6 sm:text-3xl">{t('register.createAccount')}</h2>
 			</div>
 			<div className="mx-auto mt-6 w-full max-w-md rounded-xl bg-white p-6 shadow-xl backdrop-blur-xl sm:mt-10 sm:p-10">
 				<form onSubmit={handleSubmit} autoComplete="off" className="space-y-6">
@@ -81,7 +81,7 @@ export default function Register() {
 						},
 					].map(({ id, label, type, value }) => (
 						<div key={id}>
-							<label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
+							<label htmlFor={id} className="block text-sm font-medium text-secondTextColor">{label}</label>
 							<div className="relative mt-1 rounded-md shadow-sm">
 								<input
 									id={id}
@@ -90,7 +90,7 @@ export default function Register() {
 									required
 									value={value}
 									onChange={handleChange}
-									className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-green-500 focus:ring-green-500"
+									className="w-full rounded-md border-gray-300 pl-10 text-sm focus:border-primaryHover focus:ring-primaryHover"
 								/>
 							</div>
 						</div>
@@ -99,7 +99,7 @@ export default function Register() {
 					<EmailField value={formData.email} onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))} />
 
 					<div>
-						<label className="block text-sm font-medium text-gray-700">{t('register.role.role')}</label>
+						<label className="block text-sm font-medium text-secondTextColor">{t('register.role.role')}</label>
 						<div className="mt-2 space-x-4">
 							{[
 								{ value: 'TRAINER', label: t('register.role.trainer') },
@@ -125,15 +125,15 @@ export default function Register() {
 					<div>
 						<button
 							type="submit"
-							className="w-full rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+							className="w-full rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-primaryHover focus:ring-offset-2"
 						>
 							{t('register.signUp')}
 						</button>
 					</div>
 				</form>
-				<p className="mt-6 text-center text-sm text-gray-600">
+				<p className="mt-6 text-center text-sm text-secondTextColor">
 					{t('register.alreadyHaveAccount')}{' '}
-					<Link to="/signin" className="font-medium text-green-600 hover:text-green-500">
+					<Link to="/signin" className="font-medium text-primary hover:text-primaryHover">
 						{t('register.signIn')}
 					</Link>
 				</p>

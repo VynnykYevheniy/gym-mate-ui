@@ -19,9 +19,10 @@ import Training from "./pages/Training.jsx";
 import Settings from "./pages/Settings";
 
 function App() {
-	const { primaryColor } = useTheme();
+	const { primaryColor, primaryHover } = useTheme();
 	// Обновляем CSS переменную
 	document.documentElement.style.setProperty("--primary-color", primaryColor);
+	document.documentElement.style.setProperty("--primary-hover-color", primaryHover);
 
 
 	return (

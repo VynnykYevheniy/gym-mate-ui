@@ -75,13 +75,13 @@ export default function Login() {
 						{/* Tabs for Client and trainer */}
 						<div className="flex justify-center mb-4">
 							<button
-								className={`px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'client' ? 'text-green-700 border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
+								className={`px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'client' ? 'text-primary border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
 								onClick={() => setActiveTab('client')}
 							>
 								{t('auth.client')}
 							</button>
 							<button
-								className={`ml-4 px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'trainer' ? 'text-green-700 border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
+								className={`ml-4 px-6 py-2 text-lg font-semibold rounded-t-md transition-colors duration-300 ${activeTab === 'trainer' ? 'text-primary border-b-2 border-green-600 bg-green-50' : 'text-gray-500 hover:text-green-600'}`}
 								onClick={() => setActiveTab('trainer')}
 							>
 								{t('auth.trainer')}
@@ -114,7 +114,7 @@ export default function Login() {
 							{/* Password Field */}
 							<div>
 								<label htmlFor="password"
-									   className="block text-md font-medium text-gray-700">{t('auth.password')}</label>
+									   className="block text-md font-medium text-secondTextColor">{t('auth.password')}</label>
 								<div className="relative mt-1 rounded-md shadow-sm">
 									<div className="absolute inset-y-0 left-0 flex items-center pl-3">
 										<img src={PasswordSvg} alt="Password Icon" className="h-5 w-5 text-gray-400"/>
@@ -123,7 +123,7 @@ export default function Login() {
 										type="password"
 										id="password"
 										name="password"
-										className="w-full rounded-md border-gray-200 pl-10 text-md focus:border-green-500 focus:ring-green-500"
+										className="w-full rounded-md border-gray-200 pl-10 text-md focus:border-primary focus:ring-green-500"
 										placeholder={t('auth.password')}
 										value={password}
 										onChange={handleInputChange(setPassword)}
@@ -138,13 +138,13 @@ export default function Login() {
 										type="checkbox"
 										id="remember"
 										name="remember"
-										className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+										className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-green-500"
 									/>
 									<label htmlFor="remember"
-										   className="text-sm text-gray-900">{t('auth.rememberMe')}</label>
+										   className="text-sm text-secondTextColor">{t('auth.rememberMe')}</label>
 								</div>
 								<a href=""
-								   className="text-sm font-medium text-green-500 hover:text-green-600 underline">
+								   className="text-sm font-medium text-primary hover:text-primaryHover underline">
 									{t('auth.forgotPassword')}
 								</a>
 							</div>
@@ -153,7 +153,7 @@ export default function Login() {
 							<div>
 								<button
 									type="submit"
-									className="w-full rounded-md border border-transparent bg-green-500 px-4 py-2 text-white font-medium shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+									className="w-full rounded-md border border-transparent bg-primary px-4 py-2 text-white font-medium shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 								>
 									{t('auth.signIn')}
 								</button>
@@ -161,9 +161,9 @@ export default function Login() {
 
 							{/* Registration Link */}
 							<div className="mt-4 text-center">
-								<p className="text-sm text-gray-600">
+								<p className="text-sm text-secondTextColor">
 									{t('auth.dontHaveAccount')} <Link to="/signup"
-																	  className="text-green-500 hover:text-green-600 underline">{t('auth.signUp')}</Link>
+																	  className="text-primary hover:text-primaryHover underline">{t('auth.signUp')}</Link>
 								</p>
 							</div>
 						</form>

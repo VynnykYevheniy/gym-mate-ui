@@ -24,24 +24,24 @@ export default function BottomNavbar() {
 
 	return (
 		<div className="fixed inset-x-0 bottom-0 bg-white shadow-lg z-50 h-16">
-			<div className="flex justify-between items-center p-2">
+			<div className="flex justify-between items-center p-2 h-full">
 				<Link
 					to={profileLink || "/"}
-					className="flex flex-col items-center text-gray-500 hover:text-green-600 w-1/4"
+					className="flex flex-col items-center text-gray-500 hover:text-green-600 w-1/4 h-full"
 				>
 					<i className="fa-regular fa-user h-6 w-6 mb-1 text-4xl text-primary hover:text-primaryHover" />
 
 				</Link>
-				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+				<Link to="/calendar" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4 h-full">
 					<i className="fa-regular fa-calendar h-6 w-6 mb-1 text-4xl text-primary" />
 
 				</Link>
-				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+				<Link to="/training" className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4 h-full">
 					<i className="fa-solid fa-dumbbell h-6 w-6 mb-1 text-4xl text-primary" />
 
 				</Link>
 				<Link to="/statistics"
-					  className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4">
+					  className="flex flex-col items-center text-gray-500 hover:text-primaryHover  w-1/4 h-full">
 					<i className="fa-solid fa-database h-6 w-6 mb-1 text-4xl text-primary"/>
 
 				</Link>
