@@ -43,6 +43,12 @@ class ApiUrls {
 		GET_BY_ID: (id) => `/images/${id}`,
 		UPLOAD: `/images/upload`,
 	}
+	static STATISTICS = {
+		EXERCISE_DATA: (id) => `/stat/exercise/${id}`,
+		MUSCLE_GROUPS_DATA: (id) => `/stat/muscle-group/${id}`,
+		EXERCISE_DATA_CHART: (id, timeframe) => `/stat/exercise-progress/${id}/${timeframe}`,
+		MUSCLE_GROUPS_DATA_CHART: (id, timeframe) => `/stat/muscle-progress/${id}/${timeframe}`
+	}
 }
 
 export default ApiUrls;
