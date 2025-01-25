@@ -1,5 +1,4 @@
-import {useState} from 'react';
-import {Line} from 'react-chartjs-2';
+import {useEffect, useState} from "react";
 import {
 	CategoryScale,
 	Chart as ChartJS,
@@ -9,7 +8,12 @@ import {
 	PointElement,
 	Title,
 	Tooltip,
-} from 'chart.js';
+} from "chart.js";
+import {fetchMuscleGroups} from "../service/TrainingService.jsx";
+import axiosInstance from "../api/AxiosConfig.jsx";
+import ApiUrls from "../model/ApiUrls.js";
+import TimeframeFilter from "../components/Statistics/TimeframeFilter";
+import TabsSection from "../components/Statistics/TabsSection";
 
 ChartJS.register(
 	CategoryScale,
@@ -22,187 +26,85 @@ ChartJS.register(
 );
 
 const Statistics = () => {
-	const [selectedExercise, setSelectedExercise] = useState('Bench Press');
-	const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('Chest');
-	const [timeframe, setTimeframe] = useState('Month'); // Default timeframe
-	const [showStatistics, setShowStatistics] = useState(false); // State to toggle statistics visibility
+	const [selectedExercise, setSelectedExercise] = useState(null);
+	const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null);
+	const [timeframe, setTimeframe] = useState("MONTH");
+	const [activeTab, setActiveTab] = useState("GENERAL");
+	const [muscleGroups, setMuscleGroups] = useState([]);
+	const [exercises, setExercises] = useState([]);
+	const [exerciseData, setExerciseData] = useState([]);
+	const [muscleGroupData, setMuscleGroupData] = useState([]);
+	const [exercisesDataChart, setExercisesDataChart] = useState([]);
+	const [muscleGroupDataChart, setMuscleGroupDataChart] = useState([]);
 
-	// Map muscle groups to exercises
-	const exercisesByMuscleGroup = {
-		Chest: ['Bench Press', 'Incline Bench Press', 'Chest Fly'],
-		Back: ['Deadlift', 'Pull-up', 'Bent-over Row'],
-		Legs: ['Squat', 'Leg Press', 'Lunges'],
-		Shoulders: ['Overhead Press', 'Lateral Raise', 'Arnold Press'],
-		Biceps: ['Barbell Curl', 'Hammer Curl', 'Preacher Curl'],
-		Triceps: ['Tricep Dips', 'Tricep Pushdown', 'Skull Crushers'],
+	useEffect(() => {
+		const loadMuscleGroups = async () => {
+			try {
+				const data = await fetchMuscleGroups();
+				setMuscleGroups(data);
+			} catch (err) {
+				console.error("Failed to fetch muscle groups:", err);
+			}
+		};
+		loadMuscleGroups();
+	}, []);
+
+	const fetchExercisesByMuscleGroup = async (muscleGroupId) => {
+		try {
+			const response = await axiosInstance.get(ApiUrls.EXERCISE.MUSCLE_GROUPS(muscleGroupId));
+			setExercises(response.data);
+		} catch (error) {
+			console.error("Error fetching exercises:", error);
+		}
 	};
 
-	const labelsByTimeframe = {
-		Week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-		Month: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-		Year: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-	};
+	const fetchStatisticsData = async () => {
+		try {
+			if (selectedMuscleGroup) {
+				// Load Muscle Group data and progress if only Muscle Group is selected
+				const muscleGroupDataResponse = await axiosInstance.get(ApiUrls.STATISTICS.MUSCLE_GROUPS_DATA(selectedMuscleGroup));
+				setMuscleGroupData(muscleGroupDataResponse.data);
 
-	const exerciseData = {
-		Week: [70, 72, 75, 73, 76, 78, 80],
-		Month: [60, 65, 70, 75],
-		Year: [55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110],
-	};
+				const muscleGroupProgressResponse = await axiosInstance.get(ApiUrls.STATISTICS.MUSCLE_GROUPS_DATA_CHART(selectedMuscleGroup, timeframe));
+				setMuscleGroupDataChart(muscleGroupProgressResponse.data);
 
-	const muscleGroupData = {
-		Week: [500, 520, 540, 560, 580, 600, 620],
-		Month: [2000, 2500, 3000, 3500],
-		Year: [24000, 26000, 28000, 30000, 32000, 34000, 36000, 38000, 40000, 42000, 44000, 46000],
-	};
+				// If Exercise is also selected, load Exercise data and progress
+				if (selectedExercise) {
+					const exerciseDataResponse = await axiosInstance.get(ApiUrls.STATISTICS.EXERCISE_DATA(selectedExercise));
+					setExerciseData(exerciseDataResponse.data);
 
-	const labels = labelsByTimeframe[timeframe];
-
-	const exerciseProgress = {
-		labels,
-		datasets: [
-			{
-				label: `${selectedExercise} (kg)`,
-				data: exerciseData[timeframe],
-				borderColor: 'rgba(75, 192, 192, 1)',
-				backgroundColor: 'rgba(75, 192, 192, 0.2)',
-				tension: 0.3,
-			},
-		],
-	};
-
-	const muscleGroupProgress = {
-		labels,
-		datasets: [
-			{
-				label: `${selectedMuscleGroup} Volume (kg)`,
-				data: muscleGroupData[timeframe],
-				borderColor: 'rgba(255, 99, 132, 1)',
-				backgroundColor: 'rgba(255, 99, 132, 0.2)',
-				tension: 0.3,
-			},
-		],
-	};
-
-	const handleTimeframeChange = (newTimeframe) => {
-		setTimeframe(newTimeframe);
-	};
-
-	const handleMuscleGroupChange = (e) => {
-		const newMuscleGroup = e.target.value;
-		setSelectedMuscleGroup(newMuscleGroup);
-		setSelectedExercise(exercisesByMuscleGroup[newMuscleGroup][0]); // Set first exercise for the new muscle group
+					const exercisesProgressResponse = await axiosInstance.get(ApiUrls.STATISTICS.EXERCISE_DATA_CHART(selectedExercise, timeframe));
+					setExercisesDataChart(exercisesProgressResponse.data);
+				}
+			}
+		} catch (error) {
+			console.error("Error fetching statistics data:", error);
+		}
 	};
 
 	return (
-		<main className="w-full mx-auto">
-			<div className="space-y-8 overflow-y-auto max-h-screen">
-				{/* Timeframe Filter and Muscle Group / Exercise Selection */}
-				<section className="bg-defaultInfoSectionColor rounded-lg">
-					<div className="flex space-x-4 justify-center">
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Week' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
-							onClick={() => handleTimeframeChange('Week')}
-						>
-							Week
-						</button>
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Month' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
-							onClick={() => handleTimeframeChange('Month')}
-						>
-							Month
-						</button>
-						<button
-							className={`px-4 py-2 rounded ${timeframe === 'Year' ? 'bg-primaryHover text-white' : 'bg-primary text-white'}`}
-							onClick={() => handleTimeframeChange('Year')}
-						>
-							Year
-						</button>
-					</div>
-
-					{/* Muscle Group and Exercise Selection */}
-					<div className="flex space-x-4 justify-center mt-4">
-						<select
-							className="border p-2 rounded"
-							value={selectedMuscleGroup}
-							onChange={handleMuscleGroupChange}
-						>
-							{Object.keys(exercisesByMuscleGroup).map((muscleGroup) => (
-								<option key={muscleGroup} value={muscleGroup}>
-									{muscleGroup}
-								</option>
-							))}
-						</select>
-						<select
-							className="border p-2 rounded"
-							value={selectedExercise}
-							onChange={(e) => setSelectedExercise(e.target.value)}
-						>
-							{exercisesByMuscleGroup[selectedMuscleGroup].map((exercise) => (
-								<option key={exercise} value={exercise}>
-									{exercise}
-								</option>
-							))}
-						</select>
-					</div>
-				</section>
-
-				{/* Statistics Section: Only displayed when showStatistics is true */}
-				<section className="bg-defaultInfoSectionColor rounded-lg text-secondTextColor">
-					<h2 className="text-lg text-center mb-6">Exercise Statistics</h2>
-					<div className="space-y-4 p-2">
-						{/* Max Weight */}
-						<div className="flex justify-between items-center">
-							<span className="">Max Weight Lifted</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '100 kg' : '150 kg'}
-                </span>
-						</div>
-
-						{/* Total Volume */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Total Volume (kg)</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '5000 kg' : '7500 kg'}
-                </span>
-						</div>
-
-						{/* Record Reps */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Max Reps (per set)</span>
-							<span className="font-semibold text-lg">
-                  {selectedExercise === 'Bench Press' ? '15 reps' : '12 reps'}
-                </span>
-						</div>
-
-						{/* Total Sessions */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Total Sessions</span>
-							<span className="font-semibold text-lg">
-                  {selectedMuscleGroup === 'Chest' ? '32 sessions' : '45 sessions'}
-                </span>
-						</div>
-
-						{/* Average Weekly Progress */}
-						<div className="flex justify-between items-center">
-							<span className="text-gray-600">Average Weekly Progress</span>
-							<span className="font-semibold text-lg">
-                  {selectedMuscleGroup === 'Chest' ? '1.2 kg/week' : '1.5 kg/week'}
-                </span>
-						</div>
-					</div>
-				</section>
-					{/* Chart Section: Exercise Progress */}
-					<section className="bg-white rounded-lg my-6">
-						<h2 className="text-lg text-center  mb-6">Exercise Progress</h2>
-						<Line data={exerciseProgress}/>
-					</section>
-
-					{/* Chart Section: Muscle Group Progress */}
-					<section className="bg-white  rounded-lg my-6">
-						<h2 className="text-lg text-center mb-6">Muscle Group Progress</h2>
-						<Line data={muscleGroupProgress}/>
-					</section>
-			</div>
+		<main>
+			<TimeframeFilter timeframe={timeframe} setTimeframe={setTimeframe}/>
+			<TabsSection
+				activeTab={activeTab}
+				setActiveTab={setActiveTab}
+				muscleGroups={muscleGroups}
+				selectedMuscleGroup={selectedMuscleGroup}
+				exercises={exercises}
+				selectedExercise={selectedExercise}
+				muscleGroupData={muscleGroupData}
+				exercisesData={exerciseData}
+				muscleGroupStat={muscleGroupDataChart}
+				exerciseStat={exercisesDataChart}
+				handleMuscleGroupChange={async (e) => {
+					const muscleGroupId = e.target.value;
+					setSelectedMuscleGroup(muscleGroupId);
+					setSelectedExercise(null);
+					await fetchExercisesByMuscleGroup(muscleGroupId);
+				}}
+				handleExerciseChange={(e) => setSelectedExercise(e.target.value)}
+				fetchStatisticsData={fetchStatisticsData}
+			/>
 		</main>
 	);
 };
