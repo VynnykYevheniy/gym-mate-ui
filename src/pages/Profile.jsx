@@ -7,6 +7,7 @@ import {currentUser} from "../service/UserService.jsx";
 import * as AnalyticsBodyService from "../service/AnalyticsBodyService.jsx";
 import * as ImageService from "../service/ImageService.jsx";
 import Loader from "../components/generic/Loader.jsx";
+import * as ChartService from "../service/ChartService.jsx";
 
 const Profile = () => {
 	const [data, setData] = useState({
@@ -32,10 +33,9 @@ const Profile = () => {
 				? await ImageService.getImageById(userData.imageId)
 				: null;
 
-			// Получение аналитики
-			const analytics = await AnalyticsBodyService.getAll();
-			const weights = analytics.map(({date, weight}) => ({date, weight}));
-			const bmiValues = analytics.map(({date, bmi}) => ({date, bmi}));
+			// Получение аналитик
+			const weights = await ChartService.getWeight();
+			const bmis = await ChartService.getBMI();
 
 			// Обновление состояния
 			setData({
@@ -43,7 +43,7 @@ const Profile = () => {
 				body: bodyData,
 				image: imageUrl,
 				weightData: weights,
-				bmiData: bmiValues,
+				bmiData: bmis,
 				loading: false,
 			});
 		} catch (error) {
@@ -58,7 +58,7 @@ const Profile = () => {
 		if (token && !data.user) {
 			fetchData();
 		}
-	}, [data.user, fetchData]);
+	}, []);
 
 	if (data.loading) {
 		return <Loader/>; // Показываем Loader, пока идет загрузка

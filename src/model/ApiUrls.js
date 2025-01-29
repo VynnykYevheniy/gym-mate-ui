@@ -44,10 +44,14 @@ class ApiUrls {
 		UPLOAD: `/images/upload`,
 	}
 	static STATISTICS = {
-		EXERCISE_DATA: (id) => `/stat/exercise/${id}`,
-		MUSCLE_GROUPS_DATA: (id) => `/stat/muscle-group/${id}`,
-		EXERCISE_DATA_CHART: (id, timeframe) => `/stat/exercise-progress/${id}/${timeframe}`,
-		MUSCLE_GROUPS_DATA_CHART: (id, timeframe) => `/stat/muscle-progress/${id}/${timeframe}`
+		EXERCISE_DATA: (id) => `/statistics/exercise/${id}`,
+		MUSCLE_GROUPS_DATA: (id) => `/statistics/muscle-group/${id}`,
+		EXERCISE_DATA_CHART: (id, timeframe) => `/statistics/exercise-progress/${id}/${timeframe}`,
+		MUSCLE_GROUPS_DATA_CHART: (id, timeframe) => `/statistics/muscle-progress/${id}/${timeframe}`
+	}
+	static CHART={
+		BMI:'/chart/bmi',
+		WEIGHT:'/chart/weight',
 	}
 }
 

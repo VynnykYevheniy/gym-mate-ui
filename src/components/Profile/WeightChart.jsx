@@ -1,16 +1,16 @@
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
-import {useEffect, useState} from 'react';
-import {useSwipeable} from 'react-swipeable';
-import PropTypes from "prop-types";
+import { useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import PropTypes from 'prop-types';
 
-const WeightBMIChart = ({weightData, bmiData}) => {
+const WeightBMIChart = ({ weightData, bmiData }) => {
 	const [chartData, setChartData] = useState({});
-	const [chartType, setChartType] = useState('weight'); // Track which chart to display
+	const [chartType, setChartType] = useState('weight');
 
 	const handlers = useSwipeable({
-		onSwipedLeft: () => setChartType((prev) => (prev === 'weight' ? 'bmi' : 'weight')),
-		onSwipedRight: () => setChartType((prev) => (prev === 'weight' ? 'bmi' : 'weight')),
+		onSwipedLeft: () => setChartType(prev => (prev === 'weight' ? 'bmi' : 'weight')),
+		onSwipedRight: () => setChartType(prev => (prev === 'weight' ? 'bmi' : 'weight')),
 	});
 
 	useEffect(() => {
@@ -19,22 +19,22 @@ const WeightBMIChart = ({weightData, bmiData}) => {
 		let label = '';
 
 		if (chartType === 'weight' && weightData.length > 0) {
-			labels = weightData.map((entry) => entry.date);
-			data = weightData.map((entry) => entry.weight);
+			labels = weightData.map(entry => entry.date);
+			data = weightData.map(entry => entry.value);
 			label = 'Вес (кг)';
 		} else if (chartType === 'bmi' && bmiData.length > 0) {
-			labels = bmiData.map((entry) => entry.date);
-			data = bmiData.map((entry) => entry.bmi);
+			labels = bmiData.map(entry => entry.date);
+			data = bmiData.map(entry => entry.value);
 			label = 'ИМТ';
 		}
 
 		if (labels.length > 0 && data.length > 0) {
 			setChartData({
-				labels: labels,
+				labels,
 				datasets: [
 					{
-						label: label,
-						data: data,
+						label,
+						data,
 						fill: false,
 						borderColor: chartType === 'weight' ? '#15803d' : '#FF6384',
 						backgroundColor: chartType === 'weight' ? '#15803d' : '#FF6384',
@@ -55,17 +55,16 @@ const WeightBMIChart = ({weightData, bmiData}) => {
 							responsive: true,
 							maintainAspectRatio: false,
 							scales: {
-								x: {title: {display: true, text: 'Дата'}},
+								x: { title: { display: true, text: 'Дата' } },
 								y: {
-									title: {display: true, text: chartType === 'weight' ? 'Вес (кг)' : 'ИМТ'},
-									beginAtZero: true
+									title: { display: true, text: chartType === 'weight' ? 'Вес (кг)' : 'ИМТ' },
+									beginAtZero: true,
 								},
 							},
 							plugins: {
 								tooltip: {
 									callbacks: {
-										label: (tooltipItem) =>
-											`${chartType === 'weight' ? 'Вес' : 'ИМТ'}: ${tooltipItem.raw}`,
+										label: tooltipItem => `${chartType === 'weight' ? 'Вес' : 'ИМТ'}: ${tooltipItem.raw}`,
 									},
 								},
 							},
@@ -79,8 +78,10 @@ const WeightBMIChart = ({weightData, bmiData}) => {
 		</section>
 	);
 };
+
 WeightBMIChart.propTypes = {
 	weightData: PropTypes.array.isRequired,
 	bmiData: PropTypes.array.isRequired,
-}
+};
+
 export default WeightBMIChart;
